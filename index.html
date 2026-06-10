@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Become a Veterinary Service Provider | The ELF Store</title>
+    <meta name="description" content="Register as a veterinary professional to join India's growing veterinary network and connect with pet owners, clinics, and hospitals.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <header class="app-header">
+        <div class="container header-container">
+            <a href="#" class="logo-container">
+                <img src="assets/logo.png" alt="The ELF Store Logo" class="brand-logo" id="logoImg" onerror="this.src='https://placehold.co/180x50/1d394a/ffffff?text=The+ELF+Store';">
+            </a>
+            <a href="#registration-section" class="btn btn-outline nav-btn">Register Now</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <span class="badge">Join India's Growing Veterinary Network</span>
+                    <h1>Become a Veterinary Service Provider</h1>
+                    <p class="hero-text">Connect with pet owners, clinics, hospitals, and animal care communities. Register today and build your professional presence on our platform.</p>
+                    <div class="hero-actions">
+                        <a href="#registration-section" class="btn btn-primary btn-lg">Register Now <i class="fa-solid fa-arrow-right btn-icon"></i></a>
+                        <span class="timer-badge"><i class="fa-regular fa-clock"></i> Registration takes less than 2 minutes</span>
+                    </div>
+                </div>
+                <div class="hero-image-placeholder">
+                    <!-- A beautiful styled illustration container -->
+                    <div class="illustration-card">
+                        <div class="circle-bg"></div>
+                        <div class="pet-elements">
+                            <span class="pet-icon badge-1"><i class="fa-solid fa-dog"></i></span>
+                            <span class="pet-icon badge-2"><i class="fa-solid fa-cat"></i></span>
+                            <span class="pet-icon badge-3"><i class="fa-solid fa-stethoscope"></i></span>
+                        </div>
+                        <div class="pulse-ring"></div>
+                        <div class="network-badge">
+                            <span class="network-count">500+</span>
+                            <span class="network-label">Vets Online</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Form Section -->
+        <section id="registration-section" class="form-section">
+            <div class="container">
+                <div class="form-container-box">
+                    <div class="form-header">
+                        <h2>Register as a Service Provider</h2>
+                        <p>Please fill in the details below to join our veterinary network.</p>
+                        
+                        <!-- Step Progress Indicator -->
+                        <div class="step-indicator">
+                            <div class="step-progress-bar">
+                                <div class="step-progress-fill" id="progressFill"></div>
+                            </div>
+                            <div class="step-node active" data-step="1">
+                                <div class="node-circle">1</div>
+                                <span class="node-label">Personal</span>
+                            </div>
+                            <div class="step-node" data-step="2">
+                                <div class="node-circle">2</div>
+                                <span class="node-label">Professional</span>
+                            </div>
+                            <div class="step-node" data-step="3">
+                                <div class="node-circle">3</div>
+                                <span class="node-label">Practice</span>
+                            </div>
+                            <div class="step-node" data-step="4">
+                                <div class="node-circle">4</div>
+                                <span class="node-label">Documents</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Registration Form -->
+                    <form id="vetRegistrationForm" novalidate>
+                        <!-- STEP 1: Personal Details -->
+                        <div class="form-step-panel active" id="step1">
+                            <h3 class="panel-title"><i class="fa-solid fa-user-doctor panel-icon"></i> Personal Details</h3>
+                            
+                            <div class="form-group">
+                                <label for="fullName">Full Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-regular fa-user input-icon"></i>
+                                    <input type="text" id="fullName" name="fullName" placeholder="Dr. John Doe" required>
+                                </div>
+                                <span class="error-message" id="fullNameError">Full Name is required</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mobileNumber">Mobile Number <span class="required">*</span></label>
+                                <div class="phone-input-group">
+                                    <div class="select-wrapper country-code-wrapper">
+                                        <select id="countryCode" name="countryCode" required>
+                                            <option value="+91" selected>IND (+91)</option>
+                                            <option value="+1">USA (+1)</option>
+                                            <option value="+44">GBR (+44)</option>
+                                            <option value="+971">ARE (+971)</option>
+                                            <option value="+65">SGP (+65)</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-wrapper phone-number-wrapper">
+                                        <i class="fa-solid fa-phone input-icon"></i>
+                                        <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="9876543210" pattern="[0-9]{10}" required>
+                                    </div>
+                                </div>
+                                <span class="error-message" id="mobileNumberError">Enter a valid 10-digit mobile number</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="emailAddress">Email Address <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-regular fa-envelope input-icon"></i>
+                                    <input type="email" id="emailAddress" name="emailAddress" placeholder="johndoe@example.com" required>
+                                </div>
+                                <span class="error-message" id="emailAddressError">Enter a valid email address</span>
+                            </div>
+
+                            <div class="panel-actions">
+                                <div></div> <!-- Empty placeholder for spacing -->
+                                <button type="button" class="btn btn-primary btn-next" data-next="2">Next Step <i class="fa-solid fa-chevron-right btn-icon-right"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 2: Professional Details -->
+                        <div class="form-step-panel" id="step2">
+                            <h3 class="panel-title"><i class="fa-solid fa-graduation-cap panel-icon"></i> Professional Details</h3>
+
+                            <div class="form-group">
+                                <label for="regNumber">Veterinary Registration Number <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-regular fa-id-card input-icon"></i>
+                                    <input type="text" id="regNumber" name="regNumber" placeholder="VCI-12345 or State Reg No." required>
+                                </div>
+                                <span class="error-message" id="regNumberError">Registration Number is required</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="qualification">Qualification <span class="required">*</span></label>
+                                <div class="select-wrapper">
+                                    <i class="fa-solid fa-user-graduate select-icon"></i>
+                                    <select id="qualification" name="qualification" required>
+                                        <option value="" disabled selected>Select Qualification</option>
+                                        <option value="BVSc">BVSc (Bachelor of Veterinary Science)</option>
+                                        <option value="MVSc">MVSc (Master of Veterinary Science)</option>
+                                        <option value="PhD">PhD (Doctor of Philosophy)</option>
+                                        <option value="Diploma">Diploma</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <span class="error-message" id="qualificationError">Please select your qualification</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="experience">Years of Experience</label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-briefcase input-icon"></i>
+                                    <input type="number" id="experience" name="experience" placeholder="e.g. 5" min="0" max="70">
+                                </div>
+                                <span class="error-message" id="experienceError">Please enter a valid number of years</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="label-group-title">Specialization <span class="helper-text">(Select all that apply)</span></label>
+                                <div class="checkbox-grid">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="specialization" value="Small Animals">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Small Animals</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="specialization" value="Large Animals">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Large Animals</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="specialization" value="Exotic Pets">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Exotic Pets</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="specialization" value="Surgery">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Surgery</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="specialization" value="Dermatology">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Dermatology</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="specialization" value="General Practice">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">General Practice</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="specialization" value="Emergency Care">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Emergency Care</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="specialization" value="Livestock Care">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Livestock Care</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="specialization" value="Poultry Care">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Poultry Care</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="specialization" value="Other">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Other</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="panel-actions">
+                                <button type="button" class="btn btn-outline btn-prev" data-prev="1"><i class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
+                                <button type="button" class="btn btn-primary btn-next" data-next="3">Next Step <i class="fa-solid fa-chevron-right btn-icon-right"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 3: Practice Details -->
+                        <div class="form-step-panel" id="step3">
+                            <h3 class="panel-title"><i class="fa-solid fa-clinic-medical panel-icon"></i> Practice Details</h3>
+
+                            <div class="form-group">
+                                <label for="clinicName">Clinic/Hospital Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-building-user input-icon"></i>
+                                    <input type="text" id="clinicName" name="clinicName" placeholder="e.g. Pet Care Clinic / Independent Practitioner" required>
+                                </div>
+                                <span class="error-message" id="clinicNameError">Clinic or Hospital Name is required</span>
+                            </div>
+
+                            <div class="form-grid-2">
+                                <div class="form-group">
+                                    <label for="state">State <span class="required">*</span></label>
+                                    <div class="select-wrapper">
+                                        <i class="fa-solid fa-map-location-dot select-icon"></i>
+                                        <select id="state" name="state" required>
+                                            <option value="" disabled selected>Select State</option>
+                                        </select>
+                                    </div>
+                                    <span class="error-message" id="stateError">Please select a state</span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="city">City <span class="required">*</span></label>
+                                    <div class="select-wrapper">
+                                        <i class="fa-solid fa-city select-icon"></i>
+                                        <select id="city" name="city" required disabled>
+                                            <option value="" disabled selected>Select City</option>
+                                        </select>
+                                    </div>
+                                    <span class="error-message" id="cityError">Please select a city</span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="label-group-title">Consultation Type</label>
+                                <div class="checkbox-grid">
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="consultationType" value="In Clinic" id="consultClinic">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">In Clinic</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="consultationType" value="Home Visit" id="consultHome">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Home Visit</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="consultationType" value="Online Consultation" id="consultOnline">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Online Consultation</span>
+                                    </label>
+                                    <label class="custom-checkbox">
+                                        <input type="checkbox" name="consultationType" value="All of the Above" id="consultAll">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">All of the Above</span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="panel-actions">
+                                <button type="button" class="btn btn-outline btn-prev" data-prev="2"><i class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
+                                <button type="button" class="btn btn-primary btn-next" data-next="4">Next Step <i class="fa-solid fa-chevron-right btn-icon-right"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- STEP 4: Upload Documents & Submit -->
+                        <div class="form-step-panel" id="step4">
+                            <h3 class="panel-title"><i class="fa-solid fa-file-shield panel-icon"></i> Upload Documents</h3>
+                            
+                            <p class="panel-description">Please upload valid documents for credentials verification. This helps in building client trust and unlocking premium network features.</p>
+
+                            <div class="form-group">
+                                <label>Veterinary License Upload <span class="required">*</span></label>
+                                <div class="upload-zone" id="licenseUploadZone">
+                                    <input type="file" id="licenseFile" name="licenseFile" accept=".jpg,.jpeg,.png,.pdf" class="file-input-hidden" required>
+                                    <div class="upload-zone-content">
+                                        <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+                                        <p class="upload-text">Drag & drop your Veterinary License here, or <span class="browse-link">browse</span></p>
+                                        <p class="upload-limits">Accepted: JPG, PNG, PDF | Max: 5 MB</p>
+                                    </div>
+                                    <div class="file-preview-container" id="licensePreview"></div>
+                                </div>
+                                <span class="error-message" id="licenseFileError">Veterinary License is required</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Profile Photo Upload</label>
+                                <div class="upload-zone" id="photoUploadZone">
+                                    <input type="file" id="photoFile" name="photoFile" accept=".jpg,.jpeg,.png" class="file-input-hidden">
+                                    <div class="upload-zone-content">
+                                        <i class="fa-regular fa-image upload-icon"></i>
+                                        <p class="upload-text">Drag & drop your Profile Photo here, or <span class="browse-link">browse</span></p>
+                                        <p class="upload-limits">Accepted: JPG, PNG | Max: 5 MB</p>
+                                    </div>
+                                    <div class="file-preview-container" id="photoPreview"></div>
+                                </div>
+                                <span class="error-message" id="photoFileError">Please select a valid image file (Max 5MB)</span>
+                            </div>
+
+                            <div class="form-group terms-group">
+                                <label class="custom-checkbox align-items-start">
+                                    <input type="checkbox" id="termsAgree" name="termsAgree" required>
+                                    <span class="checkmark" style="margin-top: 3px;"></span>
+                                    <span class="checkbox-text font-sm">I confirm that the information provided is accurate and I agree to the <a href="#" class="inline-link" target="_blank">Terms & Conditions</a>. <span class="required">*</span></span>
+                                </label>
+                                <span class="error-message" id="termsAgreeError">You must agree to the Terms & Conditions to proceed</span>
+                            </div>
+
+                            <div class="panel-actions">
+                                <button type="button" class="btn btn-outline btn-prev" data-prev="3"><i class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
+                                <button type="submit" class="btn btn-accent btn-lg" id="submitFormBtn">Register as Service Provider <i class="fa-solid fa-paper-plane btn-icon-right"></i></button>
+                            </div>
+                        </div>
+                    </form>
+
+                    <!-- Success State Screen (Initially Hidden) -->
+                    <div class="success-screen" id="successScreen">
+                        <div class="success-icon-wrapper">
+                            <div class="success-ring"></div>
+                            <i class="fa-solid fa-check success-check-icon"></i>
+                        </div>
+                        
+                        <h2>Registration Successful! 🎉</h2>
+                        <p class="success-msg">Thank you for joining our veterinary network. Your details have been received successfully. Our team will verify your credentials and contact you within 24-48 hours.</p>
+                        
+                        <div class="receipt-card">
+                            <div class="receipt-header">
+                                <span class="receipt-badge"><i class="fa-solid fa-hourglass-half"></i> Verification Pending</span>
+                                <span class="receipt-id" id="summaryRegId">ID: VSP-2026-8802</span>
+                            </div>
+                            <div class="receipt-divider"></div>
+                            <div class="receipt-body">
+                                <div class="receipt-row">
+                                    <span class="receipt-label">Provider Name</span>
+                                    <span class="receipt-value" id="summaryName">Dr. John Doe</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">Registration No.</span>
+                                    <span class="receipt-value" id="summaryRegNo">VCI-20239402</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">Qualification</span>
+                                    <span class="receipt-value" id="summaryQual">MVSc</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">Practice Name</span>
+                                    <span class="receipt-value" id="summaryClinic">Happy Pets Clinic</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">Location</span>
+                                    <span class="receipt-value" id="summaryLocation">Bengaluru, Karnataka</span>
+                                </div>
+                                <div class="receipt-row">
+                                    <span class="receipt-label">Consultation</span>
+                                    <span class="receipt-value" id="summaryConsult">In Clinic, Online</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="success-actions">
+                            <button type="button" class="btn btn-primary" id="btnRegisterNew">Register Another Account</button>
+                            <a href="#" class="btn btn-outline">Go to Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <div class="container footer-container">
+
+            <div class="footer-copy">
+                <p>&copy; 2026 The ELF Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Main JS Application -->
+    <script src="app.js"></script>
+</body>
+</html>
