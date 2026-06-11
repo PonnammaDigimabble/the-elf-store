@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Become a Veterinary Service Provider | The ELF Store</title>
+    <title>Provider Onboarding Optimization Recommendation | The ELF Store</title>
     <meta name="description" content="Register as a veterinary professional to join India's growing veterinary network and connect with pet owners, clinics, and hospitals.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -27,7 +27,7 @@
             
             <div class="value-prop-content">
                 <h1>Join Our Pet Ecosystem Network</h1>
-                <p class="subtitle-text">Complete your registration in less than <strong>2 minutes</strong>.</p>
+                <p class="subtitle-text">Join in less than <strong>2 minutes</strong>.</p>
                 
                 <ul class="benefits-list">
                     <li>
@@ -77,6 +77,11 @@
         <!-- Right Side: Form Wizard -->
         <section class="form-content-area" id="registration-section">
             <div class="form-container-box">
+                <!-- Form Header Title -->
+                <div class="form-header-title">
+                    <h2>Veterinary Registration Form</h2>
+                </div>
+                
                 <!-- Step Progress Indicator -->
                 <div class="step-indicator">
                     <div class="step-progress-bar">
@@ -141,12 +146,12 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="city">City <span class="required">*</span></label>
+                            <label for="city">City / Location <span class="required">*</span></label>
                             <div class="input-wrapper">
                                 <i class="fa-solid fa-city input-icon"></i>
-                                <input type="text" id="city" name="city" placeholder="Enter your city" required>
+                                <input type="text" id="city" name="city" placeholder="Enter city / location" required>
                             </div>
-                            <span class="error-message" id="cityError">City is required</span>
+                            <span class="error-message" id="cityError">City / Location is required</span>
                         </div>
 
                         <div class="form-group">
@@ -168,15 +173,6 @@
                             <span class="error-message" id="serviceTypeError">Please select a service type</span>
                         </div>
 
-                        <div class="panel-actions single-next">
-                            <button type="button" class="btn btn-primary btn-next" data-next="2">Next Step <i class="fa-solid fa-chevron-right btn-icon-right"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 2: Business Information -->
-                    <div class="form-step-panel" id="step2">
-                        <h3 class="panel-title"><i class="fa-solid fa-building panel-icon"></i> BUSINESS INFORMATION</h3>
-
                         <div class="form-group">
                             <label for="businessName">Business Name <span class="helper-text">(Optional)</span></label>
                             <div class="input-wrapper">
@@ -185,6 +181,15 @@
                             </div>
                             <span class="error-message" id="businessNameError">Business Name format is incorrect</span>
                         </div>
+
+                        <div class="panel-actions single-next">
+                            <button type="button" class="btn btn-primary btn-next" data-next="2">Next Step <i class="fa-solid fa-chevron-right btn-icon-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Business Information -->
+                    <div class="form-step-panel" id="step2">
+                        <h3 class="panel-title"><i class="fa-solid fa-building panel-icon"></i> BUSINESS INFORMATION</h3>
 
                         <div class="form-group">
                             <label for="experience">Years of Experience <span class="required">*</span></label>
@@ -202,10 +207,10 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="serviceArea">Service Area <span class="required">*</span></label>
+                            <label for="serviceArea">Service Area <span class="helper-text">(City, Locality)</span> <span class="required">*</span></label>
                             <div class="input-wrapper">
                                 <i class="fa-solid fa-map-location-dot input-icon"></i>
-                                <input type="text" id="serviceArea" name="serviceArea" placeholder="Enter area you serve" required>
+                                <input type="text" id="serviceArea" name="serviceArea" placeholder="Enter city or locality you serve" required>
                             </div>
                             <span class="error-message" id="serviceAreaError">Service Area is required</span>
                         </div>
@@ -276,7 +281,7 @@
 
                         <div class="panel-actions">
                             <button type="button" class="btn btn-outline btn-prev" data-prev="2"><i class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
-                            <button type="submit" class="btn btn-accent btn-lg" id="submitFormBtn">
+                            <button type="submit" class="btn btn-accent" id="submitFormBtn">
                                 <i class="fa-solid fa-paw btn-icon-left"></i> Join the Pet Ecosystem
                             </button>
                         </div>

@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (id === "city") {
             if (val.length < 2) {
-                setFieldState(input, false, "City is required");
+                setFieldState(input, false, "City / Location is required");
                 return false;
             }
         }
@@ -425,15 +425,17 @@ document.addEventListener("DOMContentLoaded", () => {
         // Animate submission transaction
         form.style.opacity = 0;
         if (reviewSubtext) reviewSubtext.style.opacity = 0;
-        
-        // Hide step indicators header
+        // Hide step indicators and form header
         const stepIndicatorHeader = document.querySelector(".step-indicator");
+        const formHeader = document.querySelector(".form-header-title");
         if (stepIndicatorHeader) stepIndicatorHeader.style.opacity = 0;
-
+        if (formHeader) formHeader.style.opacity = 0;
+ 
         setTimeout(() => {
             form.style.display = "none";
             if (reviewSubtext) reviewSubtext.style.display = "none";
             if (stepIndicatorHeader) stepIndicatorHeader.style.display = "none";
+            if (formHeader) formHeader.style.display = "none";
             
             successScreen.style.display = "block";
             successScreen.style.opacity = 0;
@@ -488,9 +490,14 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         
         const stepIndicatorHeader = document.querySelector(".step-indicator");
+        const formHeader = document.querySelector(".form-header-title");
         if (stepIndicatorHeader) {
             stepIndicatorHeader.style.display = "flex";
             stepIndicatorHeader.style.opacity = 1;
+        }
+        if (formHeader) {
+            formHeader.style.display = "block";
+            formHeader.style.opacity = 1;
         }
         
         setTimeout(() => {
