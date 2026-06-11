@@ -957,7 +957,6 @@ label {
         overflow-y: visible;
     }
     
-    .brand-logo-container,
     .value-prop-content,
     .pets-illustration-container {
         margin-left: auto;
@@ -986,8 +985,10 @@ label {
 
     .brand-logo-container {
         display: flex;
-        justify-content: center;
+        justify-content: flex-start;
         margin-bottom: 20px;
+        margin-left: 0;
+        margin-right: auto;
     }
     
     .benefits-list {
