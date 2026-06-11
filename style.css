@@ -153,6 +153,15 @@ h1, h2, h3, h4, h5, h6 {
     overflow-y: auto;
 }
 
+.brand-logo-container,
+.value-prop-content,
+.pets-illustration-container {
+    max-width: 500px;
+    width: 100%;
+    margin-left: 0;
+    margin-right: auto;
+}
+
 .brand-logo-container {
     margin-bottom: 30px;
 }
@@ -948,6 +957,13 @@ label {
         overflow-y: visible;
     }
     
+    .brand-logo-container,
+    .value-prop-content,
+    .pets-illustration-container {
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
     .form-content-area {
         width: 100%;
         padding: 40px 32px;
@@ -1016,6 +1032,13 @@ label {
 
     .form-content-area {
         padding: 30px 16px;
+    }
+
+    .form-container-box {
+        border: none;
+        box-shadow: none;
+        border-radius: 0;
+        background-color: transparent;
     }
 
     .step-indicator {
