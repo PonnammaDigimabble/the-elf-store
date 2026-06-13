@@ -1,19 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Provider Onboarding Optimization Recommendation | The ELF Store</title>
-    <meta name="description" content="Register as a veterinary professional to join India's growing veterinary network and connect with pet owners, clinics, and hospitals.">
+    <meta name="description"
+        content="Register as a veterinary professional to join India's growing veterinary network and connect with pet owners, clinics, and hospitals.">
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Main Stylesheet -->
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <!-- Main Split Screen Container -->
     <main class="split-container">
@@ -21,14 +26,15 @@
         <section class="value-prop-sidebar">
             <div class="brand-logo-container">
                 <a href="#" class="logo-link">
-                    <img src="assets/logo.png" alt="The ELF Store" class="brand-logo" id="logoImg" onerror="this.src='https://placehold.co/180x50/1d394a/ffffff?text=The+ELF+Store';">
+                    <img src="assets/logo.png" alt="The ELF Store" class="brand-logo" id="logoImg"
+                        onerror="this.src='https://placehold.co/180x50/1d394a/ffffff?text=The+ELF+Store';">
                 </a>
             </div>
-            
+
             <div class="value-prop-content">
                 <h1>Join Our Pet Ecosystem Network</h1>
                 <p class="subtitle-text">Join in less than <strong>2 minutes</strong>.</p>
-                
+
                 <ul class="benefits-list">
                     <li>
                         <span class="benefit-icon-circle"><i class="fa-solid fa-user-group"></i></span>
@@ -68,7 +74,11 @@
                     </li>
                 </ul>
             </div>
-            
+
+            <!-- Peeking dog transparent image blended in the center of left side to the end -->
+            <div class="sidebar-pets-container">
+                <img src="assets/peeking_dog_transparent.png" alt="Peeking Dog" class="sidebar-pets-image">
+            </div>
         </section>
 
         <!-- Right Side: Form Wizard -->
@@ -78,7 +88,7 @@
                 <div class="form-header-title">
                     <h2>Veterinary Registration Form</h2>
                 </div>
-                
+
                 <!-- Step Progress Indicator -->
                 <div class="step-indicator">
                     <div class="step-progress-bar">
@@ -103,12 +113,13 @@
                     <!-- STEP 1: Basic Information -->
                     <div class="form-step-panel active" id="step1">
                         <h3 class="panel-title"><i class="fa-solid fa-user panel-icon"></i> BASIC INFORMATION</h3>
-                        
+
                         <div class="form-group">
                             <label for="fullName">Full Name <span class="required">*</span></label>
                             <div class="input-wrapper">
                                 <i class="fa-regular fa-user input-icon"></i>
-                                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                                <input type="text" id="fullName" name="fullName" placeholder="Enter your full name"
+                                    required>
                             </div>
                             <span class="error-message" id="fullNameError">Full Name is required</span>
                         </div>
@@ -127,17 +138,20 @@
                                 </div>
                                 <div class="input-wrapper phone-number-wrapper">
                                     <i class="fa-solid fa-phone input-icon"></i>
-                                    <input type="tel" id="mobileNumber" name="mobileNumber" placeholder="Enter mobile number" pattern="[0-9]{10}" required>
+                                    <input type="tel" id="mobileNumber" name="mobileNumber"
+                                        placeholder="Enter mobile number" pattern="[0-9]{10}" required>
                                 </div>
                             </div>
-                            <span class="error-message" id="mobileNumberError">Enter a valid 10-digit mobile number</span>
+                            <span class="error-message" id="mobileNumberError">Enter a valid 10-digit mobile
+                                number</span>
                         </div>
 
                         <div class="form-group">
                             <label for="emailAddress">Email Address <span class="required">*</span></label>
                             <div class="input-wrapper">
                                 <i class="fa-regular fa-envelope input-icon"></i>
-                                <input type="email" id="emailAddress" name="emailAddress" placeholder="Enter email address" required>
+                                <input type="email" id="emailAddress" name="emailAddress"
+                                    placeholder="Enter email address" required>
                             </div>
                             <span class="error-message" id="emailAddressError">Enter a valid email address</span>
                         </div>
@@ -153,40 +167,96 @@
 
                         <div class="form-group">
                             <label for="serviceType">Service Type <span class="required">*</span></label>
-                            <div class="select-wrapper">
-                                <i class="fa-solid fa-briefcase select-icon"></i>
-                                <select id="serviceType" name="serviceType" required>
-                                    <option value="" disabled selected>Select service type</option>
-                                    <option value="Veterinarian">Veterinarian</option>
-                                    <option value="Vet Clinic">Vet Clinic</option>
-                                    <option value="Groomer">Groomer</option>
-                                    <option value="Trainer">Trainer</option>
-                                    <option value="Dog Walker">Dog Walker</option>
-                                    <option value="Pet Sitter">Pet Sitter</option>
-                                    <option value="Boarding Service">Boarding Service</option>
-                                    <option value="Other">Other</option>
-                                </select>
+                            <input type="hidden" id="serviceType" name="serviceType" required>
+                            <div class="multiselect-container" id="serviceTypeMultiselect">
+                                <div class="multiselect-header">
+                                    <div class="multiselect-header-left">
+                                        <i class="fa-solid fa-briefcase select-icon"></i>
+                                        <span class="multiselect-placeholder">Select service type</span>
+                                    </div>
+                                    <i class="fa-solid fa-chevron-down arrow-icon"></i>
+                                </div>
+                                <div class="multiselect-options-panel">
+                                    <label class="multiselect-option-item custom-checkbox">
+                                        <input type="checkbox" value="Veterinarian">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Veterinarian</span>
+                                    </label>
+                                    <label class="multiselect-option-item custom-checkbox">
+                                        <input type="checkbox" value="Vet Clinic">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Vet Clinic</span>
+                                    </label>
+                                    <label class="multiselect-option-item custom-checkbox">
+                                        <input type="checkbox" value="Groomer">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Groomer</span>
+                                    </label>
+                                    <label class="multiselect-option-item custom-checkbox">
+                                        <input type="checkbox" value="Trainer">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Trainer</span>
+                                    </label>
+                                    <label class="multiselect-option-item custom-checkbox">
+                                        <input type="checkbox" value="Dog Walker">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Dog Walker</span>
+                                    </label>
+                                    <label class="multiselect-option-item custom-checkbox">
+                                        <input type="checkbox" value="Pet Sitter">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Pet Sitter</span>
+                                    </label>
+                                    <label class="multiselect-option-item custom-checkbox">
+                                        <input type="checkbox" value="Boarding Service">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Boarding Service</span>
+                                    </label>
+                                    <label class="multiselect-option-item custom-checkbox">
+                                        <input type="checkbox" value="Pet Hostel">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Pet Hostel</span>
+                                    </label>
+                                    <label class="multiselect-option-item custom-checkbox">
+                                        <input type="checkbox" value="Pet Pharmacy">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Pet Pharmacy</span>
+                                    </label>
+                                    <label class="multiselect-option-item custom-checkbox">
+                                        <input type="checkbox" value="Food Supplier">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Food Supplier</span>
+                                    </label>
+                                    <label class="multiselect-option-item custom-checkbox">
+                                        <input type="checkbox" value="Other">
+                                        <span class="checkmark"></span>
+                                        <span class="checkbox-text">Other</span>
+                                    </label>
+                                </div>
                             </div>
                             <span class="error-message" id="serviceTypeError">Please select a service type</span>
                         </div>
 
-                        <div class="form-group">
-                            <label for="businessName">Business Name <span class="helper-text">(Optional)</span></label>
-                            <div class="input-wrapper">
-                                <i class="fa-solid fa-store input-icon"></i>
-                                <input type="text" id="businessName" name="businessName" placeholder="Enter business / clinic name">
-                            </div>
-                            <span class="error-message" id="businessNameError">Business Name format is incorrect</span>
-                        </div>
-
                         <div class="panel-actions single-next">
-                            <button type="button" class="btn btn-primary btn-next" data-next="2">Next Step <i class="fa-solid fa-chevron-right btn-icon-right"></i></button>
+                            <button type="button" class="btn btn-primary btn-next" data-next="2">Next Step <i
+                                    class="fa-solid fa-chevron-right btn-icon-right"></i></button>
                         </div>
                     </div>
 
                     <!-- STEP 2: Business Information -->
                     <div class="form-step-panel" id="step2">
-                        <h3 class="panel-title"><i class="fa-solid fa-building panel-icon"></i> BUSINESS INFORMATION</h3>
+                        <h3 class="panel-title"><i class="fa-solid fa-building panel-icon"></i> BUSINESS INFORMATION
+                        </h3>
+
+                        <div class="form-group">
+                            <label for="businessName">Business Name <span class="helper-text">(Optional)</span></label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-store input-icon"></i>
+                                <input type="text" id="businessName" name="businessName"
+                                    placeholder="Enter business / clinic name">
+                            </div>
+                            <span class="error-message" id="businessNameError">Business Name format is incorrect</span>
+                        </div>
 
                         <div class="form-group">
                             <label for="experience">Years of Experience <span class="required">*</span></label>
@@ -204,45 +274,64 @@
                         </div>
 
                         <div class="form-group">
-                            <label for="serviceArea">Service Area <span class="helper-text">(City, Locality)</span> <span class="required">*</span></label>
+                            <label for="serviceArea">Service Area <span class="helper-text">(City, Locality)</span>
+                                <span class="required">*</span></label>
                             <div class="input-wrapper">
                                 <i class="fa-solid fa-map-location-dot input-icon"></i>
-                                <input type="text" id="serviceArea" name="serviceArea" placeholder="Enter city or locality you serve" required>
+                                <input type="text" id="serviceArea" name="serviceArea"
+                                    placeholder="Enter city or locality you serve" required>
                             </div>
                             <span class="error-message" id="serviceAreaError">Service Area is required</span>
                         </div>
 
                         <div class="form-group">
-                            <label for="whatsappNumber">WhatsApp Number <span class="required">*</span></label>
-                            <div class="input-wrapper">
-                                <i class="fa-brands fa-whatsapp input-icon"></i>
-                                <input type="tel" id="whatsappNumber" name="whatsappNumber" placeholder="Enter WhatsApp number" pattern="[0-9]{10}" required>
+                            <label for="businessNumber">Business Number <span class="required">*</span></label>
+                            <div class="phone-input-group">
+                                <div class="select-wrapper country-code-wrapper">
+                                    <select id="businessCountryCode" name="businessCountryCode" required>
+                                        <option value="+91" selected>IND (+91)</option>
+                                        <option value="+1">USA (+1)</option>
+                                        <option value="+44">GBR (+44)</option>
+                                        <option value="+971">ARE (+971)</option>
+                                        <option value="+65">SGP (+65)</option>
+                                    </select>
+                                </div>
+                                <div class="input-wrapper phone-number-wrapper">
+                                    <i class="fa-solid fa-phone input-icon"></i>
+                                    <input type="tel" id="businessNumber" name="businessNumber"
+                                        placeholder="Enter business number" pattern="[0-9]{10}" required>
+                                </div>
                             </div>
-                            <span class="error-message" id="whatsappNumberError">Enter a valid 10-digit WhatsApp number</span>
-                            
+                            <span class="error-message" id="businessNumberError">Enter a valid 10-digit business
+                                number</span>
+
                             <div class="checkbox-wrapper-inline" style="margin-top: 10px;">
                                 <label class="custom-checkbox">
                                     <input type="checkbox" id="sameAsMobile" name="sameAsMobile">
                                     <span class="checkmark"></span>
-                                    <span class="checkbox-text font-sm">Same as Mobile Number</span>
+                                    <span class="checkbox-text font-sm">Same as Personal Number</span>
                                 </label>
                             </div>
                         </div>
 
                         <div class="panel-actions">
-                            <button type="button" class="btn btn-outline btn-prev" data-prev="1"><i class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
-                            <button type="button" class="btn btn-primary btn-next" data-next="3">Next Step <i class="fa-solid fa-chevron-right btn-icon-right"></i></button>
+                            <button type="button" class="btn btn-outline btn-prev" data-prev="1"><i
+                                    class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
+                            <button type="button" class="btn btn-primary btn-next" data-next="3">Next Step <i
+                                    class="fa-solid fa-chevron-right btn-icon-right"></i></button>
                         </div>
                     </div>
 
                     <!-- STEP 3: Verification & Submit -->
                     <div class="form-step-panel" id="step3">
-                        <h3 class="panel-title"><i class="fa-solid fa-shield-halved panel-icon"></i> VERIFICATION (OPTIONAL)</h3>
-                        
+                        <h3 class="panel-title"><i class="fa-solid fa-shield-halved panel-icon"></i> VERIFICATION
+                            (OPTIONAL)</h3>
+
                         <div class="form-group">
                             <label>Profile Photo <span class="helper-text">(Optional)</span></label>
                             <div class="upload-zone" id="photoUploadZone">
-                                <input type="file" id="photoFile" name="photoFile" accept=".jpg,.jpeg,.png" class="file-input-hidden">
+                                <input type="file" id="photoFile" name="photoFile" accept=".jpg,.jpeg,.png"
+                                    class="file-input-hidden">
                                 <div class="upload-zone-content">
                                     <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
                                     <p class="upload-text">Choose file, or drag & drop here</p>
@@ -250,13 +339,15 @@
                                 </div>
                                 <div class="file-preview-container" id="photoPreview"></div>
                             </div>
-                            <span class="error-message" id="photoFileError">Please select a valid image file (Max 5MB)</span>
+                            <span class="error-message" id="photoFileError">Please select a valid image file (Max
+                                5MB)</span>
                         </div>
 
                         <div class="form-group">
                             <label>License / Certificate <span class="helper-text">(Optional)</span></label>
                             <div class="upload-zone" id="licenseUploadZone">
-                                <input type="file" id="licenseFile" name="licenseFile" accept=".jpg,.jpeg,.png,.pdf" class="file-input-hidden">
+                                <input type="file" id="licenseFile" name="licenseFile" accept=".jpg,.jpeg,.png,.pdf"
+                                    class="file-input-hidden">
                                 <div class="upload-zone-content">
                                     <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
                                     <p class="upload-text">Choose file, or drag & drop here</p>
@@ -264,20 +355,25 @@
                                 </div>
                                 <div class="file-preview-container" id="licensePreview"></div>
                             </div>
-                            <span class="error-message" id="licenseFileError">Please select a valid certificate (Max 5MB)</span>
+                            <span class="error-message" id="licenseFileError">Please select a valid certificate (Max
+                                5MB)</span>
                         </div>
 
                         <div class="form-group terms-group">
                             <label class="custom-checkbox align-items-start">
                                 <input type="checkbox" id="termsAgree" name="termsAgree" required>
                                 <span class="checkmark" style="margin-top: 3px;"></span>
-                                <span class="checkbox-text font-sm">I agree to the <a href="#" class="inline-link" target="_blank">Terms & Conditions</a> *</span>
+                                <span class="checkbox-text font-sm">By continuing, you agree to the <a href="#"
+                                        class="inline-link" target="_blank">ELF Conditions of Use</a> and <a href="#"
+                                        class="inline-link" target="_blank">Privacy Notice</a>. *</span>
                             </label>
-                            <span class="error-message" id="termsAgreeError">You must agree to the Terms & Conditions to proceed</span>
+                            <span class="error-message" id="termsAgreeError">You must agree to the ELF Conditions of Use
+                                and Privacy Notice to proceed</span>
                         </div>
 
                         <div class="panel-actions">
-                            <button type="button" class="btn btn-outline btn-prev" data-prev="2"><i class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
+                            <button type="button" class="btn btn-outline btn-prev" data-prev="2"><i
+                                    class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
                             <button type="submit" class="btn btn-accent" id="submitFormBtn">
                                 <i class="fa-solid fa-paw btn-icon-left"></i> Join the Pet Ecosystem
                             </button>
@@ -291,13 +387,15 @@
                         <div class="success-ring"></div>
                         <i class="fa-solid fa-check success-check-icon"></i>
                     </div>
-                    
+
                     <h2>Registration Successful! 🎉</h2>
-                    <p class="success-msg">Thank you for joining our Pet Ecosystem.<br>Our team will review your application and contact you within 24 hours.</p>
-                    
+                    <p class="success-msg">Thank you for joining our Pet Ecosystem.<br>Our team will review your
+                        application and contact you within 24 hours.</p>
+
                     <div class="receipt-card">
                         <div class="receipt-header">
-                            <span class="receipt-badge"><i class="fa-solid fa-hourglass-half"></i> Verification Pending</span>
+                            <span class="receipt-badge"><i class="fa-solid fa-hourglass-half"></i> Verification
+                                Pending</span>
                             <span class="receipt-id" id="summaryRegId">ID: VSP-2026-8802</span>
                         </div>
                         <div class="receipt-divider"></div>
@@ -323,21 +421,21 @@
                                 <span class="receipt-value" id="summaryExperience">5+ years</span>
                             </div>
                             <div class="receipt-row">
-                                <span class="receipt-label">WhatsApp Number</span>
-                                <span class="receipt-value" id="summaryWhatsApp">+91 9876543210</span>
+                                <span class="receipt-label">Business Number</span>
+                                <span class="receipt-value" id="summaryBusinessNumber">+91 9876543210</span>
                             </div>
                         </div>
                     </div>
 
                     <div class="success-actions">
-                        <button type="button" class="btn btn-primary" id="btnRegisterNew">Register Another Account</button>
-                        <a href="#" class="btn btn-outline">Go to Dashboard</a>
+                        <button type="button" class="btn btn-primary" id="btnGoBack">Go Back</button>
                     </div>
                 </div>
             </div>
-            
+
             <div class="form-review-subtext" id="reviewSubtext">
-                <i class="fa-solid fa-circle-check"></i> Our team will review your application and contact you within 24 hours.
+                <i class="fa-solid fa-circle-check"></i> Our team will review your application and contact you within 24
+                hours.
             </div>
         </section>
     </main>
@@ -355,4 +453,5 @@
     <!-- Main JS Application -->
     <script src="app.js"></script>
 </body>
+
 </html>

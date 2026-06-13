@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const steps = Array.from(document.querySelectorAll(".form-step-panel"));
     const stepNodes = Array.from(document.querySelectorAll(".step-node"));
     const progressFill = document.getElementById("progressFill");
-    
+
     // Step 1 Elements
     const fullNameInput = document.getElementById("fullName");
     const mobileInput = document.getElementById("mobileNumber");
@@ -19,14 +19,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const businessNameInput = document.getElementById("businessName");
     const experienceSelect = document.getElementById("experience");
     const serviceAreaInput = document.getElementById("serviceArea");
-    const whatsappInput = document.getElementById("whatsappNumber");
+    const businessNumberInput = document.getElementById("businessNumber");
+    const businessCountryCodeSelect = document.getElementById("businessCountryCode");
     const sameAsMobileCheckbox = document.getElementById("sameAsMobile");
 
     // Upload Zone Elements
     const licenseZone = document.getElementById("licenseUploadZone");
     const licenseInput = document.getElementById("licenseFile");
     const licensePreview = document.getElementById("licensePreview");
-    
+
     const photoZone = document.getElementById("photoUploadZone");
     const photoInput = document.getElementById("photoFile");
     const photoPreview = document.getElementById("photoPreview");
@@ -42,27 +43,80 @@ document.addEventListener("DOMContentLoaded", () => {
     const summaryLocation = document.getElementById("summaryLocation");
     const summaryArea = document.getElementById("summaryArea");
     const summaryExperience = document.getElementById("summaryExperience");
-    const summaryWhatsApp = document.getElementById("summaryWhatsApp");
-    const btnRegisterNew = document.getElementById("btnRegisterNew");
+    const summaryBusinessNumber = document.getElementById("summaryBusinessNumber");
+    const btnGoBack = document.getElementById("btnGoBack");
 
     let currentStep = 1;
 
-    // 1. WhatsApp same as Mobile Number logic
+    // Custom Multiselect logic
+    const serviceTypeMultiselect = document.getElementById("serviceTypeMultiselect");
+    const serviceTypeHeader = serviceTypeMultiselect.querySelector(".multiselect-header");
+    const serviceTypePlaceholder = serviceTypeMultiselect.querySelector(".multiselect-placeholder");
+    const serviceTypeCheckboxes = serviceTypeMultiselect.querySelectorAll(".multiselect-options-panel input[type='checkbox']");
+
+    serviceTypeHeader.addEventListener("click", (e) => {
+        e.stopPropagation();
+        serviceTypeMultiselect.classList.toggle("active");
+    });
+
+    // Close multiselect dropdown if clicked outside
+    document.addEventListener("click", (e) => {
+        if (!serviceTypeMultiselect.contains(e.target)) {
+            serviceTypeMultiselect.classList.remove("active");
+        }
+    });
+
+    function updateMultiselectValue() {
+        const checkedValues = [];
+        serviceTypeCheckboxes.forEach(cb => {
+            if (cb.checked) {
+                checkedValues.push(cb.value);
+            }
+        });
+
+        serviceTypeSelect.value = checkedValues.join(", ");
+
+        if (checkedValues.length === 0) {
+            serviceTypePlaceholder.textContent = "Select service type";
+            serviceTypePlaceholder.classList.remove("selected-text");
+        } else {
+            serviceTypePlaceholder.textContent = checkedValues.join(", ");
+            serviceTypePlaceholder.classList.add("selected-text");
+        }
+
+        // Validate the serviceType hidden field in real time
+        validateField(serviceTypeSelect);
+    }
+
+    serviceTypeCheckboxes.forEach(cb => {
+        cb.addEventListener("change", updateMultiselectValue);
+    });
+
+    // 1. Business Number same as Mobile Number logic
     sameAsMobileCheckbox.addEventListener("change", () => {
         if (sameAsMobileCheckbox.checked) {
-            whatsappInput.value = mobileInput.value;
-            whatsappInput.disabled = true;
-            validateField(whatsappInput);
+            businessCountryCodeSelect.value = countryCodeSelect.value;
+            businessCountryCodeSelect.disabled = true;
+            businessNumberInput.value = mobileInput.value;
+            businessNumberInput.disabled = true;
+            validateField(businessNumberInput);
         } else {
-            whatsappInput.value = "";
-            whatsappInput.disabled = false;
-            setFieldState(whatsappInput, false);
+            businessCountryCodeSelect.disabled = false;
+            businessNumberInput.value = "";
+            businessNumberInput.disabled = false;
+            setFieldState(businessNumberInput, false);
         }
     });
 
     mobileInput.addEventListener("input", () => {
         if (sameAsMobileCheckbox.checked) {
-            whatsappInput.value = mobileInput.value;
+            businessNumberInput.value = mobileInput.value;
+        }
+    });
+
+    countryCodeSelect.addEventListener("change", () => {
+        if (sameAsMobileCheckbox.checked) {
+            businessCountryCodeSelect.value = countryCodeSelect.value;
         }
     });
 
@@ -116,7 +170,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        if (id === "mobileNumber" || id === "whatsappNumber") {
+        if (id === "mobileNumber" || id === "businessNumber") {
             if (!/^\d{10}$/.test(val)) {
                 setFieldState(input, false, "Please enter a valid 10-digit number");
                 return false;
@@ -146,7 +200,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (id === "termsAgree") {
             if (!input.checked) {
-                setFieldState(input, false, "You must agree to the Terms & Conditions to proceed");
+                setFieldState(input, false, "You must agree to the ELF Conditions of Use and Privacy Notice to proceed");
                 return false;
             }
         }
@@ -258,7 +312,7 @@ document.addEventListener("DOMContentLoaded", () => {
             img.style.height = "100%";
             img.style.objectFit = "cover";
             img.style.borderRadius = "4px";
-            
+
             const reader = new FileReader();
             reader.onload = (e) => {
                 img.src = e.target.result;
@@ -403,9 +457,9 @@ document.addEventListener("DOMContentLoaded", () => {
             businessName: businessNameInput.value.trim() || "N/A",
             experience: experienceSelect.value,
             serviceArea: serviceAreaInput.value.trim(),
-            whatsapp: sameAsMobileCheckbox.checked 
+            businessNumber: sameAsMobileCheckbox.checked
                 ? (countryCodeSelect.value + " " + mobileInput.value.trim())
-                : (countryCodeSelect.value + " " + whatsappInput.value.trim()),
+                : (businessCountryCodeSelect.value + " " + businessNumberInput.value.trim()),
             submittedAt: new Date().toISOString()
         };
 
@@ -420,7 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
         summaryLocation.textContent = formData.city;
         summaryArea.textContent = formData.serviceArea;
         summaryExperience.textContent = formData.experience;
-        summaryWhatsApp.textContent = formData.whatsapp;
+        summaryBusinessNumber.textContent = formData.businessNumber;
 
         // Animate submission transaction
         form.style.opacity = 0;
@@ -430,16 +484,16 @@ document.addEventListener("DOMContentLoaded", () => {
         const formHeader = document.querySelector(".form-header-title");
         if (stepIndicatorHeader) stepIndicatorHeader.style.opacity = 0;
         if (formHeader) formHeader.style.opacity = 0;
- 
+
         setTimeout(() => {
             form.style.display = "none";
             if (reviewSubtext) reviewSubtext.style.display = "none";
             if (stepIndicatorHeader) stepIndicatorHeader.style.display = "none";
             if (formHeader) formHeader.style.display = "none";
-            
+
             successScreen.style.display = "block";
             successScreen.style.opacity = 0;
-            
+
             // Fade-in success transition
             let opacityVal = 0;
             const fadeInAnim = setInterval(() => {
@@ -450,24 +504,33 @@ document.addEventListener("DOMContentLoaded", () => {
                     successScreen.style.opacity = opacityVal;
                 }
             }, 30);
-            
+
             const section = document.getElementById("registration-section");
             section.scrollIntoView({ behavior: 'smooth' });
         }, 300);
     });
 
     // 6. Handle Register New Provider Button Click
-    btnRegisterNew.addEventListener("click", () => {
+    btnGoBack.addEventListener("click", () => {
         form.reset();
-        
+
+        // Reset Custom Multiselect
+        serviceTypeCheckboxes.forEach(cb => {
+            cb.checked = false;
+        });
+        serviceTypePlaceholder.textContent = "Select service type";
+        serviceTypePlaceholder.classList.remove("selected-text");
+        serviceTypeSelect.value = "";
+
         form.querySelectorAll(".form-group").forEach(group => {
             group.classList.remove("success-state", "error-state");
             const errLabel = group.querySelector(".error-message");
             if (errLabel) errLabel.style.display = "none";
         });
 
-        // Reset WhatsApp fields
-        whatsappInput.disabled = false;
+        // Reset Business Number fields
+        businessNumberInput.disabled = false;
+        businessCountryCodeSelect.disabled = false;
         sameAsMobileCheckbox.checked = false;
 
         // Clear files
@@ -482,13 +545,13 @@ document.addEventListener("DOMContentLoaded", () => {
         currentStep = 1;
 
         successScreen.style.display = "none";
-        
+
         form.style.display = "block";
         if (reviewSubtext) {
             reviewSubtext.style.display = "block";
             reviewSubtext.style.opacity = 1;
         }
-        
+
         const stepIndicatorHeader = document.querySelector(".step-indicator");
         const formHeader = document.querySelector(".form-header-title");
         if (stepIndicatorHeader) {
@@ -499,10 +562,183 @@ document.addEventListener("DOMContentLoaded", () => {
             formHeader.style.display = "block";
             formHeader.style.opacity = 1;
         }
-        
+
         setTimeout(() => {
             form.style.opacity = 1;
             updateWizardUI();
         }, 50);
     });
+
+    // ==========================================================================
+    // Pet Onboarding Animations (Cursor Companion & Background Interactive Pets)
+    // ==========================================================================
+
+    const formContainer = document.querySelector(".form-container-box");
+
+    // 1. Background Peeking Pets Setup
+    const bgDog = document.createElement("div");
+    bgDog.className = "background-pet-dog";
+    bgDog.innerHTML = `
+    <svg width="120" height="120" viewBox="0 0 100 100" class="dog-svg">
+        <!-- Dog Body/Shoulders peeking -->
+        <path d="M 15 100 C 15 75, 85 75, 85 100" fill="#E2A65E" stroke="#1D394A" stroke-width="2.5" />
+        <path d="M 35 100 C 35 85, 65 85, 65 100" fill="#FFFFFF" />
+        
+        <!-- Tail (Behind body) -->
+        <path class="bg-pet-tail" d="M 75 80 C 85 75, 95 60, 90 50 C 85 45, 80 60, 75 75" fill="#E2A65E" stroke="#1D394A" stroke-width="2.5" stroke-linejoin="round" />
+        <path class="bg-pet-tail" d="M 85 53 C 83 48, 80 60, 75 75" fill="#FFFFFF" />
+
+        <!-- Head group to animate breathing -->
+        <g class="bg-pet-head">
+            <!-- Dog Ears -->
+            <path class="bg-pet-ear-left" d="M 25 40 L 15 15 L 40 30 Z" fill="#E2A65E" stroke="#1D394A" stroke-width="2.5" />
+            <path class="bg-pet-ear-left" d="M 27 37 L 20 20 L 37 30 Z" fill="#FFC0B5" />
+            
+            <path class="bg-pet-ear-right" d="M 75 40 L 85 15 L 60 30 Z" fill="#E2A65E" stroke="#1D394A" stroke-width="2.5" />
+            <path class="bg-pet-ear-right" d="M 73 37 L 80 20 L 63 30 Z" fill="#FFC0B5" />
+
+            <!-- Head Base -->
+            <ellipse cx="50" cy="55" rx="28" ry="24" fill="#E2A65E" stroke="#1D394A" stroke-width="2.5" />
+            <!-- White snout patch -->
+            <ellipse cx="50" cy="62" rx="16" ry="12" fill="#FFFFFF" stroke="#1D394A" stroke-width="2" />
+
+            <!-- Eyes Group for tracking -->
+            <g class="bg-pet-eye" id="dogEyeGroup" style="transform-origin: 50px 52px; transition: transform 0.1s ease;">
+                <circle cx="38" cy="52" r="3.5" fill="#1D394A" />
+                <circle cx="37" cy="50" r="1" fill="#FFFFFF" />
+                <circle cx="62" cy="52" r="3.5" fill="#1D394A" />
+                <circle cx="61" cy="50" r="1" fill="#FFFFFF" />
+            </g>
+
+            <!-- Cute eyebrows -->
+            <ellipse cx="38" cy="45" rx="3" ry="1.5" fill="#FFFFFF" />
+            <ellipse cx="62" cy="45" rx="3" ry="1.5" fill="#FFFFFF" />
+
+            <!-- Nose -->
+            <polygon points="50,58 45,54 55,54" fill="#1D394A" />
+            <!-- Mouth -->
+            <path d="M 46 62 Q 50 65 50 62 Q 50 65 54 62" fill="none" stroke="#1D394A" stroke-width="2" stroke-linecap="round" />
+            
+            <!-- Blush -->
+            <ellipse cx="28" cy="60" rx="3" ry="1.5" fill="#FF7A59" opacity="0.4" />
+            <ellipse cx="72" cy="60" rx="3" ry="1.5" fill="#FF7A59" opacity="0.4" />
+        </g>
+    </svg>
+    `;
+
+    const bgCat = document.createElement("div");
+    bgCat.className = "background-pet-cat";
+    bgCat.innerHTML = `
+    <svg width="120" height="120" viewBox="0 0 100 100" class="cat-svg">
+        <!-- Cat Body/Shoulders peeking -->
+        <path d="M 15 100 C 15 75, 85 75, 85 100" fill="#A8A29E" stroke="#1D394A" stroke-width="2.5" />
+        <!-- Stripes on shoulders -->
+        <path d="M 25 85 Q 35 83 32 100" stroke="#78716C" stroke-width="2" fill="none" />
+        <path d="M 75 85 Q 65 83 68 100" stroke="#78716C" stroke-width="2" fill="none" />
+        <path d="M 50 88 C 45 88, 45 100, 50 100 C 55 100, 55 88, 50 88" fill="#FFFFFF" />
+
+        <!-- Cat Tail -->
+        <path class="bg-pet-tail" d="M 25 85 C 12 75, 8 55, 12 42 C 16 38, 18 45, 16 55 C 14 65, 20 75, 25 80" fill="#A8A29E" stroke="#1D394A" stroke-width="2.5" stroke-linejoin="round" />
+
+        <!-- Head group to animate tilting -->
+        <g class="bg-cat-head">
+            <!-- Cat Ears -->
+            <path class="bg-pet-ear-left" d="M 25 42 L 12 18 L 38 28 Z" fill="#A8A29E" stroke="#1D394A" stroke-width="2.5" />
+            <path class="bg-pet-ear-left" d="M 23 39 L 15 22 L 34 29 Z" fill="#FFC0B5" />
+            
+            <path class="bg-pet-ear-right" d="M 75 42 L 88 18 L 62 28 Z" fill="#A8A29E" stroke="#1D394A" stroke-width="2.5" />
+            <path class="bg-pet-ear-right" d="M 73 39 L 85 22 L 66 29 Z" fill="#FFC0B5" />
+
+            <!-- Head Base -->
+            <ellipse cx="50" cy="54" rx="26" ry="22" fill="#A8A29E" stroke="#1D394A" stroke-width="2.5" />
+            
+            <!-- Cat Face Stripes -->
+            <path d="M 50 35 L 50 42" stroke="#78716C" stroke-width="2" />
+            <path d="M 45 36 L 47 41" stroke="#78716C" stroke-width="1.5" />
+            <path d="M 55 36 L 53 41" stroke="#78716C" stroke-width="1.5" />
+            <path d="M 28 54 Q 38 54 36 52" stroke="#78716C" stroke-width="1.5" fill="none" />
+            <path d="M 72 54 Q 62 54 64 52" stroke="#78716C" stroke-width="1.5" fill="none" />
+
+            <!-- Eyes Group for tracking -->
+            <g class="bg-pet-eye" id="catEyeGroup" style="transform-origin: 50px 50px; transition: transform 0.1s ease;">
+                <!-- Beautiful realistic cat eyes (slits) -->
+                <ellipse cx="38" cy="50" rx="4.5" ry="4.5" fill="#EAB308" stroke="#1D394A" stroke-width="1" />
+                <ellipse cx="38" cy="50" rx="1" ry="3.5" fill="#1D394A" />
+                <circle cx="36.5" cy="48.5" r="0.8" fill="#FFFFFF" />
+
+                <ellipse cx="62" cy="50" rx="4.5" ry="4.5" fill="#EAB308" stroke="#1D394A" stroke-width="1" />
+                <ellipse cx="62" cy="50" rx="1" ry="3.5" fill="#1D394A" />
+                <circle cx="60.5" cy="48.5" r="0.8" fill="#FFFFFF" />
+            </g>
+
+            <!-- Nose -->
+            <polygon points="50,56 47,53 53,53" fill="#FFC0B5" stroke="#1D394A" stroke-width="1" />
+            <!-- Mouth -->
+            <path d="M 47 58 C 49 59, 50 58, 50 57 C 50 58, 51 59, 53 58" fill="none" stroke="#1D394A" stroke-width="1.5" stroke-linecap="round" />
+            <!-- Whiskers -->
+            <line x1="22" y1="58" x2="10" y2="57" stroke="#1D394A" stroke-width="1.2" stroke-linecap="round" />
+            <line x1="22" y1="62" x2="9" y2="63" stroke="#1D394A" stroke-width="1.2" stroke-linecap="round" />
+            
+            <line x1="78" y1="58" x2="90" y2="57" stroke="#1D394A" stroke-width="1.2" stroke-linecap="round" />
+            <line x1="78" y1="62" x2="91" y2="63" stroke="#1D394A" stroke-width="1.2" stroke-linecap="round" />
+
+            <!-- Blush -->
+            <ellipse cx="30" cy="58" rx="2" ry="1" fill="#FF7A59" opacity="0.3" />
+            <ellipse cx="70" cy="58" rx="2" ry="1" fill="#FF7A59" opacity="0.3" />
+        </g>
+    </svg>
+    `;
+
+    if (formContainer) {
+        formContainer.appendChild(bgDog);
+        formContainer.appendChild(bgCat);
+
+        // Wake up background pets after a slight delay
+        setTimeout(() => {
+            bgDog.classList.add("active");
+            bgCat.classList.add("active");
+        }, 300);
+    }
+
+    // 2. Background Pet Mouse Interactions
+    let mouseX = 0, mouseY = 0;
+
+    if (formContainer) {
+        formContainer.addEventListener("mousemove", (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+
+            // 1. Shift Background Dog Eyes towards cursor
+            const dogRect = bgDog.getBoundingClientRect();
+            const dogCenterX = dogRect.left + dogRect.width / 2;
+            const dogCenterY = dogRect.top + dogRect.height / 2;
+            const dogAngle = Math.atan2(e.clientY - dogCenterY, e.clientX - dogCenterX);
+            const dogDist = Math.min(2.5, Math.hypot(e.clientX - dogCenterX, e.clientY - dogCenterY) / 50);
+            const dogDx = Math.cos(dogAngle) * dogDist;
+            const dogDy = Math.sin(dogAngle) * dogDist;
+            const dogEyeGroup = document.getElementById("dogEyeGroup");
+            if (dogEyeGroup) {
+                dogEyeGroup.style.transform = `translate(${dogDx}px, ${dogDy}px)`;
+            }
+
+            // 2. Shift Background Cat Eyes towards cursor
+            const catRectElem = bgCat.getBoundingClientRect();
+            const bgCatCenterX = catRectElem.left + catRectElem.width / 2;
+            const bgCatCenterY = catRectElem.top + catRectElem.height / 2;
+            const catAngle = Math.atan2(e.clientY - bgCatCenterY, e.clientX - bgCatCenterX);
+            const catDist = Math.min(2.5, Math.hypot(e.clientX - bgCatCenterX, e.clientY - bgCatCenterY) / 50);
+            const catDx = Math.cos(catAngle) * catDist;
+            const catDy = Math.sin(catAngle) * catDist;
+            const catEyeGroup = document.getElementById("catEyeGroup");
+            if (catEyeGroup) {
+                catEyeGroup.style.transform = `translate(${catDx}px, ${catDy}px)`;
+            }
+        });
+
+        formContainer.addEventListener("mouseenter", (e) => {
+            bgDog.classList.add("active");
+            bgCat.classList.add("active");
+        });
+    }
+
 });

@@ -1,27 +1,39 @@
 /* Premium Forest Green CSS Design System for DigiMabble Pet Ecosystem */
 
 :root {
-    --primary: #1D394A;        /* Deep Navy Blue */
-    --primary-light: #2C526A;  /* Lighter Navy for secondary elements */
-    --primary-hover: #142834;  /* Darker Navy for hover */
-    --accent: #FF7A59;         /* Orange Accent from Logo */
-    --accent-hover: #E56747;   /* Darker Orange for Hover */
-    --accent-light: #FFF0EB;   /* Very Light Orange Accent */
-    --background: #F8FAFC;     /* Soft blue-grey off-white background */
+    --primary: #1D394A;
+    /* Deep Navy Blue */
+    --primary-light: #2C526A;
+    /* Lighter Navy for secondary elements */
+    --primary-hover: #142834;
+    /* Darker Navy for hover */
+    --accent: #FF7A59;
+    /* Orange Accent from Logo */
+    --accent-hover: #E56747;
+    /* Darker Orange for Hover */
+    --accent-light: #FFF0EB;
+    /* Very Light Orange Accent */
+    --background: #F8FAFC;
+    /* Soft blue-grey off-white background */
     --card-bg: #FFFFFF;
-    --text-color: #334155;     /* Slate dark text */
-    --text-muted: #64748B;     /* Slate gray muted text */
-    --border-color: #E2E8F0;   /* Light border */
+    --text-color: #334155;
+    /* Slate dark text */
+    --text-muted: #64748B;
+    /* Slate gray muted text */
+    --border-color: #E2E8F0;
+    /* Light border */
     --border-focus: #1D394A;
-    --success: #10B981;        /* Success Green */
-    --error: #EF4444;          /* Error Red */
+    --success: #10B981;
+    /* Success Green */
+    --error: #EF4444;
+    /* Error Red */
     --white: #FFFFFF;
-    
+
     --shadow-sm: 0 1px 3px rgba(29, 57, 74, 0.05);
     --shadow-md: 0 4px 12px rgba(29, 57, 74, 0.06);
     --shadow-lg: 0 10px 25px rgba(29, 57, 74, 0.08);
     --shadow-xl: 0 20px 40px rgba(29, 57, 74, 0.12);
-    
+
     --radius-sm: 8px;
     --radius-md: 14px;
     --radius-lg: 20px;
@@ -49,7 +61,12 @@ body {
     overflow-x: hidden;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: 'Outfit', sans-serif;
     color: var(--primary);
     font-weight: 700;
@@ -141,12 +158,13 @@ h1, h2, h3, h4, h5, h6 {
 /* Left value proposition sidebar */
 .value-prop-sidebar {
     width: 34%;
-    background-color: var(--background);
+    background-color: #1e3a8a;
+    /* Blue background */
     padding: 32px 28px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
-    border-right: 1px solid var(--border-color);
+    border-right: none;
     position: sticky;
     top: 0;
     height: 100vh;
@@ -160,10 +178,34 @@ h1, h2, h3, h4, h5, h6 {
     width: 100%;
     margin-left: 0;
     margin-right: auto;
+    position: relative;
+    z-index: 2;
 }
 
 .brand-logo-container {
     margin-bottom: 24px;
+}
+
+/* Sidebar Peeking Dog Transparent Placement */
+.sidebar-pets-container {
+    position: absolute;
+    bottom: -45px; /* Peeking position — shows head above bottom edge */
+    left: 50%;
+    transform: translateX(-50%); /* Centers horizontally */
+    width: 100%;
+    max-width: 240px;
+    pointer-events: none;
+    z-index: 3;
+}
+
+.sidebar-pets-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    mix-blend-mode: normal; /* Keeps realistic natural colors */
+    /* Fades top edge smoothly to blend into the blue background */
+    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+    mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
 }
 
 .brand-logo {
@@ -183,12 +225,20 @@ h1, h2, h3, h4, h5, h6 {
     line-height: 1.15;
     margin-bottom: 10px;
     letter-spacing: -0.02em;
+    color: #FF7A59;
+    /* Dark Orange */
 }
 
 .subtitle-text {
     font-size: 0.95rem;
-    color: var(--text-muted);
+    color: #FFFFFF;
+    /* White */
     margin-bottom: 18px;
+}
+
+.subtitle-text strong {
+    color: #FF7A59;
+    /* Dark Orange */
 }
 
 .benefits-list {
@@ -207,8 +257,10 @@ h1, h2, h3, h4, h5, h6 {
 .benefit-icon-circle {
     width: 30px;
     height: 30px;
-    background-color: var(--accent);
-    color: var(--primary-light);
+    background-color: #FF7A59;
+    /* Dark Orange */
+    color: #FFFFFF;
+    /* White */
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -221,7 +273,8 @@ h1, h2, h3, h4, h5, h6 {
     font-family: 'Outfit', sans-serif;
     font-weight: 600;
     font-size: 1.10rem;
-    color: var(--primary);
+    color: #FFFFFF;
+    /* White */
 }
 
 
@@ -237,12 +290,14 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .form-container-box {
+    position: relative;
+    /* Added relative positioning for background pets */
     background-color: transparent;
     border-radius: var(--radius-lg);
     box-shadow: none;
     width: 100%;
     max-width: 780px;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* Form Header Title */
@@ -362,6 +417,7 @@ h1, h2, h3, h4, h5, h6 {
         opacity: 0;
         transform: translateY(15px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -405,14 +461,16 @@ label {
     font-weight: 400;
 }
 
-.input-wrapper, .select-wrapper {
+.input-wrapper,
+.select-wrapper {
     position: relative;
     display: flex;
     align-items: center;
     width: 100%;
 }
 
-.input-wrapper input, .select-wrapper select {
+.input-wrapper input,
+.select-wrapper select {
     width: 100%;
     padding: 10px 16px 10px 46px;
     border: 2px solid var(--border-color);
@@ -435,7 +493,8 @@ label {
     padding-right: 48px;
 }
 
-.input-icon, .select-icon {
+.input-icon,
+.select-icon {
     position: absolute;
     left: 16px;
     color: var(--text-muted);
@@ -445,22 +504,26 @@ label {
 }
 
 /* Focus and validation states */
-.input-wrapper input:focus, .select-wrapper select:focus {
+.input-wrapper input:focus,
+.select-wrapper select:focus {
     border-color: var(--border-focus);
     background-color: var(--white);
     box-shadow: 0 0 0 4px rgba(29, 57, 74, 0.1);
 }
 
-.input-wrapper input:focus+.input-icon, .select-wrapper select:focus+.select-icon {
+.input-wrapper input:focus+.input-icon,
+.select-wrapper select:focus+.select-icon {
     color: var(--primary-light);
 }
 
-.form-group.success-state input, .form-group.success-state select {
+.form-group.success-state input,
+.form-group.success-state select {
     border-color: var(--success);
     background-color: #F0FDF4;
 }
 
-.form-group.error-state input, .form-group.error-state select {
+.form-group.error-state input,
+.form-group.error-state select {
     border-color: var(--error);
     background-color: #FFF5F5;
 }
@@ -479,8 +542,13 @@ label {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 /* Phone details layout */
@@ -603,7 +671,8 @@ label {
     position: relative;
 }
 
-.upload-zone:hover, .upload-zone.dragover {
+.upload-zone:hover,
+.upload-zone.dragover {
     border-color: var(--primary-light);
     background-color: rgba(56, 142, 60, 0.02);
 }
@@ -739,6 +808,7 @@ label {
         opacity: 0;
         transform: scale(0.95);
     }
+
     to {
         opacity: 1;
         transform: scale(1);
@@ -765,9 +835,20 @@ label {
 }
 
 @keyframes pulseGlow {
-    0% { transform: scale(1); opacity: 1; }
-    50% { transform: scale(1.15); opacity: 0.6; }
-    100% { transform: scale(1); opacity: 1; }
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.15);
+        opacity: 0.6;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
 }
 
 .success-check-icon {
@@ -800,7 +881,8 @@ label {
     overflow: hidden;
 }
 
-.receipt-card::before, .receipt-card::after {
+.receipt-card::before,
+.receipt-card::after {
     content: '';
     position: absolute;
     width: 18px;
@@ -933,10 +1015,12 @@ label {
         padding: 20px 18px;
         width: 36%;
     }
+
     .form-content-area {
         padding: 40px 30px;
         width: 64%;
     }
+
     .value-prop-content h1 {
         font-size: 1.6rem;
     }
@@ -944,10 +1028,14 @@ label {
 
 /* Tablet View: Stacks columns vertically, makes benefits 2 columns to save height */
 @media (max-width: 992px) {
+    .sidebar-pets-container {
+        display: none !important;
+    }
+
     .split-container {
         flex-direction: column;
     }
-    
+
     .value-prop-sidebar {
         width: 100%;
         height: auto;
@@ -958,28 +1046,28 @@ label {
         overflow-y: visible;
         align-self: stretch;
     }
-    
+
     .value-prop-content,
     .pets-illustration-container {
         margin-left: auto;
         margin-right: auto;
     }
-    
+
     .form-content-area {
         width: 100%;
         padding: 40px 32px;
     }
-    
+
     .value-prop-content {
         margin: 10px 0;
         padding: 10px 0;
     }
-    
+
     .value-prop-content h1 {
         font-size: 2.2rem;
         text-align: center;
     }
-    
+
     .subtitle-text {
         text-align: center;
         margin-bottom: 24px;
@@ -992,7 +1080,7 @@ label {
         margin-left: 0;
         margin-right: auto;
     }
-    
+
     .benefits-list {
         display: grid;
         grid-template-columns: 1fr 1fr;
@@ -1005,9 +1093,10 @@ label {
         border-bottom: none;
         padding-bottom: 0;
     }
-    
+
     .pets-illustration-container {
-        display: none; /* Hide pets photo on tablet/mobile to save space */
+        display: none;
+        /* Hide pets photo on tablet/mobile to save space */
     }
 
     .form-container-box {
@@ -1022,6 +1111,7 @@ label {
         gap: 12px;
         max-width: 500px;
     }
+
     .value-prop-content h1 {
         font-size: 1.85rem;
     }
@@ -1092,12 +1182,14 @@ label {
         gap: 8px;
     }
 
-    .input-wrapper input, .select-wrapper select {
+    .input-wrapper input,
+    .select-wrapper select {
         font-size: 0.9rem;
         padding: 10px 12px 10px 42px;
     }
 
-    .input-icon, .select-icon {
+    .input-icon,
+    .select-icon {
         left: 14px;
         font-size: 0.95rem;
     }
@@ -1132,7 +1224,8 @@ label {
         gap: 10px;
     }
 
-    .receipt-card::before, .receipt-card::after {
+    .receipt-card::before,
+    .receipt-card::after {
         top: 41px;
     }
 
@@ -1148,7 +1241,8 @@ label {
 /* Very Small Screen Phones */
 @media (max-width: 380px) {
     .node-label {
-        display: none; /* Hide labels entirely to prevent overlap, show just step circles */
+        display: none;
+        /* Hide labels entirely to prevent overlap, show just step circles */
     }
 
     .step-progress-bar {
@@ -1159,5 +1253,484 @@ label {
 
     .step-indicator {
         padding: 12px 15px;
+    }
+}
+
+/* Services Checkbox Grid */
+.services-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.service-checkbox-item {
+    background: #F8FAFC;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.service-checkbox-item:hover {
+    border-color: var(--primary-light);
+    background: var(--white);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.service-checkbox-item:has(input:checked) {
+    border-color: var(--primary);
+    background: var(--accent-light);
+    box-shadow: var(--shadow-md);
+}
+
+/* Custom Multiselect Dropdown */
+.multiselect-container {
+    position: relative;
+    width: 100%;
+}
+
+.multiselect-header {
+    background-color: var(--white);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.multiselect-header:hover {
+    border-color: var(--primary-light);
+}
+
+.multiselect-container.active .multiselect-header {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(29, 57, 74, 0.1);
+}
+
+.multiselect-header-left {
+    display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.multiselect-placeholder.selected-text {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.multiselect-header .arrow-icon {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.multiselect-container.active .arrow-icon {
+    transform: rotate(180deg);
+}
+
+.multiselect-options-panel {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 100%;
+    background-color: var(--white);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    max-height: 420px;
+    overflow-y: auto;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.multiselect-container.active .multiselect-options-panel {
+    display: flex;
+}
+
+.multiselect-option-item {
+    width: 100%;
+    padding: 4px 10px !important;
+    border-radius: 6px;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+}
+
+.multiselect-option-item:hover {
+    background-color: var(--background);
+}
+
+.multiselect-option-item:has(input:checked) {
+    background-color: var(--accent-light);
+}
+
+.multiselect-options-panel::-webkit-scrollbar {}
+
+/* Services Checkbox Grid */
+.services-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 10px;
+    margin-bottom: 5px;
+}
+
+.service-checkbox-item {
+    background: #F8FAFC;
+    border: 1.5px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+    width: 100%;
+}
+
+.service-checkbox-item:hover {
+    border-color: var(--primary-light);
+    background: var(--white);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+}
+
+.service-checkbox-item:has(input:checked) {
+    border-color: var(--primary);
+    background: var(--accent-light);
+    box-shadow: var(--shadow-md);
+}
+
+/* Custom Multiselect Dropdown */
+.multiselect-container {
+    position: relative;
+    width: 100%;
+}
+
+.multiselect-header {
+    background-color: var(--white);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    font-size: 0.95rem;
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+    user-select: none;
+}
+
+.multiselect-header:hover {
+    border-color: var(--primary-light);
+}
+
+.multiselect-container.active .multiselect-header {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(29, 57, 74, 0.1);
+}
+
+.multiselect-header-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    max-width: 90%;
+}
+
+.multiselect-header-left .select-icon {
+    position: relative;
+    left: auto;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    flex-shrink: 0;
+}
+
+.multiselect-placeholder {
+    color: var(--text-muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.multiselect-placeholder.selected-text {
+    color: var(--text-color);
+    font-weight: 500;
+}
+
+.multiselect-header .arrow-icon {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    transition: var(--transition);
+}
+
+.multiselect-container.active .arrow-icon {
+    transform: rotate(180deg);
+}
+
+.multiselect-options-panel {
+    position: absolute;
+    top: calc(100% + 6px);
+    left: 0;
+    width: 100%;
+    background-color: var(--white);
+    border: 2px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-lg);
+    z-index: 100;
+    max-height: 420px;
+    overflow-y: auto;
+    padding: 6px;
+    display: none;
+    flex-direction: column;
+    gap: 0px;
+}
+
+.multiselect-container.active .multiselect-options-panel {
+    display: flex;
+}
+
+.multiselect-option-item {
+    width: 100%;
+    padding: 4px 10px !important;
+    border-radius: 6px;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+}
+
+.multiselect-option-item:hover {
+    background-color: var(--background);
+}
+
+.multiselect-option-item:has(input:checked) {
+    background-color: var(--accent-light);
+}
+
+.multiselect-options-panel::-webkit-scrollbar {
+    width: 6px;
+}
+
+.multiselect-options-panel::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.multiselect-options-panel::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 20px;
+}
+
+/* Success and Error States for Multiselect */
+.form-group.success-state .multiselect-header {
+    border-color: var(--success);
+    background-color: #F0FDF4;
+}
+
+.form-group.error-state .multiselect-header {
+    border-color: var(--error);
+    background-color: #FFF5F5;
+}
+
+/* Smaller dropdown text and checkmark style */
+.multiselect-option-item .checkbox-text {
+    font-size: 0.85rem;
+}
+
+.multiselect-option-item .checkmark {
+    height: 16px;
+    width: 16px;
+    margin-right: 8px;
+}
+
+.multiselect-option-item .custom-checkbox .checkmark:after {
+    left: 4px;
+    top: 0px;
+    width: 4px;
+    height: 8px;
+}
+
+
+
+/* ==========================================================================
+   Background Pet Animations (Peeking Shiba Inu & Tabby Cat)
+   ========================================================================= */
+
+/* Background Pets Containers */
+.background-pet-dog,
+.background-pet-cat {
+    position: absolute;
+    pointer-events: none;
+    z-index: -1;
+    opacity: 0;
+    transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.4s ease;
+}
+
+.background-pet-dog {
+    bottom: -8px;
+    right: -70px;
+    width: 120px;
+    height: 120px;
+    transform-origin: bottom right;
+    transform: translateY(20px) scale(0.8);
+}
+
+.background-pet-cat {
+    bottom: -8px;
+    left: -70px;
+    width: 120px;
+    height: 120px;
+    transform-origin: bottom left;
+    transform: translateY(20px) scale(0.8);
+}
+
+/* Active peeking state */
+.background-pet-dog.active,
+.background-pet-cat.active {
+    opacity: 0.9;
+    transform: translateY(0) scale(1);
+}
+
+/* Tail wagging keyframes */
+.bg-pet-tail {
+    transform-origin: 75px 78px;
+    animation: wagTail 1.2s ease-in-out infinite;
+}
+
+@keyframes wagTail {
+
+    0%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    50% {
+        transform: rotate(18deg);
+    }
+}
+
+/* Ear wiggling keyframes */
+.bg-pet-ear-left {
+    transform-origin: 27px 37px;
+    animation: twitchEarLeft 5s ease-in-out infinite;
+}
+
+.bg-pet-ear-right {
+    transform-origin: 73px 37px;
+    animation: twitchEarRight 5s ease-in-out infinite 2.5s;
+}
+
+@keyframes twitchEarLeft {
+
+    0%,
+    90%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    93%,
+    97% {
+        transform: rotate(-10deg);
+    }
+}
+
+@keyframes twitchEarRight {
+
+    0%,
+    90%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    93%,
+    97% {
+        transform: rotate(10deg);
+    }
+}
+
+/* Dog head breathing/movement */
+.bg-pet-head {
+    transform-origin: 50px 60px;
+    animation: dogBreathe 4s ease-in-out infinite;
+}
+
+@keyframes dogBreathe {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-2px) scale(1.02);
+    }
+}
+
+/* Tabby Cat Specific tilt head */
+.bg-cat-head {
+    transform-origin: 50px 60px;
+    animation: catTiltHead 8s ease-in-out infinite;
+}
+
+@keyframes catTiltHead {
+
+    0%,
+    75%,
+    100% {
+        transform: rotate(0deg);
+    }
+
+    35%,
+    40% {
+        transform: rotate(-6deg);
+    }
+
+    45%,
+    50% {
+        transform: rotate(6deg);
+    }
+}
+
+/* Blinking Eyes keyframes */
+.bg-pet-eye {
+    animation: petBlink 5s linear infinite;
+    transform-origin: center;
+}
+
+@keyframes petBlink {
+
+    0%,
+    95%,
+    100% {
+        transform: scaleY(1);
+    }
+
+    97.5% {
+        transform: scaleY(0.1);
+    }
+}
+
+
+
+/* Responsive adjustment for small screens */
+@media (max-width: 1200px) {
+
+    .background-pet-dog,
+    .background-pet-cat {
+        display: none !important;
     }
 }
