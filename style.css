@@ -158,8 +158,9 @@ h6 {
 /* Left value proposition sidebar */
 .value-prop-sidebar {
     width: 34%;
-    background-color: #2952b3;
-    /* Blue background */
+    background-color: #e0f2fe; /* Soft light sky blue */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='translate(10, 10) rotate(-10 20 20)' fill='%23bae6fd'%3E%3Cpath d='M 20 18 C 14 18, 11 24, 11 28 C 11 33, 15 35, 20 35 C 25 35, 29 33, 29 28 C 29 24, 26 18, 20 18 Z'/%3E%3Cellipse cx='9' cy='17' rx='3.2' ry='4.2'/%3E%3Cellipse cx='15' cy='11' rx='3.2' ry='5.2'/%3E%3Cellipse cx='25' cy='11' rx='3.2' ry='5.2'/%3E%3Cellipse cx='31' cy='17' rx='3.2' ry='4.2'/%3E%3C/g%3E%3Cg transform='translate(70, 10) rotate(45 20 20)' fill='%23bae6fd'%3E%3Ccircle cx='11' cy='17' r='3'/%3E%3Ccircle cx='11' cy='23' r='3'/%3E%3Ccircle cx='29' cy='17' r='3'/%3E%3Ccircle cx='29' cy='23' r='3'/%3E%3Crect x='11' y='18.5' width='18' height='3'/%3E%3C/g%3E%3Cg transform='translate(65, 65) rotate(20 20 20)' fill='%23bae6fd'%3E%3Cpath d='M 20 18 C 14 18, 11 24, 11 28 C 11 33, 15 35, 20 35 C 25 35, 29 33, 29 28 C 29 24, 26 18, 20 18 Z'/%3E%3Cellipse cx='9' cy='17' rx='3.2' ry='4.2'/%3E%3Cellipse cx='15' cy='11' rx='3.2' ry='5.2'/%3E%3Cellipse cx='25' cy='11' rx='3.2' ry='5.2'/%3E%3Cellipse cx='31' cy='17' rx='3.2' ry='4.2'/%3E%3C/g%3E%3Cg transform='translate(10, 70) rotate(-30 20 20)' fill='%23bae6fd'%3E%3Ccircle cx='11' cy='17' r='3'/%3E%3Ccircle cx='11' cy='23' r='3'/%3E%3Ccircle cx='29' cy='17' r='3'/%3E%3Ccircle cx='29' cy='23' r='3'/%3E%3Crect x='11' y='18.5' width='18' height='3'/%3E%3C/g%3E%3C/svg%3E");
+    background-repeat: repeat;
     padding: 32px 28px;
     display: flex;
     flex-direction: column;
@@ -271,8 +272,8 @@ h6 {
 
 .subtitle-text {
     font-size: 0.95rem;
-    color: #FFFFFF;
-    /* White */
+    color: var(--primary);
+    /* Deep Navy Blue */
     margin-bottom: 18px;
 }
 
@@ -313,8 +314,8 @@ h6 {
     font-family: 'Outfit', sans-serif;
     font-weight: 600;
     font-size: 1.10rem;
-    color: #FFFFFF;
-    /* White */
+    color: var(--primary);
+    /* Deep Navy Blue */
 }
 
 
