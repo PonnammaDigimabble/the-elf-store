@@ -158,7 +158,7 @@ h6 {
 /* Left value proposition sidebar */
 .value-prop-sidebar {
     width: 34%;
-    background-color: #1e3a8a;
+    background-color: #2952b3;
     /* Blue background */
     padding: 32px 28px;
     display: flex;
@@ -186,26 +186,66 @@ h6 {
     margin-bottom: 24px;
 }
 
-/* Sidebar Peeking Dog Transparent Placement */
-.sidebar-pets-container {
+/* Sidebar Interactive Realistic Pets */
+.sidebar-pet-dog-container,
+.sidebar-pet-center-container,
+.sidebar-pet-cat-container {
     position: absolute;
-    bottom: -45px; /* Peeking position — shows head above bottom edge */
-    left: 50%;
-    transform: translateX(-50%); /* Centers horizontally */
-    width: 100%;
-    max-width: 240px;
+    bottom: -60px;
+    /* Hide body initially */
+    width: 120px;
+    height: auto;
     pointer-events: none;
-    z-index: 3;
+    z-index: 5;
+    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-.sidebar-pets-image {
+.sidebar-pet-dog-container {
+    right: 15px;
+    transform-origin: bottom right;
+}
+
+.sidebar-pet-center-container {
+    left: 50%;
+    transform: translateX(-50%) translateY(0) rotate(0deg);
+    transform-origin: bottom center;
+}
+
+.sidebar-pet-cat-container {
+    left: 15px;
+    transform-origin: bottom left;
+}
+
+.sidebar-pet-dog-img,
+.sidebar-pet-center-img,
+.sidebar-pet-cat-img {
     width: 100%;
     height: auto;
     display: block;
-    mix-blend-mode: normal; /* Keeps realistic natural colors */
-    /* Fades top edge smoothly to blend into the blue background */
-    -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
-    mask-image: linear-gradient(to top, rgba(0,0,0,1) 85%, rgba(0,0,0,0) 100%);
+}
+
+.sidebar-pet-dog-img {
+    animation: sidebarPetBreathe 3s ease-in-out infinite;
+}
+
+.sidebar-pet-center-img {
+    animation: sidebarPetBreathe 3.2s ease-in-out infinite 0.2s;
+}
+
+.sidebar-pet-cat-img {
+    animation: sidebarPetBreathe 3.5s ease-in-out infinite 0.5s;
+}
+
+@keyframes sidebarPetBreathe {
+
+    0%,
+    100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-4px) scale(1.02);
+    }
 }
 
 .brand-logo {
@@ -714,20 +754,24 @@ label {
 /* File Preview box */
 .file-preview-container {
     display: none;
-    margin-top: 12px;
+    margin-top: 10px;
     padding: 10px 14px;
     background-color: var(--white);
     border-radius: var(--radius-sm);
     border: 1px solid var(--border-color);
     text-align: left;
-    position: relative;
-    z-index: 15;
 }
 
 .preview-content {
     display: flex;
     align-items: center;
     gap: 12px;
+}
+
+.file-preview-container .preview-content+.preview-content {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid var(--border-color);
 }
 
 .preview-thumb {
@@ -830,7 +874,7 @@ label {
     width: 100%;
     height: 100%;
     border-radius: 50%;
-    background-color: var(--accent-light);
+    background-color: #DCFCE7;
     animation: pulseGlow 2s infinite;
 }
 
@@ -853,7 +897,7 @@ label {
 
 .success-check-icon {
     font-size: 2.1rem;
-    color: var(--primary-light);
+    color: #16A34A;
     z-index: 2;
 }
 
@@ -993,6 +1037,9 @@ label {
     border-top: 1px solid var(--border-color);
     text-align: center;
     width: 100%;
+    position: relative;
+    z-index: 110;
+    /* Render on top of absolute-positioned dropdowns */
 }
 
 .footer-container {
@@ -1028,7 +1075,10 @@ label {
 
 /* Tablet View: Stacks columns vertically, makes benefits 2 columns to save height */
 @media (max-width: 992px) {
-    .sidebar-pets-container {
+
+    .sidebar-pet-dog-container,
+    .sidebar-pet-center-container,
+    .sidebar-pet-cat-container {
         display: none !important;
     }
 
@@ -1256,131 +1306,7 @@ label {
     }
 }
 
-/* Services Checkbox Grid */
-.services-checkbox-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-    gap: 12px;
-    margin-top: 10px;
-    margin-bottom: 5px;
-}
 
-.service-checkbox-item {
-    background: #F8FAFC;
-    border: 1.5px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    padding: 12px 14px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    transition: var(--transition);
-    width: 100%;
-}
-
-.service-checkbox-item:hover {
-    border-color: var(--primary-light);
-    background: var(--white);
-    transform: translateY(-1px);
-    box-shadow: var(--shadow-sm);
-}
-
-.service-checkbox-item:has(input:checked) {
-    border-color: var(--primary);
-    background: var(--accent-light);
-    box-shadow: var(--shadow-md);
-}
-
-/* Custom Multiselect Dropdown */
-.multiselect-container {
-    position: relative;
-    width: 100%;
-}
-
-.multiselect-header {
-    background-color: var(--white);
-    border: 2px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    padding: 14px 18px;
-    font-size: 0.95rem;
-    color: var(--text-color);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    transition: var(--transition);
-    user-select: none;
-}
-
-.multiselect-header:hover {
-    border-color: var(--primary-light);
-}
-
-.multiselect-container.active .multiselect-header {
-    border-color: var(--primary);
-    box-shadow: 0 0 0 3px rgba(29, 57, 74, 0.1);
-}
-
-.multiselect-header-left {
-    display: flex;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.multiselect-placeholder.selected-text {
-    color: var(--text-color);
-    font-weight: 500;
-}
-
-.multiselect-header .arrow-icon {
-    font-size: 0.85rem;
-    color: var(--text-muted);
-    transition: var(--transition);
-}
-
-.multiselect-container.active .arrow-icon {
-    transform: rotate(180deg);
-}
-
-.multiselect-options-panel {
-    position: absolute;
-    top: calc(100% + 6px);
-    left: 0;
-    width: 100%;
-    background-color: var(--white);
-    border: 2px solid var(--border-color);
-    border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-lg);
-    z-index: 100;
-    max-height: 420px;
-    overflow-y: auto;
-    padding: 6px;
-    display: none;
-    flex-direction: column;
-    gap: 0px;
-}
-
-.multiselect-container.active .multiselect-options-panel {
-    display: flex;
-}
-
-.multiselect-option-item {
-    width: 100%;
-    padding: 4px 10px !important;
-    border-radius: 6px;
-    transition: var(--transition);
-    display: flex;
-    align-items: center;
-}
-
-.multiselect-option-item:hover {
-    background-color: var(--background);
-}
-
-.multiselect-option-item:has(input:checked) {
-    background-color: var(--accent-light);
-}
-
-.multiselect-options-panel::-webkit-scrollbar {}
 
 /* Services Checkbox Grid */
 .services-checkbox-grid {
@@ -1485,21 +1411,38 @@ label {
 
 .multiselect-options-panel {
     position: absolute;
-    top: calc(100% + 6px);
+    bottom: calc(100% + 6px);
+    /* Open upwards to completely avoid the footer area */
     left: 0;
     width: 100%;
     background-color: var(--white);
     border: 2px solid var(--border-color);
     border-radius: var(--radius-sm);
-    box-shadow: var(--shadow-lg);
+    box-shadow: 0 -8px 24px rgba(29, 57, 74, 0.08);
+    /* Upward shadow for dropup look */
     z-index: 100;
-    max-height: 420px;
+    max-height: 200px;
+    /* Safe height since it has more room above the input */
     overflow-y: auto;
+    overscroll-behavior: contain;
     padding: 6px;
     display: none;
     flex-direction: column;
     gap: 0px;
 }
+
+@media (min-height: 500px) {
+    .multiselect-options-panel {
+        max-height: 220px;
+    }
+}
+
+@media (min-height: 700px) {
+    .multiselect-options-panel {
+        max-height: 300px;
+    }
+}
+
 
 .multiselect-container.active .multiselect-options-panel {
     display: flex;

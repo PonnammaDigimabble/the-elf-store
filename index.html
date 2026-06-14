@@ -75,9 +75,15 @@
                 </ul>
             </div>
 
-            <!-- Peeking dog transparent image blended in the center of left side to the end -->
-            <div class="sidebar-pets-container">
-                <img src="assets/peeking_dog_transparent.png" alt="Peeking Dog" class="sidebar-pets-image">
+            <!-- Interactive Realistic Pets -->
+            <div class="sidebar-pet-dog-container">
+                <img src="assets/peeking_dog_transparent.png" alt="Realistic Dog" class="sidebar-pet-dog-img">
+            </div>
+            <div class="sidebar-pet-center-container">
+                <img src="assets/cat_peeking_3.jpg" alt="Center Cat" class="sidebar-pet-center-img" id="sidebarCenterCatImg">
+            </div>
+            <div class="sidebar-pet-cat-container">
+                <img src="assets/cat_peeking_1.jpg" alt="Interactive Cat" class="sidebar-pet-cat-img" id="sidebarCatImg">
             </div>
         </section>
 
@@ -86,7 +92,7 @@
             <div class="form-container-box">
                 <!-- Form Header Title -->
                 <div class="form-header-title">
-                    <h2>Veterinary Registration Form</h2>
+                    <h2>Onboarding Form</h2>
                 </div>
 
                 <!-- Step Progress Indicator -->
@@ -104,7 +110,7 @@
                     </div>
                     <div class="step-node" data-step="3">
                         <div class="node-circle">3</div>
-                        <span class="node-label">Verification</span>
+                        <span class="node-label">Documents</span>
                     </div>
                 </div>
 
@@ -249,13 +255,13 @@
                         </h3>
 
                         <div class="form-group">
-                            <label for="businessName">Business Name <span class="helper-text">(Optional)</span></label>
+                            <label for="businessName">Business Name <span class="required">*</span></label>
                             <div class="input-wrapper">
                                 <i class="fa-solid fa-store input-icon"></i>
                                 <input type="text" id="businessName" name="businessName"
-                                    placeholder="Enter business / clinic name">
+                                    placeholder="Enter business / clinic name" required>
                             </div>
-                            <span class="error-message" id="businessNameError">Business Name format is incorrect</span>
+                            <span class="error-message" id="businessNameError">Business Name is required</span>
                         </div>
 
                         <div class="form-group">
@@ -309,7 +315,7 @@
                                 <label class="custom-checkbox">
                                     <input type="checkbox" id="sameAsMobile" name="sameAsMobile">
                                     <span class="checkmark"></span>
-                                    <span class="checkbox-text font-sm">Same as Personal Number</span>
+                                    <span class="checkbox-text font-sm">Same as Mobile Number</span>
                                 </label>
                             </div>
                         </div>
@@ -324,11 +330,10 @@
 
                     <!-- STEP 3: Verification & Submit -->
                     <div class="form-step-panel" id="step3">
-                        <h3 class="panel-title"><i class="fa-solid fa-shield-halved panel-icon"></i> VERIFICATION
-                            (OPTIONAL)</h3>
+                        <h3 class="panel-title"><i class="fa-solid fa-file-lines panel-icon"></i> DOCUMENTS</h3>
 
                         <div class="form-group">
-                            <label>Profile Photo <span class="helper-text">(Optional)</span></label>
+                            <label>Profile Photo <span class="required">*</span></label>
                             <div class="upload-zone" id="photoUploadZone">
                                 <input type="file" id="photoFile" name="photoFile" accept=".jpg,.jpeg,.png"
                                     class="file-input-hidden">
@@ -339,33 +344,33 @@
                                 </div>
                                 <div class="file-preview-container" id="photoPreview"></div>
                             </div>
-                            <span class="error-message" id="photoFileError">Please select a valid image file (Max
-                                5MB)</span>
+                            <span class="error-message" id="photoFileError">Profile Photo is required</span>
                         </div>
 
                         <div class="form-group">
-                            <label>License / Certificate <span class="helper-text">(Optional)</span></label>
+                            <label>Documents <span class="required">*</span></label>
                             <div class="upload-zone" id="licenseUploadZone">
                                 <input type="file" id="licenseFile" name="licenseFile" accept=".jpg,.jpeg,.png,.pdf"
-                                    class="file-input-hidden">
+                                    class="file-input-hidden" multiple>
                                 <div class="upload-zone-content">
                                     <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
-                                    <p class="upload-text">Choose file, or drag & drop here</p>
-                                    <p class="upload-limits">Accepted: JPG, PNG, PDF | Max: 5 MB</p>
+                                    <p class="upload-text">Choose files, or drag & drop here</p>
+                                    <p class="upload-limits">Accepted: JPG, PNG, PDF | Max: 5 MB each</p>
                                 </div>
-                                <div class="file-preview-container" id="licensePreview"></div>
                             </div>
-                            <span class="error-message" id="licenseFileError">Please select a valid certificate (Max
-                                5MB)</span>
+                            <div class="file-preview-container" id="licensePreview"></div>
+                            <span class="error-message" id="licenseFileError">Please upload at least one document</span>
                         </div>
 
                         <div class="form-group terms-group">
                             <label class="custom-checkbox align-items-start">
                                 <input type="checkbox" id="termsAgree" name="termsAgree" required>
                                 <span class="checkmark" style="margin-top: 3px;"></span>
-                                <span class="checkbox-text font-sm">By continuing, you agree to the <a href="#"
-                                        class="inline-link" target="_blank">ELF Conditions of Use</a> and <a href="#"
-                                        class="inline-link" target="_blank">Privacy Notice</a>. *</span>
+                                <span class="checkbox-text font-sm">By continuing, you agree to the <a
+                                        href="http://146.190.21.229/terms-conditions" class="inline-link"
+                                        target="_blank">ELF Conditions of Use</a> and <a
+                                        href="http://146.190.21.229/privacy-policy" class="inline-link"
+                                        target="_blank">Privacy Notice</a>. *</span>
                             </label>
                             <span class="error-message" id="termsAgreeError">You must agree to the ELF Conditions of Use
                                 and Privacy Notice to proceed</span>
@@ -389,43 +394,10 @@
                     </div>
 
                     <h2>Registration Successful! 🎉</h2>
-                    <p class="success-msg">Thank you for joining our Pet Ecosystem.<br>Our team will review your
-                        application and contact you within 24 hours.</p>
+                    <p class="success-msg">Thank you for joining our Pet Ecosystem.Our team will review your form and
+                        connect back soon.</p>
 
-                    <div class="receipt-card">
-                        <div class="receipt-header">
-                            <span class="receipt-badge"><i class="fa-solid fa-hourglass-half"></i> Verification
-                                Pending</span>
-                            <span class="receipt-id" id="summaryRegId">ID: VSP-2026-8802</span>
-                        </div>
-                        <div class="receipt-divider"></div>
-                        <div class="receipt-body">
-                            <div class="receipt-row">
-                                <span class="receipt-label">Provider Name</span>
-                                <span class="receipt-value" id="summaryName">Dr. John Doe</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-label">Service Type</span>
-                                <span class="receipt-value" id="summaryService">Veterinarian</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-label">Location (City)</span>
-                                <span class="receipt-value" id="summaryLocation">Bengaluru</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-label">Service Area</span>
-                                <span class="receipt-value" id="summaryArea">Koramangala, Indiranagar</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-label">Experience</span>
-                                <span class="receipt-value" id="summaryExperience">5+ years</span>
-                            </div>
-                            <div class="receipt-row">
-                                <span class="receipt-label">Business Number</span>
-                                <span class="receipt-value" id="summaryBusinessNumber">+91 9876543210</span>
-                            </div>
-                        </div>
-                    </div>
+
 
                     <div class="success-actions">
                         <button type="button" class="btn btn-primary" id="btnGoBack">Go Back</button>
@@ -433,10 +405,7 @@
                 </div>
             </div>
 
-            <div class="form-review-subtext" id="reviewSubtext">
-                <i class="fa-solid fa-circle-check"></i> Our team will review your application and contact you within 24
-                hours.
-            </div>
+
         </section>
     </main>
 

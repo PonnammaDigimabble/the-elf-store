@@ -37,13 +37,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Success Screen Elements
     const successScreen = document.getElementById("successScreen");
     const reviewSubtext = document.getElementById("reviewSubtext");
-    const summaryRegId = document.getElementById("summaryRegId");
-    const summaryName = document.getElementById("summaryName");
-    const summaryService = document.getElementById("summaryService");
-    const summaryLocation = document.getElementById("summaryLocation");
-    const summaryArea = document.getElementById("summaryArea");
-    const summaryExperience = document.getElementById("summaryExperience");
-    const summaryBusinessNumber = document.getElementById("summaryBusinessNumber");
     const btnGoBack = document.getElementById("btnGoBack");
 
     let currentStep = 1;
@@ -170,6 +163,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
+        if (id === "businessName") {
+            if (val.length < 2) {
+                setFieldState(input, false, "Business Name is required");
+                return false;
+            }
+        }
+
         if (id === "mobileNumber" || id === "businessNumber") {
             if (!/^\d{10}$/.test(val)) {
                 setFieldState(input, false, "Please enter a valid 10-digit number");
@@ -262,6 +262,114 @@ document.addEventListener("DOMContentLoaded", () => {
                 handleFiles(input.files[0], input, previewContainer, zone);
             }
         });
+    }
+
+    // Multi-file drag-and-drop setup (for Documents field)
+    function setupMultiFileDragAndDrop(zone, input, previewContainer) {
+        zone.addEventListener("click", (e) => {
+            if (e.target.closest(".btn-remove-file") || e.target.closest(".file-preview-container")) {
+                return;
+            }
+            input.click();
+        });
+
+        ["dragenter", "dragover"].forEach(eventName => {
+            zone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                zone.classList.add("dragover");
+            }, false);
+        });
+
+        ["dragleave", "drop"].forEach(eventName => {
+            zone.addEventListener(eventName, (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                zone.classList.remove("dragover");
+            }, false);
+        });
+
+        zone.addEventListener("drop", (e) => {
+            const files = e.dataTransfer.files;
+            if (files.length > 0) handleMultipleFiles(files, input, previewContainer, zone);
+        });
+
+        input.addEventListener("change", () => {
+            if (input.files.length > 0) handleMultipleFiles(input.files, input, previewContainer, zone);
+        });
+    }
+
+    function handleMultipleFiles(files, input, previewContainer, zone) {
+        const maxSize = 5 * 1024 * 1024;
+        const allowedTypes = input.accept.split(",").map(t => t.trim());
+
+        Array.from(files).forEach(file => {
+            const fileExt = "." + file.name.split(".").pop().toLowerCase();
+            if (!allowedTypes.includes(fileExt)) {
+                setFieldState(zone, false, `Invalid format. Accepted: ${allowedTypes.join(", ").toUpperCase()}`);
+                return;
+            }
+            if (file.size > maxSize) {
+                setFieldState(zone, false, `"${file.name}" exceeds the 5 MB limit.`);
+                return;
+            }
+            setFieldState(zone, true);
+            previewContainer.style.display = "block";
+            displayMultiFilePreview(file, previewContainer, zone);
+        });
+
+        // Reset input so the same file can be re-selected if needed
+        input.value = "";
+    }
+
+    function displayMultiFilePreview(file, container, zone) {
+        const previewContent = document.createElement("div");
+        previewContent.className = "preview-content";
+
+        const thumb = document.createElement("div");
+        thumb.className = "preview-thumb";
+
+        if (file.type.startsWith("image/")) {
+            const img = document.createElement("img");
+            img.style.cssText = "width:100%;height:100%;object-fit:cover;border-radius:4px;";
+            const reader = new FileReader();
+            reader.onload = (e) => { img.src = e.target.result; };
+            reader.readAsDataURL(file);
+            thumb.appendChild(img);
+        } else if (file.type === "application/pdf" || file.name.endsWith(".pdf")) {
+            thumb.innerHTML = '<i class="fa-regular fa-file-pdf" style="color:#EF4444"></i>';
+        } else {
+            thumb.innerHTML = '<i class="fa-regular fa-file"></i>';
+        }
+
+        const details = document.createElement("div");
+        details.className = "preview-details";
+        const name = document.createElement("div");
+        name.className = "preview-name";
+        name.textContent = file.name;
+        const size = document.createElement("div");
+        size.className = "preview-size";
+        size.textContent = formatBytes(file.size);
+        details.appendChild(name);
+        details.appendChild(size);
+
+        const removeBtn = document.createElement("button");
+        removeBtn.type = "button";
+        removeBtn.className = "btn-remove-file";
+        removeBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        removeBtn.addEventListener("click", (e) => {
+            e.stopPropagation();
+            previewContent.remove();
+            if (container.children.length === 0) {
+                container.style.display = "none";
+                container.closest(".form-group").classList.remove("success-state", "error-state");
+            }
+        });
+
+        previewContent.appendChild(thumb);
+        previewContent.appendChild(details);
+        previewContent.appendChild(removeBtn);
+        container.appendChild(previewContent);
     }
 
     function handleFiles(file, input, previewContainer, zone) {
@@ -364,7 +472,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
     }
 
-    setupDragAndDrop(licenseZone, licenseInput, licensePreview);
+    setupMultiFileDragAndDrop(licenseZone, licenseInput, licensePreview);
     setupDragAndDrop(photoZone, photoInput, photoPreview);
 
     // 4. Multi-Step Wizard Flow (3 steps)
@@ -400,6 +508,33 @@ document.addEventListener("DOMContentLoaded", () => {
         section.scrollIntoView({ behavior: 'smooth' });
     }
 
+    function validateUploadZone(zoneId, previewId, errorMsg) {
+        const zone = document.getElementById(zoneId);
+        const preview = document.getElementById(previewId);
+        const group = zone ? zone.closest(".form-group") : null;
+        const errorLabel = group ? group.querySelector(".error-message") : null;
+        const hasFiles = preview && preview.children.length > 0;
+
+        if (!hasFiles) {
+            if (group) {
+                group.classList.remove("success-state");
+                group.classList.add("error-state");
+            }
+            if (errorLabel) {
+                errorLabel.textContent = errorMsg;
+                errorLabel.style.display = "block";
+            }
+            return false;
+        }
+
+        if (group) {
+            group.classList.remove("error-state");
+            group.classList.add("success-state");
+        }
+        if (errorLabel) errorLabel.style.display = "none";
+        return true;
+    }
+
     function validateStepPanel(stepNum) {
         let isPanelValid = true;
         const panel = document.getElementById(`step${stepNum}`);
@@ -412,6 +547,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 isPanelValid = false;
             }
         });
+
+        // Step 3: also validate file uploads
+        if (stepNum === 3) {
+            const photoValid = validateUploadZone("photoUploadZone", "photoPreview", "Profile Photo is required");
+            const docsValid = validateUploadZone("licenseUploadZone", "licensePreview", "Please upload at least one document");
+            if (!photoValid || !docsValid) isPanelValid = false;
+        }
 
         return isPanelValid;
     }
@@ -463,18 +605,10 @@ document.addEventListener("DOMContentLoaded", () => {
             submittedAt: new Date().toISOString()
         };
 
+        // Save registration data
         const registrationsList = JSON.parse(localStorage.getItem("vet_registrations") || "[]");
         registrationsList.push(formData);
         localStorage.setItem("vet_registrations", JSON.stringify(registrationsList));
-
-        // Populate summary ticket values
-        summaryRegId.textContent = `ID: ${formData.id}`;
-        summaryName.textContent = formData.fullName;
-        summaryService.textContent = formData.serviceType;
-        summaryLocation.textContent = formData.city;
-        summaryArea.textContent = formData.serviceArea;
-        summaryExperience.textContent = formData.experience;
-        summaryBusinessNumber.textContent = formData.businessNumber;
 
         // Animate submission transaction
         form.style.opacity = 0;
@@ -738,6 +872,161 @@ document.addEventListener("DOMContentLoaded", () => {
         formContainer.addEventListener("mouseenter", (e) => {
             bgDog.classList.add("active");
             bgCat.classList.add("active");
+        });
+    }
+
+    // 3. Sidebar Interactive Realistic Pets
+    const sidebar = document.querySelector(".value-prop-sidebar");
+    const sidebarDog = document.querySelector(".sidebar-pet-dog-container");
+    const sidebarCenter = document.querySelector(".sidebar-pet-center-container");
+    const sidebarCat = document.querySelector(".sidebar-pet-cat-container");
+    const sidebarCatImg = document.getElementById("sidebarCatImg");
+    const sidebarCenterCatImg = document.getElementById("sidebarCenterCatImg");
+
+    // Pre-process cat images to remove solid white background and make them transparent
+    let cat1DataUrl = "";
+    let cat2DataUrl = "";
+    let cat3DataUrl = "";
+
+    function makeImageTransparent(src, callback) {
+        const img = new Image();
+        img.src = src;
+        img.crossOrigin = "anonymous";
+        img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const ctx = canvas.getContext("2d");
+            
+            // Crop 5 pixels from all edges to remove outer black borders
+            const crop = 5;
+            const w = img.naturalWidth - (crop * 2);
+            const h = img.naturalHeight - (crop * 2);
+            
+            canvas.width = w;
+            canvas.height = h;
+            
+            // Draw cropped image
+            ctx.drawImage(img, crop, crop, w, h, 0, 0, w, h);
+            
+            const imgData = ctx.getImageData(0, 0, w, h);
+            const data = imgData.data;
+            
+            // BFS Flood Fill from edges to transparentize background white, 
+            // keeping internal white (like cat paws/face) opaque.
+            const visited = new Uint8Array(w * h);
+            const queue = [];
+            
+            // Enqueue all border pixels as seeds
+            for (let x = 0; x < w; x++) {
+                queue.push({x, y: 0});
+                queue.push({x, y: h - 1});
+            }
+            for (let y = 1; y < h - 1; y++) {
+                queue.push({x: 0, y});
+                queue.push({x: w - 1, y});
+            }
+            
+            let head = 0;
+            while (head < queue.length) {
+                const curr = queue[head++];
+                const idx = curr.y * w + curr.x;
+                if (visited[idx]) continue;
+                visited[idx] = 1;
+                
+                const pixelIdx = idx * 4;
+                const r = data[pixelIdx];
+                const g = data[pixelIdx + 1];
+                const b = data[pixelIdx + 2];
+                
+                // If it is close to white background, make it transparent
+                // and traverse its neighbors.
+                if (r > 215 && g > 215 && b > 215) {
+                    data[pixelIdx + 3] = 0; // Alpha = 0
+                    
+                    const x = curr.x;
+                    const y = curr.y;
+                    
+                    if (x > 0 && !visited[y * w + (x - 1)]) queue.push({x: x - 1, y});
+                    if (x < w - 1 && !visited[y * w + (x + 1)]) queue.push({x: x + 1, y});
+                    if (y > 0 && !visited[(y - 1) * w + x]) queue.push({x, y: y - 1});
+                    if (y < h - 1 && !visited[(y + 1) * w + x]) queue.push({x, y: y + 1});
+                }
+            }
+            
+            ctx.putImageData(imgData, 0, 0);
+            callback(canvas.toDataURL());
+        };
+    }
+
+    // Process all cats
+    makeImageTransparent("assets/cat_peeking_1.jpg", (dataUrl) => {
+        cat1DataUrl = dataUrl;
+        if (sidebarCatImg) sidebarCatImg.src = dataUrl;
+    });
+
+    makeImageTransparent("assets/cat_peeking_2.jpg", (dataUrl) => {
+        cat2DataUrl = dataUrl;
+    });
+
+    makeImageTransparent("assets/cat_peeking_3.jpg", (dataUrl) => {
+        cat3DataUrl = dataUrl;
+        if (sidebarCenterCatImg) sidebarCenterCatImg.src = dataUrl;
+    });
+
+    if (sidebar && sidebarDog && sidebarCat) {
+        sidebar.addEventListener("mousemove", (e) => {
+            const rect = sidebar.getBoundingClientRect();
+            const x = e.clientX - rect.left; // x position within sidebar
+            const y = e.clientY - rect.top;  // y position within sidebar
+            
+            // Calculate distance to corners
+            const dogXDiff = rect.width - x;
+            const dogYDiff = rect.height - y;
+            const dogDist = Math.hypot(dogXDiff, dogYDiff);
+            
+            const catXDiff = x;
+            const catYDiff = rect.height - y;
+            const catDist = Math.hypot(catXDiff, catYDiff);
+
+            // Calculate distance to center
+            const centerXDiff = rect.width / 2 - x;
+            const centerYDiff = rect.height - y;
+            const centerDist = Math.hypot(centerXDiff, centerYDiff);
+            
+            // Peek up when cursor is closer
+            const maxDogPeek = Math.max(0, 45 - (dogDist * 0.12));
+            const maxCenterPeek = Math.max(0, 45 - (centerDist * 0.12));
+            const maxCatPeek = Math.max(0, 45 - (catDist * 0.12));
+            
+            // Tilt towards cursor
+            const dogTilt = Math.min(12, Math.max(-12, (x - rect.width + 100) * 0.08));
+            const centerTilt = Math.min(10, Math.max(-10, (x - rect.width / 2) * 0.08));
+            const catTilt = Math.min(12, Math.max(-12, (100 - x) * 0.08));
+
+            sidebarDog.style.transform = `translateY(-${maxDogPeek}px) rotate(${dogTilt}deg)`;
+            if (sidebarCenter) {
+                sidebarCenter.style.transform = `translateX(-50%) translateY(-${maxCenterPeek}px) rotate(${centerTilt}deg)`;
+            }
+            sidebarCat.style.transform = `translateY(-${maxCatPeek}px) rotate(${catTilt}deg)`;
+
+            // Swap cat image if cursor is very close (distance < 120px)
+            if (sidebarCatImg && cat1DataUrl && cat2DataUrl) {
+                if (catDist < 120) {
+                    sidebarCatImg.src = cat2DataUrl; // Smiling/Laughing Cat
+                } else {
+                    sidebarCatImg.src = cat1DataUrl; // Waving Cat
+                }
+            }
+        });
+
+        sidebar.addEventListener("mouseleave", () => {
+            sidebarDog.style.transform = "translateY(0) rotate(0deg)";
+            if (sidebarCenter) {
+                sidebarCenter.style.transform = "translateX(-50%) translateY(0) rotate(0deg)";
+            }
+            sidebarCat.style.transform = "translateY(0) rotate(0deg)";
+            if (sidebarCatImg && cat1DataUrl) {
+                sidebarCatImg.src = cat1DataUrl; // Revert to waving cat
+            }
         });
     }
 
