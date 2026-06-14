@@ -18,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // Step 2 Elements
     const businessNameInput = document.getElementById("businessName");
     const experienceSelect = document.getElementById("experience");
-    const serviceAreaInput = document.getElementById("serviceArea");
     const businessNumberInput = document.getElementById("businessNumber");
     const businessCountryCodeSelect = document.getElementById("businessCountryCode");
     const sameAsMobileCheckbox = document.getElementById("sameAsMobile");
@@ -77,13 +76,89 @@ document.addEventListener("DOMContentLoaded", () => {
             serviceTypePlaceholder.classList.add("selected-text");
         }
 
-        // Validate the serviceType hidden field in real time
+        // Only mark as dirty and touched if the multiselect panel is active (user is interacting with it)
+        if (serviceTypeMultiselect.classList.contains("active")) {
+            serviceTypeSelect.dataset.dirty = "true";
+            serviceTypeSelect.dataset.touched = "true";
+        }
         validateField(serviceTypeSelect);
     }
 
     serviceTypeCheckboxes.forEach(cb => {
         cb.addEventListener("change", updateMultiselectValue);
     });
+
+    // Dynamic Service Area Fields Setup (Max 3)
+    const serviceAreaInputsContainer = document.getElementById("serviceAreaInputsContainer");
+    const btnAddServiceArea = document.getElementById("btnAddServiceArea");
+
+    if (btnAddServiceArea && serviceAreaInputsContainer) {
+        // Re-attach validation on the initial input
+        const initialInput = serviceAreaInputsContainer.querySelector(".service-area-input");
+        if (initialInput) {
+            initialInput.addEventListener("input", () => {
+                initialInput.dataset.dirty = "true";
+                initialInput.dataset.touched = "true";
+                validateField(initialInput);
+            });
+            initialInput.addEventListener("blur", () => {
+                if (initialInput.dataset.dirty === "true") {
+                    initialInput.dataset.touched = "true";
+                }
+                validateField(initialInput);
+            });
+        }
+
+        btnAddServiceArea.addEventListener("click", () => {
+            const currentInputs = serviceAreaInputsContainer.querySelectorAll(".service-area-input");
+            if (currentInputs.length >= 3) {
+                return; // Max 3
+            }
+
+            // Create a new input row
+            const newRow = document.createElement("div");
+            newRow.className = "service-area-row";
+            newRow.innerHTML = `
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-map-location-dot input-icon"></i>
+                    <input type="text" class="service-area-input" placeholder="Enter city or locality you serve" required>
+                </div>
+                <button type="button" class="btn-remove-service-area" title="Remove service area">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            `;
+
+            // Attach event listeners to new input field
+            const newInput = newRow.querySelector(".service-area-input");
+            newInput.addEventListener("input", () => {
+                newInput.dataset.dirty = "true";
+                newInput.dataset.touched = "true";
+                validateField(newInput);
+            });
+            newInput.addEventListener("blur", () => {
+                if (newInput.dataset.dirty === "true") {
+                    newInput.dataset.touched = "true";
+                }
+                validateField(newInput);
+            });
+
+            // Attach click listener to remove button
+            const btnRemove = newRow.querySelector(".btn-remove-service-area");
+            btnRemove.addEventListener("click", () => {
+                newRow.remove();
+                validateStepPanel(2); // Re-validate panel
+                // Re-enable add button if it was disabled
+                btnAddServiceArea.style.display = "inline-flex";
+            });
+
+            serviceAreaInputsContainer.appendChild(newRow);
+
+            // Hide add button if maximum limit of 3 is reached
+            if (serviceAreaInputsContainer.querySelectorAll(".service-area-input").length >= 3) {
+                btnAddServiceArea.style.display = "none";
+            }
+        });
+    }
 
     // 1. Business Number same as Mobile Number logic
     sameAsMobileCheckbox.addEventListener("change", () => {
@@ -92,12 +167,20 @@ document.addEventListener("DOMContentLoaded", () => {
             businessCountryCodeSelect.disabled = true;
             businessNumberInput.value = mobileInput.value;
             businessNumberInput.disabled = true;
+            businessNumberInput.dataset.touched = "true";
             validateField(businessNumberInput);
         } else {
             businessCountryCodeSelect.disabled = false;
             businessNumberInput.value = "";
             businessNumberInput.disabled = false;
-            setFieldState(businessNumberInput, false);
+            delete businessNumberInput.dataset.touched;
+            // Clear visual state
+            const group = businessNumberInput.closest(".form-group");
+            if (group) {
+                group.classList.remove("success-state", "error-state");
+                const errorLabel = group.querySelector(".error-message");
+                if (errorLabel) errorLabel.style.display = "none";
+            }
         }
     });
 
@@ -120,19 +203,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const errorLabel = group.querySelector(".error-message");
 
-        if (isValid) {
-            group.classList.remove("error-state");
-            group.classList.add("success-state");
-            if (errorLabel) errorLabel.style.display = "none";
-        } else {
-            group.classList.remove("success-state");
-            group.classList.add("error-state");
-            if (errorLabel) {
-                if (errorMessage) {
-                    errorLabel.textContent = errorMessage;
+        // Only show validation styling if the element has been touched or is an upload zone
+        const isTouched = element.dataset.touched === "true" || element.classList.contains("upload-zone");
+
+        if (isTouched) {
+            if (isValid) {
+                group.classList.remove("error-state");
+                group.classList.add("success-state");
+                if (errorLabel) errorLabel.style.display = "none";
+            } else {
+                group.classList.remove("success-state");
+                group.classList.add("error-state");
+                if (errorLabel) {
+                    if (errorMessage) {
+                        errorLabel.textContent = errorMessage;
+                    }
+                    errorLabel.style.display = "block";
                 }
-                errorLabel.style.display = "block";
             }
+        } else {
+            group.classList.remove("success-state", "error-state");
+            if (errorLabel) errorLabel.style.display = "none";
         }
     }
 
@@ -144,6 +235,11 @@ document.addEventListener("DOMContentLoaded", () => {
     function validateField(input) {
         const id = input.id;
         const val = input.value.trim();
+
+        // Country code selects don't need to trigger group validation state
+        if (id === "countryCode" || id === "businessCountryCode") {
+            return true;
+        }
 
         // If field is disabled, it is valid by default (like disabled WhatsApp input)
         if (input.disabled) {
@@ -191,8 +287,19 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
 
-        if (id === "serviceArea") {
-            if (val.length < 2) {
+        if (input.classList.contains("service-area-input")) {
+            // Check if all service area inputs are valid
+            const allServiceAreas = Array.from(serviceAreaInputsContainer.querySelectorAll(".service-area-input"));
+            let isAllValid = true;
+
+            for (const saInput of allServiceAreas) {
+                if (saInput.value.trim().length < 2) {
+                    isAllValid = false;
+                    break;
+                }
+            }
+
+            if (!isAllValid) {
                 setFieldState(input, false, "Service Area is required");
                 return false;
             }
@@ -213,13 +320,33 @@ document.addEventListener("DOMContentLoaded", () => {
     // Attach real-time input event listeners for validations
     const textInputs = form.querySelectorAll("input[type='text'], input[type='tel'], input[type='email'], select");
     textInputs.forEach(input => {
-        input.addEventListener("input", () => validateField(input));
-        input.addEventListener("blur", () => validateField(input));
+        input.addEventListener("input", () => {
+            input.dataset.dirty = "true";
+            input.dataset.touched = "true";
+            validateField(input);
+        });
+        input.addEventListener("blur", () => {
+            if (input.dataset.dirty === "true") {
+                input.dataset.touched = "true";
+            }
+            validateField(input);
+        });
+        if (input.tagName === "SELECT") {
+            input.addEventListener("change", () => {
+                input.dataset.dirty = "true";
+                input.dataset.touched = "true";
+                validateField(input);
+            });
+        }
     });
 
     const checkboxInputs = form.querySelectorAll("input[type='checkbox']");
     checkboxInputs.forEach(cb => {
-        cb.addEventListener("change", () => validateField(cb));
+        cb.addEventListener("change", () => {
+            cb.dataset.dirty = "true";
+            cb.dataset.touched = "true";
+            validateField(cb);
+        });
     });
 
     // 3. Drag-and-Drop File Upload logic (Optional files)
@@ -542,18 +669,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const inputs = panel.querySelectorAll("input[required], select[required]");
         inputs.forEach(input => {
+            input.dataset.touched = "true";
             const isInputValid = validateField(input);
             if (!isInputValid) {
                 isPanelValid = false;
             }
         });
 
-        // Step 3: also validate file uploads
-        if (stepNum === 3) {
-            const photoValid = validateUploadZone("photoUploadZone", "photoPreview", "Profile Photo is required");
-            const docsValid = validateUploadZone("licenseUploadZone", "licensePreview", "Please upload at least one document");
-            if (!photoValid || !docsValid) isPanelValid = false;
-        }
+        // Step 3: file uploads are optional, so we do not enforce validation here.
 
         return isPanelValid;
     }
@@ -589,6 +712,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const randomNum = Math.floor(1000 + Math.random() * 9000);
         const regId = `VSP-2026-${randomNum}`;
 
+        const serviceAreaValues = Array.from(document.querySelectorAll(".service-area-input"))
+            .map(input => input.value.trim())
+            .filter(val => val.length > 0)
+            .join(", ");
+
         const formData = {
             id: regId,
             fullName: fullNameInput.value.trim(),
@@ -598,7 +726,7 @@ document.addEventListener("DOMContentLoaded", () => {
             serviceType: serviceTypeSelect.value,
             businessName: businessNameInput.value.trim() || "N/A",
             experience: experienceSelect.value,
-            serviceArea: serviceAreaInput.value.trim(),
+            serviceArea: serviceAreaValues,
             businessNumber: sameAsMobileCheckbox.checked
                 ? (countryCodeSelect.value + " " + mobileInput.value.trim())
                 : (businessCountryCodeSelect.value + " " + businessNumberInput.value.trim()),
@@ -648,6 +776,12 @@ document.addEventListener("DOMContentLoaded", () => {
     btnGoBack.addEventListener("click", () => {
         form.reset();
 
+        // Reset touched and dirty states
+        form.querySelectorAll("input, select").forEach(input => {
+            delete input.dataset.touched;
+            delete input.dataset.dirty;
+        });
+
         // Reset Custom Multiselect
         serviceTypeCheckboxes.forEach(cb => {
             cb.checked = false;
@@ -661,6 +795,23 @@ document.addEventListener("DOMContentLoaded", () => {
             const errLabel = group.querySelector(".error-message");
             if (errLabel) errLabel.style.display = "none";
         });
+
+        // Reset Service Area fields to just one input
+        if (serviceAreaInputsContainer && btnAddServiceArea) {
+            serviceAreaInputsContainer.innerHTML = `
+                <div class="input-wrapper">
+                    <i class="fa-solid fa-map-location-dot input-icon"></i>
+                    <input type="text" class="service-area-input" placeholder="Enter city or locality you serve" required>
+                </div>
+            `;
+            // Re-attach validation events to the first item
+            const firstInput = serviceAreaInputsContainer.querySelector(".service-area-input");
+            if (firstInput) {
+                firstInput.addEventListener("input", () => validateField(firstInput));
+                firstInput.addEventListener("blur", () => validateField(firstInput));
+            }
+            btnAddServiceArea.style.display = "inline-flex";
+        }
 
         // Reset Business Number fields
         businessNumberInput.disabled = false;
@@ -875,159 +1026,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 3. Sidebar Interactive Realistic Pets
-    const sidebar = document.querySelector(".value-prop-sidebar");
-    const sidebarDog = document.querySelector(".sidebar-pet-dog-container");
-    const sidebarCenter = document.querySelector(".sidebar-pet-center-container");
-    const sidebarCat = document.querySelector(".sidebar-pet-cat-container");
-    const sidebarCatImg = document.getElementById("sidebarCatImg");
-    const sidebarCenterCatImg = document.getElementById("sidebarCenterCatImg");
 
-    // Pre-process cat images to remove solid white background and make them transparent
-    let cat1DataUrl = "";
-    let cat2DataUrl = "";
-    let cat3DataUrl = "";
-
-    function makeImageTransparent(src, callback) {
-        const img = new Image();
-        img.src = src;
-        img.crossOrigin = "anonymous";
-        img.onload = () => {
-            const canvas = document.createElement("canvas");
-            const ctx = canvas.getContext("2d");
-            
-            // Crop 5 pixels from all edges to remove outer black borders
-            const crop = 5;
-            const w = img.naturalWidth - (crop * 2);
-            const h = img.naturalHeight - (crop * 2);
-            
-            canvas.width = w;
-            canvas.height = h;
-            
-            // Draw cropped image
-            ctx.drawImage(img, crop, crop, w, h, 0, 0, w, h);
-            
-            const imgData = ctx.getImageData(0, 0, w, h);
-            const data = imgData.data;
-            
-            // BFS Flood Fill from edges to transparentize background white, 
-            // keeping internal white (like cat paws/face) opaque.
-            const visited = new Uint8Array(w * h);
-            const queue = [];
-            
-            // Enqueue all border pixels as seeds
-            for (let x = 0; x < w; x++) {
-                queue.push({x, y: 0});
-                queue.push({x, y: h - 1});
-            }
-            for (let y = 1; y < h - 1; y++) {
-                queue.push({x: 0, y});
-                queue.push({x: w - 1, y});
-            }
-            
-            let head = 0;
-            while (head < queue.length) {
-                const curr = queue[head++];
-                const idx = curr.y * w + curr.x;
-                if (visited[idx]) continue;
-                visited[idx] = 1;
-                
-                const pixelIdx = idx * 4;
-                const r = data[pixelIdx];
-                const g = data[pixelIdx + 1];
-                const b = data[pixelIdx + 2];
-                
-                // If it is close to white background, make it transparent
-                // and traverse its neighbors.
-                if (r > 215 && g > 215 && b > 215) {
-                    data[pixelIdx + 3] = 0; // Alpha = 0
-                    
-                    const x = curr.x;
-                    const y = curr.y;
-                    
-                    if (x > 0 && !visited[y * w + (x - 1)]) queue.push({x: x - 1, y});
-                    if (x < w - 1 && !visited[y * w + (x + 1)]) queue.push({x: x + 1, y});
-                    if (y > 0 && !visited[(y - 1) * w + x]) queue.push({x, y: y - 1});
-                    if (y < h - 1 && !visited[(y + 1) * w + x]) queue.push({x, y: y + 1});
-                }
-            }
-            
-            ctx.putImageData(imgData, 0, 0);
-            callback(canvas.toDataURL());
-        };
-    }
-
-    // Process all cats
-    makeImageTransparent("assets/cat_peeking_1.jpg", (dataUrl) => {
-        cat1DataUrl = dataUrl;
-        if (sidebarCatImg) sidebarCatImg.src = dataUrl;
-    });
-
-    makeImageTransparent("assets/cat_peeking_2.jpg", (dataUrl) => {
-        cat2DataUrl = dataUrl;
-    });
-
-    makeImageTransparent("assets/cat_peeking_3.jpg", (dataUrl) => {
-        cat3DataUrl = dataUrl;
-        if (sidebarCenterCatImg) sidebarCenterCatImg.src = dataUrl;
-    });
-
-    if (sidebar && sidebarDog && sidebarCat) {
-        sidebar.addEventListener("mousemove", (e) => {
-            const rect = sidebar.getBoundingClientRect();
-            const x = e.clientX - rect.left; // x position within sidebar
-            const y = e.clientY - rect.top;  // y position within sidebar
-            
-            // Calculate distance to corners
-            const dogXDiff = rect.width - x;
-            const dogYDiff = rect.height - y;
-            const dogDist = Math.hypot(dogXDiff, dogYDiff);
-            
-            const catXDiff = x;
-            const catYDiff = rect.height - y;
-            const catDist = Math.hypot(catXDiff, catYDiff);
-
-            // Calculate distance to center
-            const centerXDiff = rect.width / 2 - x;
-            const centerYDiff = rect.height - y;
-            const centerDist = Math.hypot(centerXDiff, centerYDiff);
-            
-            // Peek up when cursor is closer
-            const maxDogPeek = Math.max(0, 45 - (dogDist * 0.12));
-            const maxCenterPeek = Math.max(0, 45 - (centerDist * 0.12));
-            const maxCatPeek = Math.max(0, 45 - (catDist * 0.12));
-            
-            // Tilt towards cursor
-            const dogTilt = Math.min(12, Math.max(-12, (x - rect.width + 100) * 0.08));
-            const centerTilt = Math.min(10, Math.max(-10, (x - rect.width / 2) * 0.08));
-            const catTilt = Math.min(12, Math.max(-12, (100 - x) * 0.08));
-
-            sidebarDog.style.transform = `translateY(-${maxDogPeek}px) rotate(${dogTilt}deg)`;
-            if (sidebarCenter) {
-                sidebarCenter.style.transform = `translateX(-50%) translateY(-${maxCenterPeek}px) rotate(${centerTilt}deg)`;
-            }
-            sidebarCat.style.transform = `translateY(-${maxCatPeek}px) rotate(${catTilt}deg)`;
-
-            // Swap cat image if cursor is very close (distance < 120px)
-            if (sidebarCatImg && cat1DataUrl && cat2DataUrl) {
-                if (catDist < 120) {
-                    sidebarCatImg.src = cat2DataUrl; // Smiling/Laughing Cat
-                } else {
-                    sidebarCatImg.src = cat1DataUrl; // Waving Cat
-                }
-            }
-        });
-
-        sidebar.addEventListener("mouseleave", () => {
-            sidebarDog.style.transform = "translateY(0) rotate(0deg)";
-            if (sidebarCenter) {
-                sidebarCenter.style.transform = "translateX(-50%) translateY(0) rotate(0deg)";
-            }
-            sidebarCat.style.transform = "translateY(0) rotate(0deg)";
-            if (sidebarCatImg && cat1DataUrl) {
-                sidebarCatImg.src = cat1DataUrl; // Revert to waving cat
-            }
-        });
-    }
 
 });

@@ -187,67 +187,7 @@ h6 {
     margin-bottom: 24px;
 }
 
-/* Sidebar Interactive Realistic Pets */
-.sidebar-pet-dog-container,
-.sidebar-pet-center-container,
-.sidebar-pet-cat-container {
-    position: absolute;
-    bottom: -60px;
-    /* Hide body initially */
-    width: 120px;
-    height: auto;
-    pointer-events: none;
-    z-index: 5;
-    transition: transform 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
 
-.sidebar-pet-dog-container {
-    right: 15px;
-    transform-origin: bottom right;
-}
-
-.sidebar-pet-center-container {
-    left: 50%;
-    transform: translateX(-50%) translateY(0) rotate(0deg);
-    transform-origin: bottom center;
-}
-
-.sidebar-pet-cat-container {
-    left: 15px;
-    transform-origin: bottom left;
-}
-
-.sidebar-pet-dog-img,
-.sidebar-pet-center-img,
-.sidebar-pet-cat-img {
-    width: 100%;
-    height: auto;
-    display: block;
-}
-
-.sidebar-pet-dog-img {
-    animation: sidebarPetBreathe 3s ease-in-out infinite;
-}
-
-.sidebar-pet-center-img {
-    animation: sidebarPetBreathe 3.2s ease-in-out infinite 0.2s;
-}
-
-.sidebar-pet-cat-img {
-    animation: sidebarPetBreathe 3.5s ease-in-out infinite 0.5s;
-}
-
-@keyframes sidebarPetBreathe {
-
-    0%,
-    100% {
-        transform: translateY(0) scale(1);
-    }
-
-    50% {
-        transform: translateY(-4px) scale(1.02);
-    }
-}
 
 .brand-logo {
     height: 48px;
@@ -257,24 +197,24 @@ h6 {
 }
 
 .value-prop-content {
-    margin: 0;
+    margin-top: 36px; /* Push content down a little */
     padding: 0;
 }
 
 .value-prop-content h1 {
-    font-size: 1.8rem;
-    line-height: 1.15;
-    margin-bottom: 10px;
-    letter-spacing: -0.02em;
+    font-size: 1.6rem; /* Slightly smaller */
+    line-height: 1.2;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
     color: #FF7A59;
     /* Dark Orange */
 }
 
 .subtitle-text {
-    font-size: 0.95rem;
+    font-size: 0.875rem; /* Slightly smaller */
     color: var(--primary);
     /* Deep Navy Blue */
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
 
 .subtitle-text strong {
@@ -286,36 +226,42 @@ h6 {
     list-style: none;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 0;
+    margin-top: 20px;
 }
 
 .benefits-list li {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(29, 57, 74, 0.12); /* Faint underline divider */
+}
+
+.benefits-list li:first-child {
+    border-top: 1px solid rgba(29, 57, 74, 0.12); /* Top divider line */
 }
 
 .benefit-icon-circle {
-    width: 30px;
-    height: 30px;
-    background-color: #FF7A59;
-    /* Dark Orange */
+    width: 40px; /* Reduced circle size */
+    height: 40px;
+    background-color: #FF7A59; /* Keep the original orange color theme */
     color: #FFFFFF;
-    /* White */
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.85rem;
+    font-size: 1.1rem; /* Reduced icon size */
     flex-shrink: 0;
+    box-shadow: 0 3px 8px rgba(255, 122, 89, 0.15);
 }
 
 .benefit-title {
     font-family: 'Outfit', sans-serif;
-    font-weight: 600;
-    font-size: 1.10rem;
-    color: var(--primary);
-    /* Deep Navy Blue */
+    font-weight: 500;
+    font-size: 0.95rem; /* Reduced clean text size */
+    color: var(--primary); /* Keep the deep navy color */
+    line-height: 1.35;
 }
 
 
@@ -365,7 +311,7 @@ h6 {
     justify-content: space-between;
     position: relative;
     padding: 12px 24px;
-    background-color: #FCFDFD;
+    background-color: #e0f2fe; /* Light blue color matching the left sidebar background */
     border-bottom: 1px solid var(--border-color);
     transition: var(--transition);
 }
@@ -445,8 +391,15 @@ h6 {
 /* Wizard Form Panels */
 .form-step-panel {
     display: none;
-    padding: 16px 24px;
+    background-color: var(--white);
+    border: 1px solid var(--border-color); /* Lightened thin card border */
+    border-radius: var(--radius-md);
+    overflow: hidden; /* Clips the header title's background to rounded corners */
+    margin-top: 24px; /* Creates a gap to prevent collision with the step indicator */
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
     animation: slideUpFade 0.4s ease-out;
+    padding: 0; /* Cleared padding to let panel-title span full width */
 }
 
 .form-step-panel.active {
@@ -466,16 +419,37 @@ h6 {
 }
 
 .panel-title {
-    font-size: 1.15rem;
-    margin-bottom: 16px;
+    font-size: 1.1rem;
+    margin-top: 0;
+    margin-bottom: 24px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     color: var(--primary-light);
     letter-spacing: 0.05em;
     font-weight: 800;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    padding-bottom: 6px;
+    background-color: #e8edf3; /* Keeping the user's requested gray */
+    border-bottom: 1px solid var(--border-color); /* Thin bottom border under header */
+    border-top: none;
+    border-left: none;
+    border-right: 
+    none;
+    border-radius: 0; /* Let it fill the top of the bordered card */
+    padding: 16px 24px;
+}
+
+/* Internal padding for form fields and content within the bordered card */
+.form-step-panel > .form-group,
+.form-step-panel > .terms-group {
+    padding-left: 24px;
+    padding-right: 24px;
+}
+
+.form-step-panel > .panel-actions {
+    padding-left: 24px;
+    padding-right: 24px;
+    padding-bottom: 24px;
+    margin-top: 24px;
 }
 
 .panel-icon {
@@ -521,7 +495,7 @@ label {
     color: var(--text-color);
     outline: none;
     transition: var(--transition);
-    background-color: #FAFAFA;
+    background-color: var(--white);
 }
 
 .select-wrapper select {
@@ -1077,11 +1051,7 @@ label {
 /* Tablet View: Stacks columns vertically, makes benefits 2 columns to save height */
 @media (max-width: 992px) {
 
-    .sidebar-pet-dog-container,
-    .sidebar-pet-center-container,
-    .sidebar-pet-cat-container {
-        display: none !important;
-    }
+
 
     .split-container {
         flex-direction: column;
@@ -1141,8 +1111,13 @@ label {
     }
 
     .benefits-list li {
-        border-bottom: none;
-        padding-bottom: 0;
+        border-top: none !important;
+        border-bottom: 1px solid rgba(29, 57, 74, 0.12) !important;
+        padding: 12px 0 !important;
+    }
+
+    .benefits-list li:last-child {
+        border-bottom: none !important;
     }
 
     .pets-illustration-container {
@@ -1207,12 +1182,26 @@ label {
     }
 
     .form-step-panel {
-        padding: 24px 16px;
+        padding: 0;
+    }
+
+    .form-step-panel > .form-group,
+    .form-step-panel > .terms-group {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .form-step-panel > .panel-actions {
+        padding-left: 16px;
+        padding-right: 16px;
+        padding-bottom: 16px;
+        margin-top: 16px;
     }
 
     .panel-title {
         font-size: 1.05rem;
         margin-bottom: 18px;
+        padding: 12px 16px;
     }
 
     .form-group {
@@ -1350,10 +1339,10 @@ label {
 }
 
 .multiselect-header {
-    background-color: var(--white);
+    background-color: var(--white); /* Matches background of standard inputs */
     border: 2px solid var(--border-color);
     border-radius: var(--radius-sm);
-    padding: 14px 18px;
+    padding: 10px 16px; /* Matches vertical and horizontal padding of standard inputs */
     font-size: 0.95rem;
     color: var(--text-color);
     display: flex;
@@ -1369,6 +1358,7 @@ label {
 }
 
 .multiselect-container.active .multiselect-header {
+    background-color: var(--white);
     border-color: var(--primary);
     box-shadow: 0 0 0 3px rgba(29, 57, 74, 0.1);
 }
@@ -1412,15 +1402,15 @@ label {
 
 .multiselect-options-panel {
     position: absolute;
-    bottom: calc(100% + 6px);
-    /* Open upwards to completely avoid the footer area */
+    top: calc(100% + 6px);
+    /* Open downwards now that it is positioned higher in the form layout */
     left: 0;
     width: 100%;
     background-color: var(--white);
     border: 2px solid var(--border-color);
     border-radius: var(--radius-sm);
-    box-shadow: 0 -8px 24px rgba(29, 57, 74, 0.08);
-    /* Upward shadow for dropup look */
+    box-shadow: 0 8px 24px rgba(29, 57, 74, 0.08);
+    /* Downward shadow for dropdown look */
     z-index: 100;
     max-height: 200px;
     /* Safe height since it has more room above the input */
@@ -1677,4 +1667,211 @@ label {
     .background-pet-cat {
         display: none !important;
     }
+}
+
+/* Service Area Dynamic Fields Styling */
+.service-area-inputs-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.service-area-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    animation: slideUpFade 0.3s ease-out;
+}
+
+.service-area-row .input-wrapper {
+    flex: 1;
+}
+
+.btn-remove-service-area {
+    background: var(--white);
+    border: 2px solid var(--border-color);
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.btn-remove-service-area:hover {
+    color: var(--error);
+    background-color: #FEE2E2;
+    border-color: #FCA5A5;
+}
+
+.btn-add-service-area {
+    background: transparent;
+    border: 2px dashed var(--border-color);
+    color: var(--primary-light);
+    border-radius: var(--radius-sm);
+    padding: 8px 14px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: var(--transition);
+}
+
+.btn-add-service-area:hover {
+    border-color: var(--primary-light);
+    background-color: rgba(29, 57, 74, 0.05);
+}
+
+/* Privacy Notice Page Styling */
+.privacy-card-panel {
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+    margin-top: 8px; /* Reduced gap between header and card content */
+    margin-bottom: 24px;
+    box-shadow: var(--shadow-sm);
+    animation: slideUpFade 0.4s ease-out;
+    padding: 32px 28px;
+}
+
+.privacy-last-updated {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--primary-light);
+    letter-spacing: 0.05em;
+    background-color: var(--background);
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    margin-bottom: 16px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.privacy-last-updated .calendar-icon {
+    font-size: 0.95rem;
+}
+
+.privacy-intro-lead {
+    font-size: 1.05rem;
+    font-weight: 500;
+    line-height: 1.6;
+    color: var(--text-color);
+    margin-bottom: 20px;
+}
+
+.privacy-divider {
+    border: 0;
+    border-top: 1px solid var(--border-color);
+    margin: 24px 0;
+}
+
+.privacy-content-body {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.privacy-section h4 {
+    font-size: 1.15rem;
+    color: var(--primary);
+    margin-bottom: 10px;
+    font-weight: 700;
+    font-family: 'Outfit', sans-serif;
+}
+
+.privacy-section p {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    line-height: 1.6;
+    margin-bottom: 12px;
+}
+
+.privacy-sublist {
+    list-style-type: disc;
+    padding-left: 20px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.privacy-sublist li {
+    font-size: 0.95rem;
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.privacy-sublist li strong {
+    color: var(--primary);
+}
+
+.privacy-warning-note {
+    font-style: italic;
+    color: var(--text-muted);
+}
+
+.privacy-contact-info {
+    margin-top: 16px;
+    padding: 12px 16px;
+    background-color: var(--background);
+    border-left: 4px solid var(--primary-light);
+    border-radius: 4px;
+}
+
+/* Privacy Full-Page Layout Styling */
+.privacy-page-body {
+    background-color: var(--background);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.privacy-header-banner {
+    background-color: var(--white);
+    border-bottom: 1px solid var(--border-color);
+    padding: 16px 24px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+}
+
+.privacy-logo-container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 0 16px;
+}
+
+.privacy-main-container {
+    flex: 1;
+    padding: 0 16px 40px 16px; /* Removed top padding to pull content upward */
+    width: 100%;
+    max-width: 1300px; /* Increased width to span more of the page */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.privacy-main-container .form-container-box {
+    max-width: 100%;
+}
+
+.privacy-main-container .form-header-title {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.privacy-main-container .form-header-title h2 {
+    font-size: 2.2rem;
 }

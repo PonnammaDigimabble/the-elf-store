@@ -19,8 +19,9 @@ const MIME_TYPES = {
 };
 
 const server = http.createServer((req, res) => {
-    // Decode URI to handle spaces/special characters in filename
-    let decodedUrl = decodeURIComponent(req.url);
+    // Decode URI to handle spaces/special characters in filename, stripping query parameters
+    let urlPath = req.url.split('?')[0];
+    let decodedUrl = decodeURIComponent(urlPath);
     let filePath = path.join(__dirname, decodedUrl);
     
     // Default to index.html if request is a directory

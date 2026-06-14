@@ -43,48 +43,32 @@
                         </div>
                     </li>
                     <li>
-                        <span class="benefit-icon-circle"><i class="fa-solid fa-globe"></i></span>
+                        <span class="benefit-icon-circle"><i class="fa-solid fa-eye"></i></span>
                         <div class="benefit-detail">
-                            <span class="benefit-title">Increase visibility online</span>
+                            <span class="benefit-title">Increase online visibility</span>
                         </div>
                     </li>
                     <li>
                         <span class="benefit-icon-circle"><i class="fa-solid fa-calendar-check"></i></span>
                         <div class="benefit-detail">
-                            <span class="benefit-title">Appointment management tools</span>
+                            <span class="benefit-title">Appointment management</span>
                         </div>
                     </li>
                     <li>
                         <span class="benefit-icon-circle"><i class="fa-solid fa-star"></i></span>
                         <div class="benefit-detail">
-                            <span class="benefit-title">Customer reviews and ratings</span>
-                        </div>
-                    </li>
-                    <li>
-                        <span class="benefit-icon-circle"><i class="fa-solid fa-chart-line"></i></span>
-                        <div class="benefit-detail">
-                            <span class="benefit-title">Business growth opportunities</span>
+                            <span class="benefit-title">Reviews & ratings</span>
                         </div>
                     </li>
                     <li>
                         <span class="benefit-icon-circle"><i class="fa-solid fa-bullhorn"></i></span>
                         <div class="benefit-detail">
-                            <span class="benefit-title">Marketing and promotional support</span>
+                            <span class="benefit-title">Marketing & promotional support</span>
                         </div>
                     </li>
                 </ul>
             </div>
 
-            <!-- Interactive Realistic Pets -->
-            <div class="sidebar-pet-dog-container">
-                <img src="assets/peeking_dog_transparent.png" alt="Realistic Dog" class="sidebar-pet-dog-img">
-            </div>
-            <div class="sidebar-pet-center-container">
-                <img src="assets/cat_peeking_3.jpg" alt="Center Cat" class="sidebar-pet-center-img" id="sidebarCenterCatImg">
-            </div>
-            <div class="sidebar-pet-cat-container">
-                <img src="assets/cat_peeking_1.jpg" alt="Interactive Cat" class="sidebar-pet-cat-img" id="sidebarCatImg">
-            </div>
         </section>
 
         <!-- Right Side: Form Wizard -->
@@ -118,7 +102,7 @@
                 <form id="vetRegistrationForm" novalidate>
                     <!-- STEP 1: Basic Information -->
                     <div class="form-step-panel active" id="step1">
-                        <h3 class="panel-title"><i class="fa-solid fa-user panel-icon"></i> BASIC INFORMATION</h3>
+                        <h3 class="panel-title"><i class="fa-solid fa-user panel-icon"></i> PERSONAL DETAILS</h3>
 
                         <div class="form-group">
                             <label for="fullName">Full Name <span class="required">*</span></label>
@@ -170,6 +154,18 @@
                             </div>
                             <span class="error-message" id="cityError">City / Location is required</span>
                         </div>
+
+
+                        <div class="panel-actions single-next">
+                            <button type="button" class="btn btn-primary btn-next" data-next="2">Next Step <i
+                                    class="fa-solid fa-chevron-right btn-icon-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Business Information -->
+                    <div class="form-step-panel" id="step2">
+                        <h3 class="panel-title"><i class="fa-solid fa-building panel-icon"></i> BUSINESS DETAILS
+                        </h3>
 
                         <div class="form-group">
                             <label for="serviceType">Service Type <span class="required">*</span></label>
@@ -233,26 +229,10 @@
                                         <span class="checkmark"></span>
                                         <span class="checkbox-text">Food Supplier</span>
                                     </label>
-                                    <label class="multiselect-option-item custom-checkbox">
-                                        <input type="checkbox" value="Other">
-                                        <span class="checkmark"></span>
-                                        <span class="checkbox-text">Other</span>
-                                    </label>
                                 </div>
                             </div>
                             <span class="error-message" id="serviceTypeError">Please select a service type</span>
                         </div>
-
-                        <div class="panel-actions single-next">
-                            <button type="button" class="btn btn-primary btn-next" data-next="2">Next Step <i
-                                    class="fa-solid fa-chevron-right btn-icon-right"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 2: Business Information -->
-                    <div class="form-step-panel" id="step2">
-                        <h3 class="panel-title"><i class="fa-solid fa-building panel-icon"></i> BUSINESS INFORMATION
-                        </h3>
 
                         <div class="form-group">
                             <label for="businessName">Business Name <span class="required">*</span></label>
@@ -279,19 +259,26 @@
                             <span class="error-message" id="experienceError">Please select your experience</span>
                         </div>
 
-                        <div class="form-group">
-                            <label for="serviceArea">Service Area <span class="helper-text">(City, Locality)</span>
-                                <span class="required">*</span></label>
-                            <div class="input-wrapper">
-                                <i class="fa-solid fa-map-location-dot input-icon"></i>
-                                <input type="text" id="serviceArea" name="serviceArea"
-                                    placeholder="Enter city or locality you serve" required>
+                        <div class="form-group" id="serviceAreaGroup">
+                            <label>Service Area <span class="helper-text">(City, Locality | Max 3)</span> <span
+                                    class="required">*</span></label>
+                            <div class="service-area-inputs-container" id="serviceAreaInputsContainer">
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-map-location-dot input-icon"></i>
+                                    <input type="text" class="service-area-input"
+                                        placeholder="Enter city or locality you serve" required>
+                                </div>
+                            </div>
+                            <div class="add-service-area-trigger-wrapper" style="margin-top: 8px;">
+                                <button type="button" class="btn-add-service-area" id="btnAddServiceArea">
+                                    <i class="fa-solid fa-plus"></i> Add Service Area
+                                </button>
                             </div>
                             <span class="error-message" id="serviceAreaError">Service Area is required</span>
                         </div>
 
                         <div class="form-group">
-                            <label for="businessNumber">Business Number <span class="required">*</span></label>
+                            <label for="businessNumber">Business Mobile Number <span class="required">*</span></label>
                             <div class="phone-input-group">
                                 <div class="select-wrapper country-code-wrapper">
                                     <select id="businessCountryCode" name="businessCountryCode" required>
@@ -315,7 +302,7 @@
                                 <label class="custom-checkbox">
                                     <input type="checkbox" id="sameAsMobile" name="sameAsMobile">
                                     <span class="checkmark"></span>
-                                    <span class="checkbox-text font-sm">Same as Mobile Number</span>
+                                    <span class="checkbox-text font-sm">Same as Personal Mobile Number</span>
                                 </label>
                             </div>
                         </div>
@@ -333,7 +320,7 @@
                         <h3 class="panel-title"><i class="fa-solid fa-file-lines panel-icon"></i> DOCUMENTS</h3>
 
                         <div class="form-group">
-                            <label>Profile Photo <span class="required">*</span></label>
+                            <label>Profile Photo <span class="helper-text">(Optional)</span></label>
                             <div class="upload-zone" id="photoUploadZone">
                                 <input type="file" id="photoFile" name="photoFile" accept=".jpg,.jpeg,.png"
                                     class="file-input-hidden">
@@ -348,7 +335,7 @@
                         </div>
 
                         <div class="form-group">
-                            <label>Documents <span class="required">*</span></label>
+                            <label>Documents <span class="helper-text">(Optional)</span></label>
                             <div class="upload-zone" id="licenseUploadZone">
                                 <input type="file" id="licenseFile" name="licenseFile" accept=".jpg,.jpeg,.png,.pdf"
                                     class="file-input-hidden" multiple>
@@ -367,9 +354,9 @@
                                 <input type="checkbox" id="termsAgree" name="termsAgree" required>
                                 <span class="checkmark" style="margin-top: 3px;"></span>
                                 <span class="checkbox-text font-sm">By continuing, you agree to the <a
-                                        href="http://146.190.21.229/terms-conditions" class="inline-link"
+                                        href="conditions-of-use.html" class="inline-link"
                                         target="_blank">ELF Conditions of Use</a> and <a
-                                        href="http://146.190.21.229/privacy-policy" class="inline-link"
+                                        href="privacy-policy.html" class="inline-link"
                                         target="_blank">Privacy Notice</a>. *</span>
                             </label>
                             <span class="error-message" id="termsAgreeError">You must agree to the ELF Conditions of Use
@@ -408,19 +395,8 @@
 
         </section>
     </main>
-
-    <!-- Footer -->
-    <footer class="app-footer">
-        <div class="container footer-container">
-
-            <div class="footer-copy">
-                <p>&copy; 2026 The ELF Store. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
     <!-- Main JS Application -->
-    <script src="app.js"></script>
+    <script src="app.js?v=3"></script>
 </body>
 
 </html>
