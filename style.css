@@ -158,7 +158,8 @@ h6 {
 /* Left value proposition sidebar */
 .value-prop-sidebar {
     width: 34%;
-    background-color: #e0f2fe; /* Soft light sky blue */
+    background-color: #e0f2fe;
+    /* Soft light sky blue */
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg transform='translate(10, 10) rotate(-10 20 20)' fill='%23bae6fd'%3E%3Cpath d='M 20 18 C 14 18, 11 24, 11 28 C 11 33, 15 35, 20 35 C 25 35, 29 33, 29 28 C 29 24, 26 18, 20 18 Z'/%3E%3Cellipse cx='9' cy='17' rx='3.2' ry='4.2'/%3E%3Cellipse cx='15' cy='11' rx='3.2' ry='5.2'/%3E%3Cellipse cx='25' cy='11' rx='3.2' ry='5.2'/%3E%3Cellipse cx='31' cy='17' rx='3.2' ry='4.2'/%3E%3C/g%3E%3Cg transform='translate(70, 10) rotate(45 20 20)' fill='%23bae6fd'%3E%3Ccircle cx='11' cy='17' r='3'/%3E%3Ccircle cx='11' cy='23' r='3'/%3E%3Ccircle cx='29' cy='17' r='3'/%3E%3Ccircle cx='29' cy='23' r='3'/%3E%3Crect x='11' y='18.5' width='18' height='3'/%3E%3C/g%3E%3Cg transform='translate(65, 65) rotate(20 20 20)' fill='%23bae6fd'%3E%3Cpath d='M 20 18 C 14 18, 11 24, 11 28 C 11 33, 15 35, 20 35 C 25 35, 29 33, 29 28 C 29 24, 26 18, 20 18 Z'/%3E%3Cellipse cx='9' cy='17' rx='3.2' ry='4.2'/%3E%3Cellipse cx='15' cy='11' rx='3.2' ry='5.2'/%3E%3Cellipse cx='25' cy='11' rx='3.2' ry='5.2'/%3E%3Cellipse cx='31' cy='17' rx='3.2' ry='4.2'/%3E%3C/g%3E%3Cg transform='translate(10, 70) rotate(-30 20 20)' fill='%23bae6fd'%3E%3Ccircle cx='11' cy='17' r='3'/%3E%3Ccircle cx='11' cy='23' r='3'/%3E%3Ccircle cx='29' cy='17' r='3'/%3E%3Ccircle cx='29' cy='23' r='3'/%3E%3Crect x='11' y='18.5' width='18' height='3'/%3E%3C/g%3E%3C/svg%3E");
     background-repeat: repeat;
     padding: 32px 28px;
@@ -197,12 +198,14 @@ h6 {
 }
 
 .value-prop-content {
-    margin-top: 36px; /* Push content down a little */
+    margin-top: 36px;
+    /* Push content down a little */
     padding: 0;
 }
 
 .value-prop-content h1 {
-    font-size: 1.6rem; /* Slightly smaller */
+    font-size: 1.6rem;
+    /* Slightly smaller */
     line-height: 1.2;
     margin-bottom: 8px;
     letter-spacing: -0.01em;
@@ -211,7 +214,8 @@ h6 {
 }
 
 .subtitle-text {
-    font-size: 0.875rem; /* Slightly smaller */
+    font-size: 0.875rem;
+    /* Slightly smaller */
     color: var(--primary);
     /* Deep Navy Blue */
     margin-bottom: 16px;
@@ -235,23 +239,28 @@ h6 {
     align-items: center;
     gap: 12px;
     padding: 10px 0;
-    border-bottom: 1px solid rgba(29, 57, 74, 0.12); /* Faint underline divider */
+    border-bottom: 1px solid rgba(29, 57, 74, 0.12);
+    /* Faint underline divider */
 }
 
 .benefits-list li:first-child {
-    border-top: 1px solid rgba(29, 57, 74, 0.12); /* Top divider line */
+    border-top: 1px solid rgba(29, 57, 74, 0.12);
+    /* Top divider line */
 }
 
 .benefit-icon-circle {
-    width: 40px; /* Reduced circle size */
+    width: 40px;
+    /* Reduced circle size */
     height: 40px;
-    background-color: #FF7A59; /* Keep the original orange color theme */
+    background-color: #FF7A59;
+    /* Keep the original orange color theme */
     color: #FFFFFF;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.1rem; /* Reduced icon size */
+    font-size: 1.1rem;
+    /* Reduced icon size */
     flex-shrink: 0;
     box-shadow: 0 3px 8px rgba(255, 122, 89, 0.15);
 }
@@ -259,8 +268,10 @@ h6 {
 .benefit-title {
     font-family: 'Outfit', sans-serif;
     font-weight: 500;
-    font-size: 0.95rem; /* Reduced clean text size */
-    color: var(--primary); /* Keep the deep navy color */
+    font-size: 0.95rem;
+    /* Reduced clean text size */
+    color: var(--primary);
+    /* Keep the deep navy color */
     line-height: 1.35;
 }
 
@@ -311,7 +322,8 @@ h6 {
     justify-content: space-between;
     position: relative;
     padding: 12px 24px;
-    background-color: #e0f2fe; /* Light blue color matching the left sidebar background */
+    background-color: #e0f2fe;
+    /* Light blue color matching the left sidebar background */
     border-bottom: 1px solid var(--border-color);
     transition: var(--transition);
 }
@@ -392,14 +404,18 @@ h6 {
 .form-step-panel {
     display: none;
     background-color: var(--white);
-    border: 1px solid var(--border-color); /* Lightened thin card border */
+    border: 1px solid var(--border-color);
+    /* Lightened thin card border */
     border-radius: var(--radius-md);
-    overflow: hidden; /* Clips the header title's background to rounded corners */
-    margin-top: 24px; /* Creates a gap to prevent collision with the step indicator */
+    overflow: hidden;
+    /* Clips the header title's background to rounded corners */
+    margin-top: 24px;
+    /* Creates a gap to prevent collision with the step indicator */
     margin-bottom: 24px;
     box-shadow: var(--shadow-sm);
     animation: slideUpFade 0.4s ease-out;
-    padding: 0; /* Cleared padding to let panel-title span full width */
+    padding: 0;
+    /* Cleared padding to let panel-title span full width */
 }
 
 .form-step-panel.active {
@@ -428,24 +444,27 @@ h6 {
     color: var(--primary-light);
     letter-spacing: 0.05em;
     font-weight: 800;
-    background-color: #e8edf3; /* Keeping the user's requested gray */
-    border-bottom: 1px solid var(--border-color); /* Thin bottom border under header */
+    background-color: #e8edf3;
+    /* Keeping the user's requested gray */
+    border-bottom: 1px solid var(--border-color);
+    /* Thin bottom border under header */
     border-top: none;
     border-left: none;
-    border-right: 
-    none;
-    border-radius: 0; /* Let it fill the top of the bordered card */
+    border-right:
+        none;
+    border-radius: 0;
+    /* Let it fill the top of the bordered card */
     padding: 16px 24px;
 }
 
 /* Internal padding for form fields and content within the bordered card */
-.form-step-panel > .form-group,
-.form-step-panel > .terms-group {
+.form-step-panel>.form-group,
+.form-step-panel>.terms-group {
     padding-left: 24px;
     padding-right: 24px;
 }
 
-.form-step-panel > .panel-actions {
+.form-step-panel>.panel-actions {
     padding-left: 24px;
     padding-right: 24px;
     padding-bottom: 24px;
@@ -1185,13 +1204,13 @@ label {
         padding: 0;
     }
 
-    .form-step-panel > .form-group,
-    .form-step-panel > .terms-group {
+    .form-step-panel>.form-group,
+    .form-step-panel>.terms-group {
         padding-left: 16px;
         padding-right: 16px;
     }
 
-    .form-step-panel > .panel-actions {
+    .form-step-panel>.panel-actions {
         padding-left: 16px;
         padding-right: 16px;
         padding-bottom: 16px;
@@ -1339,10 +1358,12 @@ label {
 }
 
 .multiselect-header {
-    background-color: var(--white); /* Matches background of standard inputs */
+    background-color: var(--white);
+    /* Matches background of standard inputs */
     border: 2px solid var(--border-color);
     border-radius: var(--radius-sm);
-    padding: 10px 16px; /* Matches vertical and horizontal padding of standard inputs */
+    padding: 10px 16px;
+    /* Matches vertical and horizontal padding of standard inputs */
     font-size: 0.95rem;
     color: var(--text-color);
     display: flex;
@@ -1734,7 +1755,8 @@ label {
     border: 1px solid var(--border-color);
     border-radius: var(--radius-md);
     overflow: hidden;
-    margin-top: 8px; /* Reduced gap between header and card content */
+    margin-top: 8px;
+    /* Reduced gap between header and card content */
     margin-bottom: 24px;
     box-shadow: var(--shadow-sm);
     animation: slideUpFade 0.4s ease-out;
@@ -1854,9 +1876,11 @@ label {
 
 .privacy-main-container {
     flex: 1;
-    padding: 0 16px 40px 16px; /* Removed top padding to pull content upward */
+    padding: 0 16px 40px 16px;
+    /* Removed top padding to pull content upward */
     width: 100%;
-    max-width: 1300px; /* Increased width to span more of the page */
+    max-width: 1300px;
+    /* Increased width to span more of the page */
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -1874,4 +1898,111 @@ label {
 
 .privacy-main-container .form-header-title h2 {
     font-size: 2.2rem;
+}
+
+/* ─── Role Tabs (Service Provider / Pet Parent switcher) ─── */
+.role-tabs {
+    display: flex;
+    border-bottom: 2px solid var(--border-color);
+    background-color: var(--white);
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+    overflow: hidden;
+}
+
+.role-tab {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 14px 20px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: var(--transition);
+    cursor: pointer;
+    background: transparent;
+}
+
+.role-tab:hover {
+    color: var(--primary);
+    background: #F8FAFC;
+}
+
+.role-tab.active {
+    color: var(--primary);
+    border-bottom-color: var(--accent);
+    background: var(--white);
+}
+
+.role-tab i {
+    font-size: 1rem;
+}
+
+/* ─── Form Header Subtitle ─── */
+.form-header-subtitle {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    margin-bottom: 0;
+    font-weight: 400;
+}
+
+/* Service area row with remove button */
+.service-area-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.service-area-row .input-wrapper {
+    flex: 1;
+}
+
+.btn-remove-service-area {
+    background: transparent;
+    border: 1.5px solid var(--border-color);
+    color: var(--text-muted);
+    border-radius: var(--radius-sm);
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+    flex-shrink: 0;
+}
+
+.btn-remove-service-area:hover {
+    color: var(--error);
+    border-color: var(--error);
+    background: #FEF2F2;
+}
+
+.btn-add-service-area {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    font-family: 'Outfit', sans-serif;
+    color: var(--primary-light);
+    background: transparent;
+    border: 1.5px dashed var(--primary-light);
+    border-radius: var(--radius-sm);
+    padding: 7px 16px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-add-service-area:hover {
+    background: rgba(44, 82, 106, 0.06);
+    border-color: var(--primary);
+    color: var(--primary);
 }

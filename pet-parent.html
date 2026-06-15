@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pet Parent Registration | The ELF Store</title>
+    <meta name="description"
+        content="Join The ELF Store as a Pet Parent — find trusted pet care, connect with verified professionals, and manage your furry family all in one place.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* ─── Pet Parent specific additions ─── */
+
+        /* Password toggle wrapper */
+        .password-input-wrapper {
+            position: relative;
+        }
+        .password-input-wrapper input {
+            padding-right: 48px;
+        }
+        .btn-toggle-password {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            cursor: pointer;
+            font-size: 1rem;
+            padding: 4px;
+            transition: var(--transition);
+            z-index: 5;
+        }
+        .btn-toggle-password:hover {
+            color: var(--primary);
+        }
+
+        /* Pet type grid */
+        .pet-type-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .pet-type-card {
+            position: relative;
+            cursor: pointer;
+        }
+        .pet-type-card input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .pet-type-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            padding: 12px 8px;
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: #F8FAFC;
+            font-family: 'Outfit', sans-serif;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            transition: var(--transition);
+            cursor: pointer;
+        }
+        .pet-type-label i {
+            font-size: 1.4rem;
+        }
+        .pet-type-card input[type="radio"]:checked + .pet-type-label {
+            border-color: var(--primary);
+            background: var(--accent-light);
+            color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+        .pet-type-card:hover .pet-type-label {
+            border-color: var(--primary-light);
+            background: var(--white);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        /* How did you hear section */
+        .hear-about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(155px, 1fr));
+            gap: 10px;
+            margin-top: 4px;
+        }
+        .hear-about-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 12px;
+            border: 1.5px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: #F8FAFC;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .hear-about-item:hover {
+            border-color: var(--primary-light);
+            background: var(--white);
+        }
+        .hear-about-item:has(input:checked) {
+            border-color: var(--primary);
+            background: var(--accent-light);
+        }
+        .hear-about-item input[type="checkbox"] {
+            accent-color: var(--primary);
+            width: 15px;
+            height: 15px;
+            flex-shrink: 0;
+            cursor: pointer;
+        }
+        .hear-about-item label {
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: var(--text-color);
+            cursor: pointer;
+            margin: 0;
+        }
+
+        /* Two-column form row layout */
+        .form-row-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        @media (max-width: 580px) {
+            .form-row-2col {
+                grid-template-columns: 1fr;
+            }
+            .pet-type-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        /* Step 2 extra panel padding wrapper */
+        .form-step-panel > .form-row-2col {
+            padding-left: 24px;
+            padding-right: 24px;
+        }
+        @media (max-width: 580px) {
+            .form-step-panel > .form-row-2col {
+                padding-left: 16px;
+                padding-right: 16px;
+            }
+        }
+
+        /* Age input with unit */
+        .age-input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .age-input-group .input-wrapper {
+            flex: 1;
+        }
+        .age-unit-select {
+            flex: 0 0 110px;
+        }
+
+        /* Success screen receipt for pet parent */
+        .success-pet-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: var(--accent-light);
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin: 20px auto 28px;
+            max-width: 400px;
+        }
+        .success-pet-icon {
+            font-size: 2.2rem;
+            color: var(--accent);
+        }
+        .success-pet-text p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+        .success-pet-text strong {
+            color: var(--primary);
+            font-size: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Main Split Screen Container -->
+    <main class="split-container">
+        <!-- Left Side: Value Proposition Banner -->
+        <section class="value-prop-sidebar">
+            <div class="brand-logo-container">
+                <a href="#" class="logo-link">
+                    <img src="assets/logo.png" alt="The ELF Store" class="brand-logo" id="logoImg"
+                        onerror="this.src='https://placehold.co/180x50/1d394a/ffffff?text=The+ELF+Store';">
+                </a>
+            </div>
+
+            <div class="value-prop-content">
+                <h1>Find Trusted Pet Care</h1>
+                <p class="subtitle-text">Connect with verified pet professionals — all in one place, built just for
+                    your furry family.</p>
+
+                <ul class="benefits-list">
+                    <li>
+                        <span class="benefit-icon-circle"><i class="fa-solid fa-shield-heart"></i></span>
+                        <div class="benefit-detail">
+                            <span class="benefit-title">Trusted pet care</span>
+                            <span style="font-size:0.8rem;color:var(--text-muted);display:block;">Verified vets, groomers &amp; walkers</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="benefit-icon-circle"><i class="fa-solid fa-calendar-check"></i></span>
+                        <div class="benefit-detail">
+                            <span class="benefit-title">Easy booking</span>
+                            <span style="font-size:0.8rem;color:var(--text-muted);display:block;">Book &amp; manage appointments</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="benefit-icon-circle"><i class="fa-solid fa-star"></i></span>
+                        <div class="benefit-detail">
+                            <span class="benefit-title">Ratings &amp; reviews</span>
+                            <span style="font-size:0.8rem;color:var(--text-muted);display:block;">Choose the best providers</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="benefit-icon-circle"><i class="fa-solid fa-location-dot"></i></span>
+                        <div class="benefit-detail">
+                            <span class="benefit-title">Near you</span>
+                            <span style="font-size:0.8rem;color:var(--text-muted);display:block;">Services in your neighbourhood</span>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+        </section>
+
+        <!-- Right Side: Pet Parent Form -->
+        <section class="form-content-area" id="registration-section">
+            <div class="form-container-box">
+                <!-- Role Tab Navigation -->
+                <div class="role-tabs">
+                    <a href="index.html" class="role-tab" id="tabServiceProvider">
+                        <i class="fa-solid fa-briefcase-medical"></i> Service Provider
+                    </a>
+                    <a href="pet-parent.html" class="role-tab active" id="tabPetParent">
+                        <i class="fa-solid fa-paw"></i> Pet Parent
+                    </a>
+                </div>
+
+                <!-- Form Header Title -->
+                <div class="form-header-title">
+                    <h2>Join as Pet Parent</h2>
+                    <p class="form-header-subtitle">Complete your registration in under 2 minutes</p>
+                </div>
+
+                <!-- Step Progress Indicator -->
+                <div class="step-indicator">
+                    <div class="step-progress-bar">
+                        <div class="step-progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="step-node active" data-step="1">
+                        <div class="node-circle">1</div>
+                        <span class="node-label">Personal Info</span>
+                    </div>
+                    <div class="step-node" data-step="2">
+                        <div class="node-circle">2</div>
+                        <span class="node-label">Your Pet</span>
+                    </div>
+                    <div class="step-node" data-step="3">
+                        <div class="node-circle">3</div>
+                        <span class="node-label">Account Setup</span>
+                    </div>
+                </div>
+
+                <!-- Pet Parent Registration Form -->
+                <form id="petParentForm" novalidate>
+
+                    <!-- STEP 1: Personal Information -->
+                    <div class="form-step-panel active" id="step1">
+                        <h3 class="panel-title"><i class="fa-solid fa-user panel-icon"></i> PERSONAL INFORMATION</h3>
+
+                        <!-- Full Name & Mobile Number -->
+                        <div class="form-row-2col">
+                            <div class="form-group">
+                                <label for="ppFullName">Full Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-regular fa-user input-icon"></i>
+                                    <input type="text" id="ppFullName" name="ppFullName"
+                                        placeholder="Enter your full name" required>
+                                </div>
+                                <span class="error-message" id="ppFullNameError">Full Name is required</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ppMobile">Mobile Number <span class="required">*</span></label>
+                                <div class="phone-input-group">
+                                    <div class="select-wrapper country-code-wrapper">
+                                        <select id="ppCountryCode" name="ppCountryCode">
+                                            <option value="+91" selected>IN +91</option>
+                                            <option value="+1">USA +1</option>
+                                            <option value="+44">GBR +44</option>
+                                            <option value="+971">ARE +971</option>
+                                            <option value="+65">SGP +65</option>
+                                        </select>
+                                    </div>
+                                    <div class="input-wrapper phone-number-wrapper">
+                                        <i class="fa-solid fa-phone input-icon"></i>
+                                        <input type="tel" id="ppMobile" name="ppMobile"
+                                            placeholder="10-digit number" pattern="[0-9]{10}" required>
+                                    </div>
+                                </div>
+                                <span class="error-message" id="ppMobileError">Enter a valid 10-digit mobile number</span>
+                            </div>
+                        </div>
+
+                        <!-- Email & City -->
+                        <div class="form-row-2col">
+                            <div class="form-group">
+                                <label for="ppEmail">Email Address <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-regular fa-envelope input-icon"></i>
+                                    <input type="email" id="ppEmail" name="ppEmail"
+                                        placeholder="your@email.com" required>
+                                </div>
+                                <span class="error-message" id="ppEmailError">Enter a valid email address</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ppCity">City / Location <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-city input-icon"></i>
+                                    <input type="text" id="ppCity" name="ppCity"
+                                        placeholder="Enter your city" required>
+                                </div>
+                                <span class="error-message" id="ppCityError">City / Location is required</span>
+                            </div>
+                        </div>
+
+                        <div class="panel-actions single-next">
+                            <button type="button" class="btn btn-primary btn-next" data-next="2">Next Step <i
+                                    class="fa-solid fa-chevron-right btn-icon-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 2: Your Pet -->
+                    <div class="form-step-panel" id="step2">
+                        <h3 class="panel-title"><i class="fa-solid fa-paw panel-icon"></i> YOUR PET</h3>
+
+                        <!-- Pet Name & Pet Type -->
+                        <div class="form-row-2col">
+                            <div class="form-group">
+                                <label for="ppPetName">Pet Name <span class="required">*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-paw input-icon"></i>
+                                    <input type="text" id="ppPetName" name="ppPetName"
+                                        placeholder="What is your pet called?" required>
+                                </div>
+                                <span class="error-message" id="ppPetNameError">Pet Name is required</span>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ppPetType">Pet Type <span class="required">*</span></label>
+                                <div class="select-wrapper">
+                                    <i class="fa-solid fa-dog select-icon"></i>
+                                    <select id="ppPetType" name="ppPetType" required>
+                                        <option value="" disabled selected>Select pet type</option>
+                                        <option value="Dog">Dog</option>
+                                        <option value="Cat">Cat</option>
+                                        <option value="Bird">Bird</option>
+                                        <option value="Rabbit">Rabbit</option>
+                                        <option value="Fish">Fish</option>
+                                        <option value="Hamster">Hamster</option>
+                                        <option value="Turtle">Turtle</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <span class="error-message" id="ppPetTypeError">Please select a pet type</span>
+                            </div>
+                        </div>
+
+                        <!-- Breed & Pet Age -->
+                        <div class="form-row-2col">
+                            <div class="form-group">
+                                <label for="ppBreed">Breed <span class="helper-text">(Optional)</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-dna input-icon"></i>
+                                    <input type="text" id="ppBreed" name="ppBreed"
+                                        placeholder="e.g. Labrador, Persian">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="ppPetAge">Pet Age <span class="required">*</span></label>
+                                <div class="age-input-group">
+                                    <div class="input-wrapper">
+                                        <i class="fa-regular fa-calendar input-icon"></i>
+                                        <input type="number" id="ppPetAge" name="ppPetAge" min="0" max="100"
+                                            placeholder="Age" required>
+                                    </div>
+                                    <div class="select-wrapper age-unit-select">
+                                        <select id="ppAgeUnit" name="ppAgeUnit">
+                                            <option value="Months">Months</option>
+                                            <option value="Years" selected>Years</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <span class="error-message" id="ppPetAgeError">Pet Age is required</span>
+                            </div>
+                        </div>
+
+                        <!-- Pet Gender -->
+                        <div class="form-group">
+                            <label for="ppPetGender">Pet Gender <span class="required">*</span></label>
+                            <div class="select-wrapper">
+                                <i class="fa-solid fa-venus-mars select-icon"></i>
+                                <select id="ppPetGender" name="ppPetGender" required>
+                                    <option value="" disabled selected>Select gender</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <span class="error-message" id="ppPetGenderError">Please select gender</span>
+                        </div>
+
+                        <!-- Services Needed -->
+                        <div class="form-group">
+                            <label>Services Needed <span class="helper-text">(Select all that apply)</span></label>
+                            <div class="services-checkbox-grid" id="servicesNeededGrid">
+                                <label class="service-checkbox-item custom-checkbox">
+                                    <input type="checkbox" name="services" value="Veterinary Care">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">Veterinary Care</span>
+                                </label>
+                                <label class="service-checkbox-item custom-checkbox">
+                                    <input type="checkbox" name="services" value="Grooming">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">Grooming</span>
+                                </label>
+                                <label class="service-checkbox-item custom-checkbox">
+                                    <input type="checkbox" name="services" value="Dog Walking">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">Dog Walking</span>
+                                </label>
+                                <label class="service-checkbox-item custom-checkbox">
+                                    <input type="checkbox" name="services" value="Pet Boarding">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">Pet Boarding</span>
+                                </label>
+                                <label class="service-checkbox-item custom-checkbox">
+                                    <input type="checkbox" name="services" value="Training">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">Training</span>
+                                </label>
+                                <label class="service-checkbox-item custom-checkbox">
+                                    <input type="checkbox" name="services" value="Pet Sitting">
+                                    <span class="checkmark"></span>
+                                    <span class="checkbox-text">Pet Sitting</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="panel-actions">
+                            <button type="button" class="btn btn-outline btn-prev" data-prev="1"><i
+                                    class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
+                            <button type="button" class="btn btn-primary btn-next" data-next="3">Next Step <i
+                                    class="fa-solid fa-chevron-right btn-icon-right"></i></button>
+                        </div>
+                    </div>
+
+                    <!-- STEP 3: Account Setup -->
+                    <div class="form-step-panel" id="step3">
+                        <h3 class="panel-title"><i class="fa-solid fa-lock panel-icon"></i> ACCOUNT SETUP</h3>
+
+                        <div class="form-group">
+                            <label for="ppPassword">Password <span class="required">*</span></label>
+                            <div class="input-wrapper password-input-wrapper">
+                                <i class="fa-solid fa-lock input-icon"></i>
+                                <input type="password" id="ppPassword" name="ppPassword"
+                                    placeholder="Create a password (min 8 characters)" required>
+                                <button type="button" class="btn-toggle-password" id="btnTogglePassword" aria-label="Toggle password visibility">
+                                    <i class="fa-regular fa-eye" id="passwordEyeIcon"></i>
+                                </button>
+                            </div>
+                            <span class="error-message" id="ppPasswordError">Password must be at least 8 characters</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ppConfirmPassword">Confirm Password <span class="required">*</span></label>
+                            <div class="input-wrapper password-input-wrapper">
+                                <i class="fa-solid fa-lock input-icon"></i>
+                                <input type="password" id="ppConfirmPassword" name="ppConfirmPassword"
+                                    placeholder="Re-enter your password" required>
+                                <button type="button" class="btn-toggle-password" id="btnToggleConfirmPassword" aria-label="Toggle confirm password visibility">
+                                    <i class="fa-regular fa-eye" id="confirmPasswordEyeIcon"></i>
+                                </button>
+                            </div>
+                            <span class="error-message" id="ppConfirmPasswordError">Passwords do not match</span>
+                        </div>
+
+                        <!-- How did you hear about us -->
+                        <div class="form-group">
+                            <label>How did you hear about us? <span class="helper-text">(Optional)</span></label>
+                            <div class="hear-about-grid">
+                                <div class="hear-about-item">
+                                    <input type="checkbox" id="hearGoogle" name="hearAbout" value="Google Search">
+                                    <label for="hearGoogle"><i class="fa-brands fa-google" style="margin-right:6px;color:#4285F4;"></i>Google Search</label>
+                                </div>
+                                <div class="hear-about-item">
+                                    <input type="checkbox" id="hearSocial" name="hearAbout" value="Social Media">
+                                    <label for="hearSocial"><i class="fa-brands fa-instagram" style="margin-right:6px;color:#E1306C;"></i>Social Media</label>
+                                </div>
+                                <div class="hear-about-item">
+                                    <input type="checkbox" id="hearFriend" name="hearAbout" value="Friend Referral">
+                                    <label for="hearFriend"><i class="fa-solid fa-user-group" style="margin-right:6px;color:var(--primary);"></i>Friend / Family</label>
+                                </div>
+                                <div class="hear-about-item">
+                                    <input type="checkbox" id="hearVet" name="hearAbout" value="Vet Recommendation">
+                                    <label for="hearVet"><i class="fa-solid fa-stethoscope" style="margin-right:6px;color:var(--accent);"></i>Vet Recommendation</label>
+                                </div>
+                                <div class="hear-about-item">
+                                    <input type="checkbox" id="hearOther" name="hearAbout" value="Other">
+                                    <label for="hearOther"><i class="fa-solid fa-ellipsis" style="margin-right:6px;color:var(--text-muted);"></i>Other</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Terms & Conditions -->
+                        <div class="form-group terms-group">
+                            <label class="custom-checkbox align-items-start">
+                                <input type="checkbox" id="ppTermsAgree" name="ppTermsAgree" required>
+                                <span class="checkmark" style="margin-top: 3px;"></span>
+                                <span class="checkbox-text font-sm">By continuing, you agree to the <a
+                                        href="conditions-of-use.html" class="inline-link"
+                                        target="_blank">ELF Conditions of Use</a> and <a
+                                        href="privacy-policy.html" class="inline-link"
+                                        target="_blank">Privacy Notice</a>. *</span>
+                            </label>
+                            <span class="error-message" id="ppTermsAgreeError">You must agree to the ELF Conditions of Use and Privacy Notice to proceed</span>
+                        </div>
+
+                        <div class="panel-actions">
+                            <button type="button" class="btn btn-outline btn-prev" data-prev="2"><i
+                                    class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
+                            <button type="submit" class="btn btn-accent" id="ppSubmitBtn">
+                                <i class="fa-solid fa-paw btn-icon-left"></i> Join as Pet Parent
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+
+                <!-- Success Screen -->
+                <div class="success-screen" id="successScreen">
+                    <div class="success-icon-wrapper">
+                        <div class="success-ring"></div>
+                        <i class="fa-solid fa-paw success-check-icon" style="color:var(--accent);font-size:2rem;"></i>
+                    </div>
+
+                    <h2>Welcome to The ELF Store! 🐾</h2>
+                    <p class="success-msg">Your Pet Parent account has been created successfully. Start exploring trusted pet care services near you!</p>
+
+                    <div class="success-pet-info" id="successPetInfo">
+                        <span class="success-pet-icon"><i class="fa-solid fa-dog"></i></span>
+                        <div class="success-pet-text">
+                            <strong id="successPetName">Your pet</strong>
+                            <p id="successPetDetails">has been registered with your account.</p>
+                        </div>
+                    </div>
+
+                    <div class="success-actions">
+                        <button type="button" class="btn btn-primary" id="btnGoBack">Register Another Pet Parent</button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Pet Parent Form JS -->
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const form = document.getElementById("petParentForm");
+            const steps = Array.from(document.querySelectorAll(".form-step-panel"));
+            const stepNodes = Array.from(document.querySelectorAll(".step-node"));
+            const progressFill = document.getElementById("progressFill");
+            const successScreen = document.getElementById("successScreen");
+            const btnGoBack = document.getElementById("btnGoBack");
+
+            let currentStep = 1;
+
+            // ─── Step 1 fields ───
+            const ppFullName = document.getElementById("ppFullName");
+            const ppMobile = document.getElementById("ppMobile");
+            const ppEmail = document.getElementById("ppEmail");
+            const ppCity = document.getElementById("ppCity");
+
+            // ─── Step 2 fields ───
+            const ppPetName = document.getElementById("ppPetName");
+            const ppPetType = document.getElementById("ppPetType");
+            const ppPetAge = document.getElementById("ppPetAge");
+            const ppPetGender = document.getElementById("ppPetGender");
+
+            // ─── Step 3 fields ───
+            const ppPassword = document.getElementById("ppPassword");
+            const ppConfirmPassword = document.getElementById("ppConfirmPassword");
+            const ppTermsAgree = document.getElementById("ppTermsAgree");
+
+            // ─── Password toggle ───
+            function setupPasswordToggle(btnId, inputId, iconId) {
+                const btn = document.getElementById(btnId);
+                const input = document.getElementById(inputId);
+                const icon = document.getElementById(iconId);
+                if (!btn || !input || !icon) return;
+                btn.addEventListener("click", () => {
+                    if (input.type === "password") {
+                        input.type = "text";
+                        icon.classList.replace("fa-eye", "fa-eye-slash");
+                    } else {
+                        input.type = "password";
+                        icon.classList.replace("fa-eye-slash", "fa-eye");
+                    }
+                });
+            }
+            setupPasswordToggle("btnTogglePassword", "ppPassword", "passwordEyeIcon");
+            setupPasswordToggle("btnToggleConfirmPassword", "ppConfirmPassword", "confirmPasswordEyeIcon");
+
+            // ─── Validation helpers ───
+            function validateEmail(email) {
+                return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(String(email).toLowerCase());
+            }
+
+            function setFieldState(element, isValid, errorMsg) {
+                const group = element.closest(".form-group");
+                if (!group) return;
+                const errorLabel = group.querySelector(".error-message");
+                const isTouched = element.dataset.touched === "true";
+
+                if (isTouched) {
+                    if (isValid) {
+                        group.classList.remove("error-state");
+                        group.classList.add("success-state");
+                        if (errorLabel) errorLabel.style.display = "none";
+                    } else {
+                        group.classList.remove("success-state");
+                        group.classList.add("error-state");
+                        if (errorLabel) {
+                            if (errorMsg) errorLabel.textContent = errorMsg;
+                            errorLabel.style.display = "block";
+                        }
+                    }
+                } else {
+                    group.classList.remove("success-state", "error-state");
+                    if (errorLabel) errorLabel.style.display = "none";
+                }
+            }
+
+            function validateField(input) {
+                const id = input.id;
+                const val = (input.type === "checkbox") ? input.checked : input.value.trim();
+
+                if (id === "ppCountryCode" || id === "ppAgeUnit") return true;
+
+                if (input.hasAttribute("required") && !val) {
+                    setFieldState(input, false);
+                    return false;
+                }
+
+                if (id === "ppFullName" && val.length < 2) {
+                    setFieldState(input, false, "Name must be at least 2 characters");
+                    return false;
+                }
+                if (id === "ppMobile" && !/^\d{10}$/.test(val)) {
+                    setFieldState(input, false, "Please enter a valid 10-digit number");
+                    return false;
+                }
+                if (id === "ppEmail" && !validateEmail(val)) {
+                    setFieldState(input, false, "Please enter a valid email address");
+                    return false;
+                }
+                if (id === "ppCity" && val.length < 2) {
+                    setFieldState(input, false, "City / Location is required");
+                    return false;
+                }
+                if (id === "ppPetName" && val.length < 1) {
+                    setFieldState(input, false, "Pet Name is required");
+                    return false;
+                }
+                if (id === "ppPetAge") {
+                    const numVal = parseFloat(input.value);
+                    if (isNaN(numVal) || numVal < 0) {
+                        setFieldState(input, false, "Please enter a valid age");
+                        return false;
+                    }
+                }
+                if (id === "ppPassword" && input.value.length < 8) {
+                    setFieldState(input, false, "Password must be at least 8 characters");
+                    return false;
+                }
+                if (id === "ppConfirmPassword") {
+                    if (input.value !== ppPassword.value) {
+                        setFieldState(input, false, "Passwords do not match");
+                        return false;
+                    }
+                }
+                if (id === "ppTermsAgree" && !input.checked) {
+                    setFieldState(input, false, "You must agree to the ELF Conditions of Use and Privacy Notice to proceed");
+                    return false;
+                }
+
+                setFieldState(input, true);
+                return true;
+            }
+
+            // Attach real-time listeners
+            const allInputs = form.querySelectorAll("input, select");
+            allInputs.forEach(input => {
+                const eventType = (input.type === "checkbox" || input.type === "radio" || input.tagName === "SELECT") ? "change" : "input";
+                input.addEventListener(eventType, () => {
+                    input.dataset.dirty = "true";
+                    input.dataset.touched = "true";
+                    validateField(input);
+                });
+                input.addEventListener("blur", () => {
+                    if (input.dataset.dirty === "true") input.dataset.touched = "true";
+                    validateField(input);
+                });
+            });
+
+            // ─── Step panel validation ───
+            function validateStepPanel(stepNum) {
+                let isPanelValid = true;
+                const panel = document.getElementById(`step${stepNum}`);
+                if (!panel) return false;
+
+                const inputs = panel.querySelectorAll("input[required], select[required]");
+                inputs.forEach(input => {
+                    input.dataset.touched = "true";
+                    if (!validateField(input)) isPanelValid = false;
+                });
+                return isPanelValid;
+            }
+
+            // ─── Wizard UI update ───
+            function updateWizardUI() {
+                steps.forEach((step, i) => {
+                    step.classList.toggle("active", i + 1 === currentStep);
+                });
+                stepNodes.forEach((node, i) => {
+                    const n = i + 1;
+                    node.classList.toggle("active", n === currentStep);
+                    node.classList.toggle("completed", n < currentStep);
+                });
+                const pct = (currentStep / steps.length) * 100;
+                progressFill.style.width = `${pct}%`;
+                document.getElementById("registration-section").scrollIntoView({ behavior: "smooth" });
+            }
+
+            // Next / Prev buttons
+            document.querySelectorAll(".btn-next").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    const target = parseInt(btn.getAttribute("data-next"), 10);
+                    if (validateStepPanel(target - 1)) {
+                        currentStep = target;
+                        updateWizardUI();
+                    }
+                });
+            });
+            document.querySelectorAll(".btn-prev").forEach(btn => {
+                btn.addEventListener("click", () => {
+                    currentStep = parseInt(btn.getAttribute("data-prev"), 10);
+                    updateWizardUI();
+                });
+            });
+
+            // ─── Form submit ───
+            form.addEventListener("submit", (e) => {
+                e.preventDefault();
+                if (!validateStepPanel(3)) return;
+
+                const petName = ppPetName.value.trim();
+                const petType = ppPetType.value;
+                const petAge = ppPetAge.value;
+                const ageUnit = document.getElementById("ppAgeUnit").value;
+
+                // Update success screen
+                const successPetName = document.getElementById("successPetName");
+                const successPetDetails = document.getElementById("successPetDetails");
+                const successPetIcon = document.querySelector(".success-pet-icon i");
+                if (successPetName) successPetName.textContent = petName || "Your pet";
+                if (successPetDetails) successPetDetails.textContent = `${petType || "Pet"} · ${petAge} ${ageUnit} old — registered to your account!`;
+                // Change icon based on pet type
+                const iconMap = { Dog: "fa-dog", Cat: "fa-cat", Bird: "fa-crow", Rabbit: "fa-rabbit", Fish: "fa-fish", Hamster: "fa-hippo", Turtle: "fa-frog" };
+                if (successPetIcon && petType) {
+                    successPetIcon.className = `fa-solid ${iconMap[petType] || "fa-paw"}`;
+                }
+
+                // Save to localStorage
+                const regId = `PP-2026-${Math.floor(1000 + Math.random() * 9000)}`;
+                const data = {
+                    id: regId,
+                    fullName: ppFullName.value.trim(),
+                    mobile: document.getElementById("ppCountryCode").value + " " + ppMobile.value.trim(),
+                    email: ppEmail.value.trim(),
+                    city: ppCity.value.trim(),
+                    petName,
+                    petType,
+                    petAge: `${petAge} ${ageUnit}`,
+                    petGender: ppPetGender.value,
+                    submittedAt: new Date().toISOString()
+                };
+                const list = JSON.parse(localStorage.getItem("pet_parent_registrations") || "[]");
+                list.push(data);
+                localStorage.setItem("pet_parent_registrations", JSON.stringify(list));
+
+                // Fade out → show success
+                form.style.opacity = 0;
+                const stepIndicator = document.querySelector(".step-indicator");
+                const formHeader = document.querySelector(".form-header-title");
+                if (stepIndicator) stepIndicator.style.opacity = 0;
+                if (formHeader) formHeader.style.opacity = 0;
+
+                setTimeout(() => {
+                    form.style.display = "none";
+                    if (stepIndicator) stepIndicator.style.display = "none";
+                    if (formHeader) formHeader.style.display = "none";
+                    successScreen.style.display = "block";
+                    successScreen.style.opacity = 0;
+                    let op = 0;
+                    const fade = setInterval(() => {
+                        if (op >= 1) { clearInterval(fade); }
+                        else { op += 0.1; successScreen.style.opacity = op; }
+                    }, 30);
+                    document.getElementById("registration-section").scrollIntoView({ behavior: "smooth" });
+                }, 300);
+            });
+
+            // ─── Go Back / Reset ───
+            btnGoBack.addEventListener("click", () => {
+                form.reset();
+                form.querySelectorAll("input, select").forEach(input => {
+                    delete input.dataset.touched;
+                    delete input.dataset.dirty;
+                });
+                form.querySelectorAll(".form-group").forEach(group => {
+                    group.classList.remove("success-state", "error-state");
+                    const errLabel = group.querySelector(".error-message");
+                    if (errLabel) errLabel.style.display = "none";
+                });
+
+                successScreen.style.display = "none";
+                const stepIndicator = document.querySelector(".step-indicator");
+                const formHeader = document.querySelector(".form-header-title");
+                if (stepIndicator) { stepIndicator.style.display = "flex"; stepIndicator.style.opacity = 1; }
+                if (formHeader) { formHeader.style.display = "block"; formHeader.style.opacity = 1; }
+                form.style.display = "block";
+                form.style.opacity = 1;
+                currentStep = 1;
+                updateWizardUI();
+            });
+        });
+    </script>
+</body>
+
+</html>
