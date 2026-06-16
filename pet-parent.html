@@ -504,18 +504,7 @@
                             <span class="error-message" id="ppPasswordError">Password must be at least 8 characters</span>
                         </div>
 
-                        <div class="form-group">
-                            <label for="ppConfirmPassword">Confirm Password <span class="required">*</span></label>
-                            <div class="input-wrapper password-input-wrapper">
-                                <i class="fa-solid fa-lock input-icon"></i>
-                                <input type="password" id="ppConfirmPassword" name="ppConfirmPassword"
-                                    placeholder="Re-enter your password" required>
-                                <button type="button" class="btn-toggle-password" id="btnToggleConfirmPassword" aria-label="Toggle confirm password visibility">
-                                    <i class="fa-regular fa-eye" id="confirmPasswordEyeIcon"></i>
-                                </button>
-                            </div>
-                            <span class="error-message" id="ppConfirmPasswordError">Passwords do not match</span>
-                        </div>
+
 
                         <!-- How did you hear about us -->
                         <div class="form-group">
@@ -622,7 +611,6 @@
 
             // ─── Step 3 fields ───
             const ppPassword = document.getElementById("ppPassword");
-            const ppConfirmPassword = document.getElementById("ppConfirmPassword");
             const ppTermsAgree = document.getElementById("ppTermsAgree");
 
             // ─── Password toggle ───
@@ -642,7 +630,6 @@
                 });
             }
             setupPasswordToggle("btnTogglePassword", "ppPassword", "passwordEyeIcon");
-            setupPasswordToggle("btnToggleConfirmPassword", "ppConfirmPassword", "confirmPasswordEyeIcon");
 
             // ─── Validation helpers ───
             function validateEmail(email) {
@@ -716,12 +703,7 @@
                     setFieldState(input, false, "Password must be at least 8 characters");
                     return false;
                 }
-                if (id === "ppConfirmPassword") {
-                    if (input.value !== ppPassword.value) {
-                        setFieldState(input, false, "Passwords do not match");
-                        return false;
-                    }
-                }
+
                 if (id === "ppTermsAgree" && !input.checked) {
                     setFieldState(input, false, "You must agree to the ELF Conditions of Use and Privacy Notice to proceed");
                     return false;
