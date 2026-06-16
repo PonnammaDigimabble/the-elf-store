@@ -284,12 +284,9 @@
                     </div>
                     <div class="step-node" data-step="2">
                         <div class="node-circle">2</div>
-                        <span class="node-label">Your Pet</span>
+                        <span class="node-label">Pet Info</span>
                     </div>
-                    <div class="step-node" data-step="3">
-                        <div class="node-circle">3</div>
-                        <span class="node-label">Account Setup</span>
-                    </div>
+
                 </div>
 
                 <!-- Pet Parent Registration Form -->
@@ -297,7 +294,7 @@
 
                     <!-- STEP 1: Personal Information -->
                     <div class="form-step-panel active" id="step1">
-                        <h3 class="panel-title"><i class="fa-solid fa-user panel-icon"></i> PERSONAL INFORMATION</h3>
+                        <h3 class="panel-title"><i class="fa-solid fa-user panel-icon"></i> PERSONAL DETAILS</h3>
 
                         <!-- Full Name & Mobile Number -->
                         <div class="form-row-2col">
@@ -364,7 +361,7 @@
 
                     <!-- STEP 2: Your Pet -->
                     <div class="form-step-panel" id="step2">
-                        <h3 class="panel-title"><i class="fa-solid fa-paw panel-icon"></i> YOUR PET</h3>
+                        <h3 class="panel-title"><i class="fa-solid fa-paw panel-icon"></i>PET DETAILS</h3>
 
                         <!-- Pet Name & Pet Type -->
                         <div class="form-row-2col">
@@ -378,23 +375,32 @@
                                 <span class="error-message" id="ppPetNameError">Pet Name is required</span>
                             </div>
 
-                            <div class="form-group">
-                                <label for="ppPetType">Pet Type <span class="required">*</span></label>
-                                <div class="select-wrapper">
-                                    <i class="fa-solid fa-dog select-icon"></i>
-                                    <select id="ppPetType" name="ppPetType" required>
-                                        <option value="" disabled selected>Select pet type</option>
-                                        <option value="Dog">Dog</option>
-                                        <option value="Cat">Cat</option>
-                                        <option value="Bird">Bird</option>
-                                        <option value="Rabbit">Rabbit</option>
-                                        <option value="Fish">Fish</option>
-                                        <option value="Hamster">Hamster</option>
-                                        <option value="Turtle">Turtle</option>
-                                        <option value="Other">Other</option>
-                                    </select>
+                            <div>
+                                <div class="form-group" style="margin-bottom: 0;">
+                                    <label for="ppPetType">Pet Type <span class="required">*</span></label>
+                                    <div class="select-wrapper">
+                                        <i class="fa-solid fa-dog select-icon"></i>
+                                        <select id="ppPetType" name="ppPetType" required>
+                                            <option value="" disabled selected>Select pet type</option>
+                                            <option value="Dog">Dog</option>
+                                            <option value="Cat">Cat</option>
+                                            <option value="Bird">Bird</option>
+                                            <option value="Rabbit">Rabbit</option>
+                                            <option value="Fish">Fish</option>
+                                            <option value="Hamster">Hamster</option>
+                                            <option value="Turtle">Turtle</option>
+                                            <option value="Other">Other</option>
+                                        </select>
+                                    </div>
+                                    <span class="error-message" id="ppPetTypeError">Please select a pet type</span>
                                 </div>
-                                <span class="error-message" id="ppPetTypeError">Please select a pet type</span>
+                                <div class="form-group" id="ppOtherPetTypeGroup" style="display: none; margin-top: 12px; margin-bottom: 0;">
+                                    <div class="input-wrapper">
+                                        <i class="fa-solid fa-pen input-icon"></i>
+                                        <input type="text" id="ppOtherPetType" name="ppOtherPetType" placeholder="Specify other pet type">
+                                    </div>
+                                    <span class="error-message" id="ppOtherPetTypeError">Please specify the pet type</span>
+                                </div>
                             </div>
                         </div>
 
@@ -410,21 +416,17 @@
                             </div>
 
                             <div class="form-group">
-                                <label for="ppPetAge">Pet Age <span class="required">*</span></label>
-                                <div class="age-input-group">
-                                    <div class="input-wrapper">
-                                        <i class="fa-regular fa-calendar input-icon"></i>
-                                        <input type="number" id="ppPetAge" name="ppPetAge" min="0" max="100"
-                                            placeholder="Age" required>
-                                    </div>
-                                    <div class="select-wrapper age-unit-select">
-                                        <select id="ppAgeUnit" name="ppAgeUnit">
-                                            <option value="Months">Months</option>
-                                            <option value="Years" selected>Years</option>
-                                        </select>
-                                    </div>
+                                <label for="ppPetAge">Pet Age <span class="helper-text">(optional)</span></label>
+                                <div class="select-wrapper">
+                                    <i class="fa-solid fa-cake-candles select-icon"></i>
+                                    <select id="ppPetAge" name="ppPetAge">
+                                        <option value="" disabled selected>Select age range</option>
+                                        <option value="Under 1 year">Under 1 year</option>
+                                        <option value="1–3 years">1–3 years</option>
+                                        <option value="3–7 years">3–7 years</option>
+                                        <option value="7+ years">7+ years</option>
+                                    </select>
                                 </div>
-                                <span class="error-message" id="ppPetAgeError">Pet Age is required</span>
                             </div>
                         </div>
 
@@ -479,62 +481,8 @@
                             </div>
                         </div>
 
-                        <div class="panel-actions">
-                            <button type="button" class="btn btn-outline btn-prev" data-prev="1"><i
-                                    class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
-                            <button type="button" class="btn btn-primary btn-next" data-next="3">Next Step <i
-                                    class="fa-solid fa-chevron-right btn-icon-right"></i></button>
-                        </div>
-                    </div>
-
-                    <!-- STEP 3: Account Setup -->
-                    <div class="form-step-panel" id="step3">
-                        <h3 class="panel-title"><i class="fa-solid fa-lock panel-icon"></i> ACCOUNT SETUP</h3>
-
-                        <div class="form-group">
-                            <label for="ppPassword">Password <span class="required">*</span></label>
-                            <div class="input-wrapper password-input-wrapper">
-                                <i class="fa-solid fa-lock input-icon"></i>
-                                <input type="password" id="ppPassword" name="ppPassword"
-                                    placeholder="Create a password (min 8 characters)" required>
-                                <button type="button" class="btn-toggle-password" id="btnTogglePassword" aria-label="Toggle password visibility">
-                                    <i class="fa-regular fa-eye" id="passwordEyeIcon"></i>
-                                </button>
-                            </div>
-                            <span class="error-message" id="ppPasswordError">Password must be at least 8 characters</span>
-                        </div>
-
-
-
-                        <!-- How did you hear about us -->
-                        <div class="form-group">
-                            <label>How did you hear about us? <span class="helper-text">(Optional)</span></label>
-                            <div class="hear-about-grid">
-                                <div class="hear-about-item">
-                                    <input type="checkbox" id="hearGoogle" name="hearAbout" value="Google Search">
-                                    <label for="hearGoogle"><i class="fa-brands fa-google" style="margin-right:6px;color:#4285F4;"></i>Google Search</label>
-                                </div>
-                                <div class="hear-about-item">
-                                    <input type="checkbox" id="hearSocial" name="hearAbout" value="Social Media">
-                                    <label for="hearSocial"><i class="fa-brands fa-instagram" style="margin-right:6px;color:#E1306C;"></i>Social Media</label>
-                                </div>
-                                <div class="hear-about-item">
-                                    <input type="checkbox" id="hearFriend" name="hearAbout" value="Friend Referral">
-                                    <label for="hearFriend"><i class="fa-solid fa-user-group" style="margin-right:6px;color:var(--primary);"></i>Friend / Family</label>
-                                </div>
-                                <div class="hear-about-item">
-                                    <input type="checkbox" id="hearVet" name="hearAbout" value="Vet Recommendation">
-                                    <label for="hearVet"><i class="fa-solid fa-stethoscope" style="margin-right:6px;color:var(--accent);"></i>Vet Recommendation</label>
-                                </div>
-                                <div class="hear-about-item">
-                                    <input type="checkbox" id="hearOther" name="hearAbout" value="Other">
-                                    <label for="hearOther"><i class="fa-solid fa-ellipsis" style="margin-right:6px;color:var(--text-muted);"></i>Other</label>
-                                </div>
-                            </div>
-                        </div>
-
                         <!-- Terms & Conditions -->
-                        <div class="form-group terms-group">
+                        <div class="form-group terms-group" style="margin-top: 16px;">
                             <label class="custom-checkbox align-items-start">
                                 <input type="checkbox" id="ppTermsAgree" name="ppTermsAgree" required>
                                 <span class="checkmark" style="margin-top: 3px;"></span>
@@ -548,7 +496,7 @@
                         </div>
 
                         <div class="panel-actions">
-                            <button type="button" class="btn btn-outline btn-prev" data-prev="2"><i
+                            <button type="button" class="btn btn-outline btn-prev" data-prev="1"><i
                                     class="fa-solid fa-chevron-left btn-icon-left"></i> Back</button>
                             <button type="submit" class="btn btn-accent" id="ppSubmitBtn">
                                 <i class="fa-solid fa-paw btn-icon-left"></i> Join as Pet Parent
@@ -562,19 +510,13 @@
                 <div class="success-screen" id="successScreen">
                     <div class="success-icon-wrapper">
                         <div class="success-ring"></div>
-                        <i class="fa-solid fa-paw success-check-icon" style="color:var(--accent);font-size:2rem;"></i>
+                        <i class="fa-solid fa-check success-check-icon"></i>
                     </div>
 
-                    <h2>Welcome to The ELF Store! 🐾</h2>
+                    <h2>Registration Successful! 🎉</h2>
                     <p class="success-msg">Your Pet Parent account has been created successfully. Start exploring trusted pet care services near you!</p>
 
-                    <div class="success-pet-info" id="successPetInfo">
-                        <span class="success-pet-icon"><i class="fa-solid fa-dog"></i></span>
-                        <div class="success-pet-text">
-                            <strong id="successPetName">Your pet</strong>
-                            <p id="successPetDetails">has been registered with your account.</p>
-                        </div>
-                    </div>
+
 
                     <div class="success-actions">
                         <button type="button" class="btn btn-primary" id="btnGoBack">Register Another Pet Parent</button>
@@ -610,26 +552,7 @@
             const ppPetGender = document.getElementById("ppPetGender");
 
             // ─── Step 3 fields ───
-            const ppPassword = document.getElementById("ppPassword");
             const ppTermsAgree = document.getElementById("ppTermsAgree");
-
-            // ─── Password toggle ───
-            function setupPasswordToggle(btnId, inputId, iconId) {
-                const btn = document.getElementById(btnId);
-                const input = document.getElementById(inputId);
-                const icon = document.getElementById(iconId);
-                if (!btn || !input || !icon) return;
-                btn.addEventListener("click", () => {
-                    if (input.type === "password") {
-                        input.type = "text";
-                        icon.classList.replace("fa-eye", "fa-eye-slash");
-                    } else {
-                        input.type = "password";
-                        icon.classList.replace("fa-eye-slash", "fa-eye");
-                    }
-                });
-            }
-            setupPasswordToggle("btnTogglePassword", "ppPassword", "passwordEyeIcon");
 
             // ─── Validation helpers ───
             function validateEmail(email) {
@@ -692,17 +615,7 @@
                     setFieldState(input, false, "Pet Name is required");
                     return false;
                 }
-                if (id === "ppPetAge") {
-                    const numVal = parseFloat(input.value);
-                    if (isNaN(numVal) || numVal < 0) {
-                        setFieldState(input, false, "Please enter a valid age");
-                        return false;
-                    }
-                }
-                if (id === "ppPassword" && input.value.length < 8) {
-                    setFieldState(input, false, "Password must be at least 8 characters");
-                    return false;
-                }
+
 
                 if (id === "ppTermsAgree" && !input.checked) {
                     setFieldState(input, false, "You must agree to the ELF Conditions of Use and Privacy Notice to proceed");
@@ -712,6 +625,25 @@
                 setFieldState(input, true);
                 return true;
             }
+
+            // ─── Other Pet Type Toggle ───
+            const ppOtherPetTypeGroup = document.getElementById("ppOtherPetTypeGroup");
+            const ppOtherPetType = document.getElementById("ppOtherPetType");
+            
+            ppPetType.addEventListener("change", (e) => {
+                if (e.target.value === "Other") {
+                    ppOtherPetTypeGroup.style.display = "block";
+                    ppOtherPetType.setAttribute("required", "true");
+                } else {
+                    ppOtherPetTypeGroup.style.display = "none";
+                    ppOtherPetType.removeAttribute("required");
+                    ppOtherPetType.value = "";
+                    ppOtherPetType.dataset.touched = "false";
+                    ppOtherPetTypeGroup.classList.remove("error-state", "success-state");
+                    const err = ppOtherPetTypeGroup.querySelector(".error-message");
+                    if (err) err.style.display = "none";
+                }
+            });
 
             // Attach real-time listeners
             const allInputs = form.querySelectorAll("input, select");
@@ -777,24 +709,16 @@
             // ─── Form submit ───
             form.addEventListener("submit", (e) => {
                 e.preventDefault();
-                if (!validateStepPanel(3)) return;
+                if (!validateStepPanel(2)) return;
 
                 const petName = ppPetName.value.trim();
-                const petType = ppPetType.value;
-                const petAge = ppPetAge.value;
-                const ageUnit = document.getElementById("ppAgeUnit").value;
-
-                // Update success screen
-                const successPetName = document.getElementById("successPetName");
-                const successPetDetails = document.getElementById("successPetDetails");
-                const successPetIcon = document.querySelector(".success-pet-icon i");
-                if (successPetName) successPetName.textContent = petName || "Your pet";
-                if (successPetDetails) successPetDetails.textContent = `${petType || "Pet"} · ${petAge} ${ageUnit} old — registered to your account!`;
-                // Change icon based on pet type
-                const iconMap = { Dog: "fa-dog", Cat: "fa-cat", Bird: "fa-crow", Rabbit: "fa-rabbit", Fish: "fa-fish", Hamster: "fa-hippo", Turtle: "fa-frog" };
-                if (successPetIcon && petType) {
-                    successPetIcon.className = `fa-solid ${iconMap[petType] || "fa-paw"}`;
+                let petType = ppPetType.value;
+                if (petType === "Other") {
+                    petType = ppOtherPetType.value.trim() || "Other Pet";
                 }
+                const petAge = ppPetAge.value;
+
+
 
                 // Save to localStorage
                 const regId = `PP-2026-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -806,7 +730,7 @@
                     city: ppCity.value.trim(),
                     petName,
                     petType,
-                    petAge: `${petAge} ${ageUnit}`,
+                    petAge: petAge,
                     petGender: ppPetGender.value,
                     submittedAt: new Date().toISOString()
                 };
